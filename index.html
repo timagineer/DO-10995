@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <style>
-      
+
         @layer config, base, components, utils;
 
         @layer config {
@@ -1028,6 +1028,11 @@
                 color: var(--positive-150);
             }
 
+            .badge-patient-signed {
+                background: var(--info-550);
+                color: var(--info-150);
+            }
+
             .badge-neutral {
                 background: var(--gray-550);
                 color: var(--gray-175);
@@ -1073,6 +1078,231 @@
                 display: flex;
                 align-items: center;
                 gap: var(--space-30);
+            }
+
+            /* Fax docs popover */
+            .fax-docs-trigger {
+                background: var(--info-550);
+                border: 1px solid var(--info-450);
+                padding: 0.15em 0.5em;
+                border-radius: 2em;
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-semibold);
+                color: var(--info-200);
+                cursor: pointer;
+                white-space: nowrap;
+                vertical-align: middle;
+                margin-inline-start: var(--space-20);
+            }
+
+            .fax-docs-trigger:hover {
+                background: var(--info-600);
+                color: var(--info-100);
+            }
+
+            .fax-docs-popover {
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius);
+                background: var(--surface);
+                box-shadow: var(--elevation-md);
+                padding: var(--space-30) 0;
+                padding-inline-end: var(--space-40);
+                min-inline-size: 16rem;
+                max-inline-size: 24rem;
+                margin: 0 !important;
+                inset: auto;
+                position: fixed !important;
+            }
+
+            .fax-docs-popover,
+            .fax-docs-popover::backdrop {
+                transition:
+                    display 120ms allow-discrete,
+                    overlay 120ms allow-discrete,
+                    opacity 120ms ease;
+                opacity: 0;
+            }
+
+            .fax-docs-popover:popover-open {
+                opacity: 1;
+            }
+
+            @starting-style {
+                .fax-docs-popover:popover-open {
+                    opacity: 0;
+                }
+            }
+
+            .fax-docs-popover-header {
+                font-size: var(--font-size-xs);
+                font-weight: 700;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                letter-spacing: var(--tracking-wide);
+                padding-inline: var(--space-40);
+                padding-block-end: var(--space-20);
+                border-block-end: 1px solid var(--border-subtle);
+                margin-block-end: var(--space-20);
+            }
+
+            .fax-docs-popover ol {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .fax-docs-popover li {
+                display: grid;
+                grid-template-columns: auto 1fr auto auto;
+                align-items: baseline;
+                column-gap: var(--space-40);
+                padding-block: var(--space-20);
+                padding-inline: var(--space-40);
+                font-size: var(--font-size-sm);
+                color: var(--text);
+            }
+
+            .fax-docs-popover li+li {
+                border-block-start: 1px solid var(--border-subtle);
+            }
+
+            .fax-docs-popover .doc-pages {
+                color: var(--text-secondary);
+                white-space: nowrap;
+                inline-size: 4.5ch;
+            }
+
+            .doc-filetype {
+                color: var(--text-secondary);
+                white-space: nowrap;
+                flex-shrink: 0;
+                min-inline-size: 3rem;
+            }
+
+            /* Send Fax modal */
+            #fax-send-dialog>div {
+                padding-block-start: var(--space-55);
+            }
+
+            #fax-send-dialog .modal-footer {
+                padding-block-end: var(--space-50);
+                margin-block-end: 0;
+            }
+
+            .fax-doc-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius);
+                max-block-size: 10rem;
+                overflow-y: auto;
+            }
+
+            .fax-doc-list li {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-block: var(--space-25);
+                padding-inline: var(--space-40);
+                font-size: var(--font-size-sm);
+                color: var(--text);
+                border-block-end: 1px solid var(--border-subtle);
+            }
+
+            .fax-doc-list li:last-child {
+                border-block-end: none;
+            }
+
+            .fax-doc-list .doc-pages {
+                color: var(--text-secondary);
+                white-space: nowrap;
+            }
+
+            .fax-or-divider {
+                display: flex;
+                align-items: center;
+                gap: var(--space-40);
+                margin-block: var(--space-40);
+                color: var(--text-secondary);
+                font-size: var(--font-size-sm);
+            }
+
+            .fax-or-divider::before,
+            .fax-or-divider::after {
+                content: '';
+                flex: 1;
+                block-size: 1px;
+                background: var(--border-subtle);
+            }
+
+            .kno2-results {
+                list-style: none;
+                margin: 0;
+                padding: var(--space-20) 0;
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius);
+                background: var(--surface);
+                box-shadow: var(--elevation-md);
+                max-block-size: 12rem;
+                overflow-y: auto;
+            }
+
+            .kno2-results li {
+                padding-block: var(--space-30);
+                padding-inline: var(--space-40);
+                cursor: pointer;
+            }
+
+            .kno2-results li:hover {
+                background: var(--bg);
+            }
+
+            .kno2-result-name {
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-semibold);
+                color: var(--text);
+            }
+
+            .kno2-result-meta {
+                font-size: var(--font-size-xs);
+                color: var(--text-secondary);
+                margin-block-start: 0.125rem;
+            }
+
+            .fax-recipient-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: var(--space-25);
+                background: var(--primary-700);
+                border: 1px solid var(--primary-500);
+                border-radius: 2rem;
+                padding-block: var(--space-15);
+                padding-inline: var(--space-35) var(--space-25);
+                font-size: var(--font-size-sm);
+                color: var(--primary-150);
+                margin-block-start: var(--space-30);
+            }
+
+            .fax-recipient-chip button {
+                background: none;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                color: var(--primary-300);
+                display: flex;
+                align-items: center;
+                line-height: 1;
+            }
+
+            .fax-recipient-chip button:hover {
+                color: var(--primary-150);
+            }
+
+            .fax-number-error {
+                font-size: var(--font-size-sm);
+                color: var(--warning-300);
+                margin-block-start: var(--space-20);
             }
 
             /* Fax table numeric columns */
@@ -3316,8 +3546,9 @@
                                 <td>{{doc.encounter || ''}}<span ng-if="!doc.encounter" class="empty-value">–</span></td>
                                 <td>
                                     <span ng-if="doc.staffSigned" class="badge badge-signed">Staff Signed</span>
+                                    <span ng-if="!doc.staffSigned && doc.patientSigned" class="badge badge-patient-signed">Patient Signed</span>
                                     <span ng-if="doc.faxed" class="badge badge-info">Faxed</span>
-                                    <span ng-if="!doc.staffSigned && !doc.faxed && doc.shareStatus === 'Shared to Sign'" class="badge badge-finished">Shared to Sign</span>
+                                    <span ng-if="!doc.staffSigned && !doc.patientSigned && !doc.faxed && doc.shareStatus === 'Shared to Sign'" class="badge badge-finished">Shared to Sign</span>
                                     <span ng-if="!doc.staffSigned && !doc.faxed && doc.shareStatus === 'Shared'" class="badge badge-info">Shared</span>
                                     <span ng-if="!doc.staffSigned && !doc.shareStatus && !doc.faxed" class="badge badge-neutral">Not Shared</span>
                                 </td>
@@ -3357,7 +3588,7 @@
                 <div class="docs-panel-header">
                     <div class="th-toolbar-cell">
                         <div class="th-toolbar-actions">
-                            <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0">Fax</button>
+                            <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0" ng-click="vm.openFaxModal()">Fax</button>
                             <button class="table-action-btn" ng-disabled="!vm.hasFaxFailedSelected()">Retry</button>
                             <div class="th-toolbar-actions-separator" aria-hidden="true"></div>
                             <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0">Download</button>
@@ -3474,7 +3705,19 @@
                                         </svg>
                                     </div>
                                 </td>
-                                <td class="doc-name-cell"><span class="doc-name">{{fax.name}}</span></td>
+                                <td class="doc-name-cell">
+                                    <span class="doc-name">{{fax.docs[0].name}}<ng-container ng-if="fax.docs.length > 1"> <button class="fax-docs-trigger" ng-click="$event.stopPropagation()" onclick="(function(btn){var id=btn.getAttribute('data-popover');var pop=document.getElementById(id);if(!pop)return;var rect=btn.getBoundingClientRect();pop.style.top=(rect.bottom+6)+'px';pop.style.left=rect.left+'px';pop.showPopover();requestAnimationFrame(function(){var pr=pop.getBoundingClientRect();var left=Math.max(8,Math.min(rect.left,window.innerWidth-pr.width-8));pop.style.left=left+'px';});})(this)" data-popover="fax-docs-{{fax.id}}">+{{fax.docs.length - 1}}</button></ng-container></span>
+                                    <div id="fax-docs-{{fax.id}}" class="fax-docs-popover" popover="auto">
+                                        <p class="fax-docs-popover-header">{{fax.docs.length}} documents in this transmission</p>
+                                        <ol>
+                                            <li ng-repeat="d in fax.docs">
+                                                <span>{{d.name}}</span>
+                                                <span aria-hidden="true"></span>
+                                                <span class="doc-filetype">{{d.fileType}}</span><span class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</span>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </td>
                                 <td>{{fax.recipient}}<span ng-if="!fax.recipient" class="empty-value">–</span></td>
                                 <td>{{fax.faxNumber}}</td>
                                 <td>{{fax.sentDate}}</td>
@@ -3498,7 +3741,7 @@
                                         <div ng-if="fax.menuOpen" ng-click="vm.closeRowMenu(fax)" class="overlay-backdrop"></div>
                                         <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top + 'px', right: fax.menuPos.right + 'px'}">
                                             <button ng-if="fax.faxStatus === 'failed'" ng-click="vm.closeRowMenu(fax)">Retry</button>
-                                            <button ng-if="fax.faxStatus !== 'failed'" ng-click="vm.closeRowMenu(fax)">Fax</button>
+                                            <button ng-if="fax.faxStatus !== 'failed'" ng-click="vm.openFaxModal(fax); vm.closeRowMenu(fax)">Fax</button>
                                             <hr class="menu-divider">
                                             <button ng-click="vm.closeRowMenu(fax)">Download</button>
                                             <button ng-click="vm.closeRowMenu(fax)">Print</button>
@@ -3517,6 +3760,62 @@
             </div>
         </div>
     </main>
+
+    <!-- Send Fax Modal -->
+    <dialog id="fax-send-dialog" aria-labelledby="fax-dialog-title">
+        <header>
+            <h2 id="fax-dialog-title">Send Fax</h2>
+            <button ng-click="vm.closeFaxModal()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </header>
+        <div>
+            <div class="modal-form-group">
+                <p class="modal-section-header">Documents ({{vm.faxModal.docs.length}})</p>
+                <ul class="fax-doc-list">
+                    <li ng-repeat="d in vm.faxModal.docs">
+                        <span>{{d.name}}</span>
+                        <span class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="modal-form-group">
+                <label class="modal-form-label" for="kno2-search">Search Kno2 Directory</label>
+                <input id="kno2-search" type="search" class="modal-field-input" placeholder="Provider name, organization, or specialty" ng-model="vm.faxModal.kno2Query" ng-change="vm.searchKno2()" autocomplete="off">
+                <ul class="kno2-results" ng-if="vm.faxModal.kno2Results.length && !vm.faxModal.recipient">
+                    <li ng-repeat="r in vm.faxModal.kno2Results" ng-click="vm.selectKno2Recipient(r)">
+                        <p class="kno2-result-name">{{r.name}}</p>
+                        <p class="kno2-result-meta">{{r.org}} &middot; {{r.faxNumber}}</p>
+                    </li>
+                </ul>
+                <div class="fax-recipient-chip" ng-if="vm.faxModal.recipient">
+                    <span>{{vm.faxModal.recipient.name}} &mdash; {{vm.faxModal.recipient.faxNumber}}</span>
+                    <button ng-click="vm.clearFaxRecipient()" aria-label="Remove recipient">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="fax-or-divider">or</div>
+
+            <div class="modal-form-group">
+                <label class="modal-form-label" for="fax-number-manual">Enter Fax Number Manually</label>
+                <input id="fax-number-manual" type="tel" class="modal-field-input" ng-class="{error: vm.faxModal.numberError}" placeholder="(555) 000-0000" ng-model="vm.faxModal.manualNumber" ng-change="vm.onManualNumberChange()" ng-disabled="!!vm.faxModal.recipient" maxlength="14">
+                <p class="fax-number-error" ng-if="vm.faxModal.numberError" role="alert">{{vm.faxModal.numberError}}</p>
+            </div>
+        </div>
+        <div class="modal-footer modal-footer-spaced">
+            <button class="btn-outline" ng-click="vm.closeFaxModal()">Cancel</button>
+            <button class="btn-primary" ng-click="vm.submitFax()" ng-disabled="!vm.faxModal.recipient && !vm.faxModal.validNumber">Send Fax</button>
+        </div>
+    </dialog>
 
     <!-- Staff Sign Modal -->
     <dialog id="staff-sign-dialog" aria-labelledby="sign-dialog-title">
@@ -3577,6 +3876,14 @@
             <!-- Modal footer -->
             <div class="sign-modal-footer">
                 <button ng-click="vm.cancelSign()">Cancel</button>
+                <div ng-if="vm.skippedNonSignable > 0" class="sign-modal-footer-notice">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="8" />
+                        <line x1="12" y1="12" x2="12" y2="16" />
+                    </svg>
+                    {{vm.skippedNonSignable}} selected {{vm.skippedNonSignable === 1 ? 'document is' : 'documents are'}} not signable and will be skipped
+                </div>
                 <div ng-if="vm.signDoc.staffSigned && !vm.signDoc.justSigned" class="sign-modal-footer-notice">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10" />
@@ -3604,653 +3911,6 @@
                 <button class="btn-danger" ng-click="vm.confirmCancelQueue()">Cancel Signing</button>
             </div>
         </div>
-    </dialog>
-
-
-    <!-- Payment Detail Modal -->
-    <dialog id="payment-detail-dialog">
-        <header>
-            <h2>Transaction Details</h2>
-            <button type="button" ng-click="vm.closePaymentDetail()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div ng-if="vm.selectedPayment">
-            <div class="modal-field-grid cards">
-                <div>
-                    <div class="modal-field-label">Date</div>
-                    <div class="modal-field-value">{{vm.selectedPayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Posted</div>
-                    <div class="modal-field-value">{{vm.selectedPayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Reference №</div>
-                    <div class="modal-field-value">{{vm.selectedPayment.checkNum}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Type</div>
-                    <div class="modal-field-value">{{vm.selectedPaymentType || vm.selectedPayment.type}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Code</div>
-                    <div class="modal-field-value"><span class="empty-value">–</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Amount</div>
-                    <div class="modal-field-value">${{vm.selectedPayment.amount.toFixed(2)}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Payer</div>
-                    <div class="modal-field-value">{{vm.selectedPayment.payer}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Source</div>
-                    <div class="modal-field-value"><span ng-if="!vm.selectedPayment.source" class="empty-value">–</span><span ng-if="vm.selectedPayment.source">{{vm.selectedPayment.source}}</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Adjusted Amount (Code)</div>
-                    <div class="modal-field-value"><span ng-if="vm.selectedPayment.adjAmount <= 0" class="empty-value">–</span><span ng-if="vm.selectedPayment.adjAmount > 0">-${{vm.selectedPayment.adjAmount.toFixed(2)}}<span ng-if="vm.selectedPayment.adjCodes"> ({{vm.selectedPayment.adjCodes}})</span></span></div>
-                </div>
-            </div>
-
-            <div ng-if="vm.selectedServiceLine" class="modal-section">
-                <div class="modal-section-header">Application History</div>
-                <table class="modal-table">
-                    <thead>
-                        <tr>
-                            <th class="code">Code</th>
-                            <th>Description</th>
-                            <th>Posted</th>
-                            <th class="numeric">Charge</th>
-                            <th class="numeric">Paid</th>
-                            <th class="numeric"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="code">{{vm.selectedServiceLine.cpt}}</td>
-                            <td>{{vm.selectedServiceLine.desc}}</td>
-                            <td>{{vm.selectedPayment.date}}</td>
-                            <td class="numeric">${{vm.selectedServiceLine.charge.toFixed(2)}}</td>
-                            <td class="numeric positive">${{vm.selectedPayment.amount.toFixed(2)}}</td>
-                            <td class="numeric"><button class="btn-danger btn-xs">Unapply</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Refund Modal -->
-    <dialog id="refund-dialog">
-        <header>
-            <h2>Refund Payment</h2>
-            <button type="button" ng-click="vm.closeRefundModal()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div ng-if="vm.refundPayment">
-            <div class="modal-field-grid cards">
-                <div>
-                    <div class="modal-field-label">Payer</div>
-                    <div class="modal-field-value">{{vm.refundPayment.payer}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Date</div>
-                    <div class="modal-field-value">{{vm.refundPayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Amount</div>
-                    <div class="modal-field-value">${{vm.refundPayment.amount.toFixed(2)}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Adjustment Amount</div>
-                    <div class="modal-field-value"><span ng-if="vm.refundPayment.adjAmount <= 0" class="empty-value">–</span><span ng-if="vm.refundPayment.adjAmount > 0">-${{vm.refundPayment.adjAmount.toFixed(2)}}</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Reference №</div>
-                    <div class="modal-field-value">{{vm.refundPayment.checkNum}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Adjustment Code</div>
-                    <div class="modal-field-value"><span ng-if="!vm.refundPayment.adjCodes" class="empty-value">–</span><span ng-if="vm.refundPayment.adjCodes">{{vm.refundPayment.adjCodes}}</span></div>
-                </div>
-            </div>
-
-            <div class="modal-warning" ng-if="vm.hasDownstreamTransactions()">
-                <div class="modal-warning-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
-                        <line x1="12" y1="8" x2="12" y2="12"></line>
-                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                    </svg>
-                </div>
-                <div class="modal-warning-content">
-                    <div class="modal-warning-title">Downstream Transactions Detected</div>
-                    <div class="modal-warning-text">
-                        This {{vm.refundPayment.insuranceLevel.toLowerCase()}} payment is linked to {{vm.getDownstreamDescription()}}.<br>
-                        Reversing it now may invalidate those transactions.
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-form-group">
-                <div class="modal-form-label">Refund Type</div>
-                <div class="modal-radio-group">
-                    <label class="modal-radio-label">
-                        <input type="radio" name="refundType" value="full" ng-model="vm.refundType">
-                        <span>Full Refund</span>
-                    </label>
-                    <label class="modal-radio-label">
-                        <input type="radio" name="refundType" value="partial" ng-model="vm.refundType" ng-click="$event.target.parentElement.querySelector('.modal-input').focus()">
-                        <span>Partial Refund:</span>
-                        <input type="number" class="modal-input" ng-class="{hidden: vm.refundType !== 'partial'}" ng-model="vm.partialAmount" step="0.01" min="0.01" max="{{vm.refundPayment.amount}}" ng-click="$event.stopPropagation()">
-                    </label>
-                </div>
-            </div>
-
-            <table class="modal-table">
-                <thead>
-                    <tr>
-                        <th class="code">Code</th>
-                        <th>Description</th>
-                        <th class="numeric">Charge</th>
-                        <th class="numeric">Paid</th>
-                        <th class="numeric">Refund</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-if="vm.refundServiceLine">
-                        <td class="code">{{vm.refundServiceLine.cpt}}</td>
-                        <td>{{vm.refundServiceLine.desc}}</td>
-                        <td class="numeric">${{vm.refundServiceLine.charge.toFixed(2)}}</td>
-                        <td class="numeric">${{vm.refundPayment.amount.toFixed(2)}}</td>
-                        <td class="numeric danger">-${{vm.getRefundAmount().toFixed(2)}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="modal-footer">
-                <button ng-click="vm.closeRefundModal()">Cancel</button>
-                <button class="btn-danger" ng-disabled="!vm.canRefund()">Refund Payment</button>
-            </div>
-
-            <div class="modal-footer-note">
-                <div class="modal-footer-note-input">
-                    <input type="text" placeholder="Add an optional note about this refund…" ng-model="vm.refundNote" ng-keypress="vm.handleModalNoteKeypress($event, vm.refundServiceLine, 'refund')">
-                    <button class="btn-primary" ng-click="vm.addModalNote(vm.refundServiceLine, vm.refundNote, 'refund')">Add Note</button>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Add Transaction Modal -->
-    <dialog id="add-transaction-dialog">
-        <header>
-            <h2>Add {{vm.txnType}}</h2>
-            <button type="button" ng-click="vm.closeAddTransaction()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div ng-if="vm.addTxnServiceLine">
-            <!-- Form Fields -->
-            <div class="modal-field-grid">
-                <!-- Date -->
-                <div>
-                    <label class="modal-form-label" for="txn-date">Date <span class="required">*</span></label>
-                    <input id="txn-date" type="date" ng-model="vm.txnDate" ng-class="{error: vm.txnErrors.date}" class="modal-field-input">
-                </div>
-
-                <!-- Posted -->
-                <div>
-                    <label class="modal-form-label" for="txn-posted">Posted <span class="required">*</span></label>
-                    <input id="txn-posted" type="date" ng-model="vm.txnPosted" ng-class="{error: vm.txnErrors.posted}" class="modal-field-input">
-                </div>
-
-                <!-- Reference Number -->
-                <div>
-                    <label class="modal-form-label" for="txn-ref">Reference №</label>
-                    <input id="txn-ref" type="text" ng-model="vm.txnRefNum" placeholder="Check №, EFT №, etc." class="modal-field-input tabular">
-                </div>
-
-                <!-- Transaction Type -->
-                <div>
-                    <label class="modal-form-label" for="txn-type">Transaction Type <span class="required">*</span></label>
-                    <select id="txn-type" ng-model="vm.txnType" ng-change="vm.onTxnTypeChange()" ng-class="{error: vm.txnErrors.type}" class="modal-field-select">
-                        <option value="Client Payment">Client Payment</option>
-                        <option value="Client Adjustment">Client Adjustment</option>
-                        <option value="Insurance Payment">Insurance Payment</option>
-                        <option value="Insurance Adjustment">Insurance Adjustment</option>
-                    </select>
-                </div>
-
-                <!-- Transaction Code -->
-                <div>
-                    <label class="modal-form-label" for="txn-code">Transaction Code <span class="required">*</span></label>
-                    <select id="txn-code" ng-model="vm.txnCode" ng-class="{error: vm.txnErrors.code}" class="modal-field-select">
-                        <option value="">Select code...</option>
-                        <option ng-repeat="code in vm.getTxnCodes()" value="{{code}}">{{code}}</option>
-                    </select>
-                </div>
-
-                <!-- Amount -->
-                <div>
-                    <label class="modal-form-label" for="txn-amount">Amount <span class="required">*</span></label>
-                    <div class="modal-field-wrapper">
-                        <span class="modal-field-prefix">$</span>
-                        <input id="txn-amount" type="number" ng-model="vm.txnAmount" ng-class="{error: vm.txnErrors.amount}" step="0.01" placeholder="0.00" class="modal-field-input with-prefix tabular">
-                    </div>
-                </div>
-
-                <!-- Payer -->
-                <div>
-                    <label class="modal-form-label" for="txn-payer">Payer <span class="required" ng-if="vm.txnType.includes('Insurance')">*</span></label>
-                    <select id="txn-payer" ng-if="vm.txnType.includes('Insurance')" ng-model="vm.txnPayer" ng-class="{error: vm.txnErrors.payer}" class="modal-field-select">
-                        <option value="">Select payer...</option>
-                        <option value="Primary">Aetna (Primary)</option>
-                        <option value="Secondary">Blue Cross (Secondary)</option>
-                    </select>
-                    <div ng-if="!vm.txnType.includes('Insurance')" class="modal-field-value">{{vm.patient.name}}</div>
-                </div>
-
-                <!-- Source -->
-                <div>
-                    <label class="modal-form-label" for="txn-source">Source</label>
-                    <select id="txn-source" ng-model="vm.txnSource" class="modal-field-select">
-                        <option value="">Select source...</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Check">Check</option>
-                        <option value="Credit Card">Credit Card</option>
-                        <option value="EFT">EFT</option>
-                        <option value="Money Order">Money Order</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <!-- Adjusted Amount (Code) -->
-                <div>
-                    <label class="modal-form-label">Adjusted Amount (Code)</label>
-                    <div class="modal-field-value"><span class="empty-value">–</span></div>
-                </div>
-            </div>
-
-            <!-- Application Preview Table -->
-            <div class="modal-section modal-section-spaced">
-                <table class="modal-table">
-                    <thead>
-                        <tr>
-                            <th class="code">Code</th>
-                            <th>Description</th>
-                            <th>DOS</th>
-                            <th class="numeric">Charge</th>
-                            <th class="numeric">Current Bal.</th>
-                            <th class="numeric">Applying</th>
-                            <th class="numeric">After</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="code">{{vm.addTxnServiceLine.cpt}}</td>
-                            <td>{{vm.addTxnServiceLine.desc}}</td>
-                            <td>{{vm.addTxnEncounter.date}}</td>
-                            <td class="numeric">${{vm.addTxnServiceLine.charge.toFixed(2)}}</td>
-                            <td class="numeric">${{vm.addTxnServiceLine.totalBal.toFixed(2)}}</td>
-                            <td class="numeric" ng-class="{'positive': vm.getApplyingAmount(), 'empty-value': !vm.getApplyingAmount()}">{{vm.getApplyingAmount() ? '$' + vm.getApplyingAmount().toFixed(2) : '–'}}</td>
-                            <td class="numeric" ng-class="{'empty-value': !vm.getAfterAmount() && vm.getAfterAmount() !== 0}">{{vm.getAfterAmount() !== null ? '$' + vm.getAfterAmount().toFixed(2) : '–'}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Footer Buttons -->
-            <div class="modal-footer">
-                <button ng-click="vm.closeAddTransaction()">Cancel</button>
-                <button class="btn-primary" ng-click="vm.saveTransaction()">Save Transaction</button>
-            </div>
-
-            <!-- Note Section -->
-            <div class="modal-footer-note">
-                <div class="modal-footer-note-input">
-                    <input type="text" placeholder="Add an optional note about this transaction…" ng-model="vm.txnNote" ng-keypress="vm.handleModalNoteKeypress($event, vm.addTxnServiceLine, 'txn')">
-                    <button class="btn-primary" ng-click="vm.addModalNote(vm.addTxnServiceLine, vm.txnNote, 'txn')">Add Note</button>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Unapplied Payment Details Modal -->
-    <dialog id="unapplied-details-dialog">
-        <header>
-            <h2>Payment Details</h2>
-            <button type="button" ng-click="vm.closeUnappliedDetails()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div ng-if="vm.selectedUnappliedPayment">
-            <div class="modal-field-grid-2col cards">
-                <div>
-                    <div class="modal-field-label">Payer</div>
-                    <div class="modal-field-value">{{vm.patient.name}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Type</div>
-                    <div class="modal-field-value">{{vm.selectedUnappliedPayment.type}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Date</div>
-                    <div class="modal-field-value">{{vm.selectedUnappliedPayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Posted</div>
-                    <div class="modal-field-value">{{vm.selectedUnappliedPayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Total <span class="empty-value">/</span> Unapplied</div>
-                    <div class="modal-field-value">${{vm.selectedUnappliedPayment.amount.toFixed(2)}} <span class="empty-value">/</span> <span class="value-balance">${{vm.selectedUnappliedPayment.unapplied.toFixed(2)}}</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Code</div>
-                    <div class="modal-field-value"><span ng-if="!vm.selectedUnappliedPayment.code" class="empty-value">–</span><span ng-if="vm.selectedUnappliedPayment.code">{{vm.selectedUnappliedPayment.code}}</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Source</div>
-                    <div class="modal-field-value"><span ng-if="!vm.selectedUnappliedPayment.source" class="empty-value">–</span><span ng-if="vm.selectedUnappliedPayment.source">{{vm.selectedUnappliedPayment.source}}</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Reference №</div>
-                    <div class="modal-field-value">{{vm.selectedUnappliedPayment.refNum}}</div>
-                </div>
-            </div>
-
-            <div class="modal-section">
-                <div class="modal-section-header">Application History</div>
-                <div class="modal-table-wrapper">
-                    <table class="modal-table">
-                        <thead>
-                            <tr>
-                                <th class="code">Code</th>
-                                <th>Description</th>
-                                <th class="th-middle">
-                                    DOS
-                                    <button ng-click="vm.toggleAppHistoryDateSort()" class="sort-btn">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m21 16-4 4-4-4" />
-                                            <path d="M17 20V4" />
-                                            <path d="m3 8 4-4 4 4" />
-                                            <path d="M7 4v16" />
-                                        </svg>
-                                    </button>
-                                </th>
-                                <th class="th-middle">
-                                    Posted
-                                    <button ng-click="vm.toggleAppHistoryPostedSort()" class="sort-btn">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m21 16-4 4-4-4" />
-                                            <path d="M17 20V4" />
-                                            <path d="m3 8 4-4 4 4" />
-                                            <path d="M7 4v16" />
-                                        </svg>
-                                    </button>
-                                </th>
-                                <th class="numeric">Charge</th>
-                                <th class="numeric">Applied</th>
-                                <th class="numeric"></th>
-                            </tr>
-                        </thead>
-                        <tbody ng-if="vm.appHistory.length > 0">
-                            <tr ng-repeat="item in vm.appHistory">
-                                <td class="code">{{item.code}}</td>
-                                <td>{{item.description}}</td>
-                                <td>{{item.date}}</td>
-                                <td>{{item.posted}}</td>
-                                <td class="numeric">${{item.charge.toFixed(2)}}</td>
-                                <td class="numeric positive">${{item.applied.toFixed(2)}}</td>
-                                <td class="numeric"><button class="btn-xs">Unapply</button></td>
-                            </tr>
-
-                        </tbody>
-                        <tbody ng-if="vm.appHistory.length === 0">
-                            <tr class="payment-empty-state">
-                                <td colspan="6">No applications. The entire amount is unapplied</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Distribute Payment Modal -->
-    <dialog id="distribute-dialog">
-        <header>
-            <h2>Distribute Unapplied Payment</h2>
-            <button type="button" ng-click="vm.closeDistribute()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div ng-if="vm.distributePayment">
-            <div class="modal-field-grid cards">
-                <div>
-                    <div class="modal-field-label">Date</div>
-                    <div class="modal-field-value">{{vm.distributePayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Posted</div>
-                    <div class="modal-field-value">{{vm.distributePayment.date}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Reference №</div>
-                    <div class="modal-field-value">{{vm.distributePayment.refNum}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Type</div>
-                    <div class="modal-field-value">{{vm.distributePayment.type}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Transaction Code</div>
-                    <div class="modal-field-value"><span class="empty-value">–</span></div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Amount</div>
-                    <div class="modal-field-value">${{vm.distributePayment.amount.toFixed(2)}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Payer</div>
-                    <div class="modal-field-value">{{vm.patient.name}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Source</div>
-                    <div class="modal-field-value">{{vm.distributePayment.source}}</div>
-                </div>
-                <div>
-                    <div class="modal-field-label">Unapplied Balance</div>
-                    <div class="modal-field-value">${{vm.distributePayment.unapplied.toFixed(2)}}</div>
-                </div>
-            </div>
-
-            <div class="modal-form-group">
-                <div class="modal-form-label">Distribution Mode</div>
-                <div class="modal-radio-group">
-                    <label class="modal-radio-label">
-                        <input type="radio" name="distMode" value="auto" ng-model="vm.distMode">
-                        <span>Auto-distribute to oldest balances</span>
-                    </label>
-                    <label class="modal-radio-label">
-                        <input type="radio" name="distMode" value="manual" ng-model="vm.distMode">
-                        <span>Manually distribute</span>
-                    </label>
-                </div>
-            </div>
-
-            <table class="modal-table">
-                <thead>
-                    <tr>
-                        <th>DOS</th>
-                        <th class="code">Code</th>
-                        <th>Description</th>
-                        <th class="numeric">Charge</th>
-                        <th class="numeric">Client Bal.</th>
-                        <th class="numeric">Payment</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="line in vm.getDistributableLines()">
-                        <td>{{line.encDate}}</td>
-                        <td class="code">{{line.cpt}}</td>
-                        <td>{{line.desc}}</td>
-                        <td class="numeric">${{line.charge.toFixed(2)}}</td>
-                        <td class="numeric">${{line.clientBal.toFixed(2)}}</td>
-                        <td class="numeric">
-                            <span ng-if="vm.distMode === 'auto'">${{(line.distAmount || 0).toFixed(2)}}</span>
-                            <input ng-if="vm.distMode === 'manual'" type="number" placeholder="0.00" step="0.01" min="0" class="modal-input modal-input-distribute modal-input-narrow">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="modal-footer">
-                <button ng-click="vm.closeDistribute()">Cancel</button>
-                <button class="btn-primary" ng-disabled="!vm.canDistribute()">Distribute Payment</button>
-            </div>
-
-            <div class="modal-footer-note">
-                <div class="modal-footer-note-input">
-                    <input type="text" placeholder="Add an optional note about this distribution…" ng-model="vm.distNote" ng-keypress="vm.handleDistNoteKeypress($event)">
-                    <button class="btn-primary" ng-click="vm.addDistNote()">Add Note</button>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- New Payment Modal -->
-    <dialog id="new-payment-dialog">
-        <header>
-            <h2>New Payment</h2>
-            <button type="button" ng-click="vm.closeNewPayment()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
-        <div>
-            <div class="modal-notice">
-                <div class="modal-notice-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
-                        <path d="M12 18V6" />
-                    </svg>
-                </div>
-                <div class="modal-notice-content">
-                    <div class="modal-notice-title">Unapplied Client Payment</div>
-                    <div class="modal-notice-text">
-                        This payment will be held as unapplied. To apply funds to specific service lines, use Distribute.<br>For insurance payments and adjustments, post directly from the service line.
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-field-grid-2col">
-                <div>
-                    <label class="modal-form-label">Payer</label>
-                    <div class="modal-field-value">{{vm.patient.name}}</div>
-                </div>
-
-                <div>
-                    <label class="modal-form-label">Transaction Type</label>
-                    <div class="modal-field-value">Client Payment</div>
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-date">Date <span class="required">*</span></label>
-                    <input id="new-pmt-date" type="date" ng-model="vm.newPmtDate" ng-class="{error: vm.newPmtErrors.date}" class="modal-field-input">
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-posted">Posted <span class="required">*</span></label>
-                    <input id="new-pmt-posted" type="date" ng-model="vm.newPmtPosted" ng-class="{error: vm.newPmtErrors.posted}" class="modal-field-input">
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-amount">Amount <span class="required">*</span></label>
-                    <div class="modal-field-wrapper">
-                        <span class="modal-field-prefix">$</span>
-                        <input id="new-pmt-amount" type="number" ng-model="vm.newPmtAmount" ng-class="{error: vm.newPmtErrors.amount}" step="0.01" placeholder="0.00" class="modal-field-input with-prefix tabular">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-code">Transaction Code <span class="required">*</span></label>
-                    <select id="new-pmt-code" ng-model="vm.newPmtCode" ng-class="{error: vm.newPmtErrors.code}" class="modal-field-select">
-                        <option value="">Select code...</option>
-                        <option value="Account Payment">Account Payment</option>
-                        <option value="Coinsurance">Coinsurance</option>
-                        <option value="Copay">Copay</option>
-                        <option value="Deductible">Deductible</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-source">Source</label>
-                    <select id="new-pmt-source" ng-model="vm.newPmtSource" class="modal-field-select">
-                        <option value="">Select source...</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Check">Check</option>
-                        <option value="Credit Card">Credit Card</option>
-                        <option value="EFT">EFT</option>
-                        <option value="Money Order">Money Order</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="modal-form-label" for="new-pmt-ref">Reference №</label>
-                    <input id="new-pmt-ref" type="text" ng-model="vm.newPmtRefNum" placeholder="Check №, EFT №, etc." class="modal-field-input tabular">
-                </div>
-            </div>
-
-            <div class="modal-footer modal-footer-spaced">
-                <button ng-click="vm.closeNewPayment()">Cancel</button>
-                <button class="btn-primary" ng-click="vm.saveNewPayment()">Save as Unapplied</button>
-            </div>
-
-            <div class="modal-footer-note">
-                <div class="modal-footer-note-input">
-                    <input type="text" placeholder="Add an optional note about this payment…" ng-model="vm.newPmtNote" ng-keypress="vm.handleNewPmtNoteKeypress($event)">
-                    <button class="btn-primary" ng-click="vm.addNewPmtNote()">Add Note</button>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <!-- Unapplied Refund Modal -->
-    <dialog id="unapplied-refund-dialog">
-        <header>
-            <h2>Refund Payment</h2>
-            <button type="button" ng-click="vm.closeUnappliedRefund()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </header>
     </dialog>
 
     <!-- Toast (success: outside dialogs, shows after dialog closes) -->
@@ -4323,6 +3983,7 @@
                 vm.docs = [
                     { id: 1, name: 'Telehealth Informed Consent', type: 'Form', sendDate: '03/06/2026 09:14 AM', receivedDate: '03/06/2026 09:16 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
                     { id: 2, name: 'Authorization to Bill Insurance', type: 'Form', sendDate: '03/05/2026 03:58 PM', receivedDate: '03/05/2026 04:02 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: AUTH_CONTENT },
+                    { id: 25, name: 'Consent to Treatment', type: 'Form', sendDate: '03/05/2026 10:00 AM', receivedDate: '03/05/2026 10:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, patientSigned: true, selected: false, content: CONSENT_CONTENT },
                     { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/05/2026 03:42 PM', receivedDate: '03/05/2026 03:51 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
                     { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: [] },
                     { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: [] },
@@ -4374,15 +4035,61 @@
                 };
 
                 vm.faxDocs = [
-                    { id: 101, name: 'Treatment Plan - Jan 2026', recipient: 'Dr. Sarah Johnson', faxNumber: '(555) 123-4567', sentDate: '03/06/2026 09:44 AM', sentBy: 'Dr. Sarah', pages: 10, faxStatus: 'pending', selected: false },
-                    { id: 102, name: 'Referral Letter', recipient: 'Dr. Michael Chen', faxNumber: '(555) 345-6789', sentDate: '03/06/2026 08:30 AM', sentBy: 'Richard Elliott', pages: 1, faxStatus: 'pending', selected: false },
-                    { id: 103, name: 'Assessment Report', recipient: 'Memorial Hospital', faxNumber: '(555) 987-6543', sentDate: '03/05/2026 03:20 PM', sentBy: 'Dr. Sarah', pages: 6, faxStatus: 'failed', selected: false },
-                    { id: 104, name: 'Prescription Records', recipient: 'Dr. Emily Rodriguez', faxNumber: '(555) 456-7890', sentDate: '03/04/2026 11:15 AM', sentBy: 'Jane Doe', pages: 2, faxStatus: 'success', selected: false },
-                    { id: 105, name: 'Medication List', recipient: '', faxNumber: '(555) 234-5678', sentDate: '03/04/2026 10:50 AM', sentBy: 'Richard Elliott', pages: 5, faxStatus: 'success', selected: false },
-                    { id: 106, name: 'Lab Results - CBC', recipient: 'Quest Diagnostics', faxNumber: '(555) 876-5432', sentDate: '02/28/2026 02:10 PM', sentBy: 'Jane Doe', pages: 3, faxStatus: 'success', selected: false },
-                    { id: 107, name: 'Prior Authorization Request', recipient: '', faxNumber: '(555) 111-2233', sentDate: '02/20/2026 02:40 PM', sentBy: 'Dr. Sarah', pages: 4, faxStatus: 'success', selected: false },
-                    { id: 108, name: 'Discharge Summary', recipient: 'Dr. James Patel', faxNumber: '(555) 444-9900', sentDate: '02/20/2026 01:55 PM', sentBy: 'John Smith', pages: 8, faxStatus: 'success', selected: false },
-                    { id: 109, name: 'Insurance Verification', recipient: 'BlueCross BlueShield', faxNumber: '(555) 300-7700', sentDate: '01/15/2026 09:30 AM', sentBy: 'Richard Elliott', pages: 2, faxStatus: 'success', selected: false }
+                    {
+                        id: 101, name: 'Treatment Plan - Jan 2026', recipient: 'Dr. Sarah Johnson', faxNumber: '(555) 123-4567', sentDate: '03/06/2026 09:44 AM', sentBy: 'Dr. Sarah', pages: 10, faxStatus: 'pending', selected: false, docs: [
+                            { name: 'Treatment Plan - Jan 2026', pages: 3, fileType: 'PDF' },
+                            { name: 'Lab Results - CBC', pages: 2, fileType: 'JPEG' },
+                            { name: 'Progress Notes - Feb 2026', pages: 5, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 102, name: 'Referral Letter', recipient: 'Dr. Michael Chen', faxNumber: '(555) 345-6789', sentDate: '03/06/2026 08:30 AM', sentBy: 'Richard Elliott', pages: 1, faxStatus: 'pending', selected: false, docs: [
+                            { name: 'Referral Letter', pages: 1, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 103, name: 'Assessment Report', recipient: 'Memorial Hospital', faxNumber: '(555) 987-6543', sentDate: '03/05/2026 03:20 PM', sentBy: 'Dr. Sarah', pages: 6, faxStatus: 'failed', selected: false, docs: [
+                            { name: 'Assessment Report', pages: 4, fileType: 'PDF' },
+                            { name: 'Intake Progress Note', pages: 2, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 104, name: 'Prescription Records', recipient: 'Dr. Emily Rodriguez', faxNumber: '(555) 456-7890', sentDate: '03/04/2026 11:15 AM', sentBy: 'Jane Doe', pages: 2, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Prescription Records', pages: 2, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 105, name: 'Medication List', recipient: '', faxNumber: '(555) 234-5678', sentDate: '03/04/2026 10:50 AM', sentBy: 'Richard Elliott', pages: 5, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Medication List', pages: 5, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 106, name: 'Lab Results - CBC', recipient: 'Quest Diagnostics', faxNumber: '(555) 876-5432', sentDate: '02/28/2026 02:10 PM', sentBy: 'Jane Doe', pages: 3, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Lab Results - CBC', pages: 3, fileType: 'JPEG' }
+                        ]
+                    },
+                    {
+                        id: 107, name: 'Prior Authorization Request', recipient: '', faxNumber: '(555) 111-2233', sentDate: '02/20/2026 02:40 PM', sentBy: 'Dr. Sarah', pages: 4, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Prior Authorization Request', pages: 4, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 108, name: 'Discharge Summary', recipient: 'Dr. James Patel', faxNumber: '(555) 444-9900', sentDate: '02/20/2026 01:55 PM', sentBy: 'John Smith', pages: 8, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Discharge Summary', pages: 5, fileType: 'PDF' },
+                            { name: 'Medication Reconciliation', pages: 2, fileType: 'PDF' },
+                            { name: 'Follow-up Instructions', pages: 1, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 109, name: 'Insurance Verification', recipient: 'BlueCross BlueShield', faxNumber: '(555) 300-7700', sentDate: '01/15/2026 09:30 AM', sentBy: 'Richard Elliott', pages: 2, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Insurance Verification', pages: 2, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 110, name: 'Release of Information', recipient: 'Dr. Sarah Johnson', faxNumber: '(555) 123-4567', sentDate: '02/20/2026 02:15 PM', sentBy: 'Dr. Sarah', pages: 3, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Release of Information', pages: 3, fileType: 'PDF' }
+                        ]
+                    }
                 ];
 
                 vm.faxSearchQuery = '';
@@ -4484,6 +4191,7 @@
                         vm.signQueue = [doc];
                     } else {
                         vm.signQueue = vm.docs.filter(function (d) { return d.selected && d.signable; });
+                        vm.skippedNonSignable = vm.docs.filter(function (d) { return d.selected && !d.signable; }).length;
                     }
                     vm.signQueueIndex = 0;
                     vm.signDoc = vm.signQueue[0];
@@ -4491,8 +4199,8 @@
                 };
 
                 vm.electronicallySign = function () {
-                    // Simulate occasional save failure for demo: fail on doc id 2
-                    if (vm.signDoc.id === 2 && !vm.signDoc._retried) {
+                    // Simulate occasional save failure for demo: fail on doc id 7
+                    if (vm.signDoc.id === 7 && !vm.signDoc._retried) {
                         vm.signDoc._retried = true;
                         vm._closeSignDialog();
                         vm._showToast('error', 'Signature could not be saved. Please try again.');
@@ -4585,18 +4293,93 @@
                     }, 200);
                 };
 
-                ['staff-sign-dialog', 'cancel-queue-dialog'].forEach(function (id) {
+                ['staff-sign-dialog', 'cancel-queue-dialog', 'fax-send-dialog'].forEach(function (id) {
                     var el = document.getElementById(id);
                     if (el) {
                         el.addEventListener('cancel', function (e) {
                             e.preventDefault();
                             $scope.$apply(function () {
                                 if (id === 'staff-sign-dialog') vm.cancelSign();
-                                else vm.dismissCancelQueue();
+                                else if (id === 'cancel-queue-dialog') vm.dismissCancelQueue();
+                                else vm.closeFaxModal();
                             });
                         });
                     }
                 });
+
+                // --- Send Fax ---
+                var KNO2_MOCK = [
+                    { name: 'Dr. Sarah Johnson', org: 'Northside Medical Group', specialty: 'Psychiatry', faxNumber: '(555) 123-4567' },
+                    { name: 'Dr. Michael Chen', org: 'Riverside Behavioral Health', specialty: 'Psychology', faxNumber: '(555) 345-6789' },
+                    { name: 'Memorial Hospital', org: 'Memorial Health System', specialty: 'Hospital', faxNumber: '(555) 987-6543' },
+                    { name: 'Dr. Emily Rodriguez', org: 'Sunrise Psychiatry', specialty: 'Psychiatry', faxNumber: '(555) 456-7890' },
+                    { name: 'Dr. James Patel', org: 'Valley Mental Health', specialty: 'Counseling', faxNumber: '(555) 444-9900' },
+                    { name: 'Quest Diagnostics', org: 'Quest Diagnostics', specialty: 'Laboratory', faxNumber: '(555) 876-5432' },
+                    { name: 'BlueCross BlueShield', org: 'BlueCross BlueShield', specialty: 'Insurance', faxNumber: '(555) 300-7700' }
+                ];
+
+                vm.faxModal = { docs: [], kno2Query: '', kno2Results: [], recipient: null, manualNumber: '', validNumber: false, numberError: '' };
+
+                vm.bulkFax = function () { vm.openFaxModal(); };
+
+                vm.openFaxModal = function (fax) {
+                    var selectedDocs = vm.docs.filter(function (d) { return d.selected; });
+                    if (fax) {
+                        vm.faxModal.docs = [{ name: fax.docs[0].name, pages: fax.docs[0].pages }];
+                    } else if (selectedDocs.length) {
+                        vm.faxModal.docs = selectedDocs.map(function (d) { return { name: d.name, pages: 1 }; });
+                    } else {
+                        vm.faxModal.docs = [];
+                    }
+                    vm.faxModal.kno2Query = '';
+                    vm.faxModal.kno2Results = [];
+                    vm.faxModal.recipient = null;
+                    vm.faxModal.manualNumber = '';
+                    vm.faxModal.validNumber = false;
+                    vm.faxModal.numberError = '';
+                    vm._openDialog('fax-send-dialog');
+                };
+
+                vm.closeFaxModal = function () {
+                    vm._closeDialog('fax-send-dialog');
+                };
+
+                vm.searchKno2 = function () {
+                    var q = (vm.faxModal.kno2Query || '').toLowerCase().trim();
+                    if (!q) { vm.faxModal.kno2Results = []; return; }
+                    vm.faxModal.kno2Results = KNO2_MOCK.filter(function (r) {
+                        return r.name.toLowerCase().indexOf(q) !== -1 ||
+                            r.org.toLowerCase().indexOf(q) !== -1 ||
+                            r.specialty.toLowerCase().indexOf(q) !== -1;
+                    });
+                };
+
+                vm.selectKno2Recipient = function (r) {
+                    vm.faxModal.recipient = r;
+                    vm.faxModal.kno2Query = '';
+                    vm.faxModal.kno2Results = [];
+                    vm.faxModal.manualNumber = '';
+                    vm.faxModal.numberError = '';
+                    vm.faxModal.validNumber = false;
+                };
+
+                vm.clearFaxRecipient = function () {
+                    vm.faxModal.recipient = null;
+                };
+
+                vm.onManualNumberChange = function () {
+                    var raw = vm.faxModal.manualNumber.replace(/\D/g, '');
+                    vm.faxModal.validNumber = raw.length === 10;
+                    vm.faxModal.numberError = (vm.faxModal.manualNumber && !vm.faxModal.validNumber) ? 'Enter a valid 10-digit fax number.' : '';
+                };
+
+                vm.submitFax = function () {
+                    var recipient = vm.faxModal.recipient
+                        ? vm.faxModal.recipient.name
+                        : vm.faxModal.manualNumber;
+                    vm.closeFaxModal();
+                    vm._showToast('success', 'Fax sent to ' + recipient);
+                };
 
                 vm._showToast = function (type, message) {
                     var t = { type: type, message: message };
