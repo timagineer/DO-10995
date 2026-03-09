@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" ng-app="docsApp">
 
@@ -12,6 +11,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <style>
+        * {
+            /* outline: .5px dashed deeppink */
+        }
 
         @layer config, base, components, utils;
 
@@ -1236,6 +1238,7 @@
                 background: var(--border-subtle);
             }
 
+
             .kno2-results {
                 list-style: none;
                 margin: 0;
@@ -1262,11 +1265,13 @@
                 font-size: var(--font-size-sm);
                 font-weight: var(--font-weight-semibold);
                 color: var(--text);
+                margin: 0;
             }
 
             .kno2-result-meta {
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-sm);
                 color: var(--text-secondary);
+                margin: 0;
                 margin-block-start: 0.125rem;
             }
 
@@ -4323,13 +4328,16 @@
                 vm.bulkFax = function () { vm.openFaxModal(); };
 
                 vm.openFaxModal = function (fax) {
-                    var selectedDocs = vm.docs.filter(function (d) { return d.selected; });
                     if (fax) {
-                        vm.faxModal.docs = [{ name: fax.docs[0].name, pages: fax.docs[0].pages }];
-                    } else if (selectedDocs.length) {
-                        vm.faxModal.docs = selectedDocs.map(function (d) { return { name: d.name, pages: 1 }; });
+                        vm.faxModal.docs = fax.docs.map(function (d) { return { name: d.name, pages: d.pages }; });
+                    } else if (vm.activeView === 'fax') {
+                        var selectedFaxes = vm.faxDocs.filter(function (f) { return f.selected; });
+                        vm.faxModal.docs = selectedFaxes.reduce(function (acc, f) {
+                            return acc.concat(f.docs.map(function (d) { return { name: d.name, pages: d.pages }; }));
+                        }, []);
                     } else {
-                        vm.faxModal.docs = [];
+                        var selectedDocs = vm.docs.filter(function (d) { return d.selected; });
+                        vm.faxModal.docs = selectedDocs.map(function (d) { return { name: d.name, pages: 1 }; });
                     }
                     vm.faxModal.kno2Query = '';
                     vm.faxModal.kno2Results = [];
