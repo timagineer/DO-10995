@@ -1140,30 +1140,39 @@
                 margin: 0;
             }
 
-            .fax-docs-popover ol {
-                list-style: none;
-                margin: 0;
-                padding: 0;
+            .fax-docs-popover table {
+                border-collapse: collapse;
+                inline-size: 100%;
             }
 
-            .fax-docs-popover li {
-                display: grid;
-                grid-template-columns: auto 1fr auto auto;
-                align-items: baseline;
-                column-gap: var(--space-45);
-                padding-block: var(--space-25);
-                padding-inline: var(--space-45);
+            .fax-docs-popover tbody tr:hover,
+            .fax-docs-popover tbody tr:hover td {
+                background: none !important;
+            }
 
+            .fax-docs-popover td {
+                padding-block: var(--space-25);
+                padding-inline: var(--space-20);
                 font-size: var(--font-size-12);
                 color: var(--text);
+                border: none !important;
             }
 
-            .fax-docs-popover li+li {
+            .fax-docs-popover td:first-child {
+                padding-inline-start: var(--space-45);
+            }
+
+            .fax-docs-popover td:last-child {
+                padding-inline-end: var(--space-45);
+            }
+
+            .fax-docs-popover tr+tr td {
                 border-block-start: 1px solid var(--border-subtle);
             }
 
-            .fax-docs-popover li:last-child {
-                padding-block-end: var(--space-45);
+            .fax-docs-popover tr:last-child td {
+                padding-block-end: var(--space-40);
+                border-block-end: none !important;
             }
 
             .fax-docs-popover .doc-pages {
@@ -1171,11 +1180,9 @@
                 white-space: nowrap;
             }
 
-            .doc-filetype {
+            .fax-docs-popover .doc-filetype {
                 color: var(--text-secondary);
                 white-space: nowrap;
-                flex-shrink: 0;
-                min-inline-size: 3rem;
             }
 
             /* Send Fax modal */
@@ -3744,13 +3751,15 @@
                                     <span class="doc-name">{{fax.docs[0].name}}<ng-container ng-if="fax.docs.length > 1"> <button class="fax-docs-trigger" ng-click="$event.stopPropagation()" ng-attr-data-popover="fax-docs-{{fax.id}}">+{{fax.docs.length - 1}}</button></ng-container></span>
                                     <div id="fax-docs-{{fax.id}}" class="fax-docs-popover" popover="auto">
                                         <p class="fax-docs-popover-header">{{fax.docs.length}} documents in this transmission</p>
-                                        <ol>
-                                            <li ng-repeat="d in fax.docs">
-                                                <span>{{d.name}}</span>
-                                                <span aria-hidden="true"></span>
-                                                <span class="doc-filetype">{{d.fileType}}</span><span class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</span>
-                                            </li>
-                                        </ol>
+                                        <table>
+                                            <tbody>
+                                                <tr ng-repeat="d in fax.docs">
+                                                    <td>{{d.name}}</td>
+                                                    <td class="doc-filetype">{{d.fileType}}</td>
+                                                    <td class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </td>
                                 <td>{{fax.recipient}}<span ng-if="!fax.recipient" class="empty-value">–</span></td>
