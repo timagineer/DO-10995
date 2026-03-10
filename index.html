@@ -2505,6 +2505,7 @@
                 font-weight: 500;
                 color: var(--text-secondary);
             }
+
             .segmented-control {
                 display: inline-flex;
                 background: var(--gray-650);
@@ -3461,10 +3462,14 @@
                             <button class="table-action-btn table-action-danger" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkDelete()">Delete</button>
                         </div>
                         <div class="docs-search-wrapper">
-                            <svg class="docs-search-icon" viewBox="0 0 24 24"><use href="#icon-search"/></svg>
+                            <svg class="docs-search-icon" viewBox="0 0 24 24">
+                                <use href="#icon-search" />
+                            </svg>
                             <input type="search" placeholder="Search documents" ng-model="vm.searchQuery" class="docs-search">
                             <button ng-if="vm.searchQuery" class="docs-search-clear" ng-click="vm.searchQuery = ''" aria-label="Clear search">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-close"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <use href="#icon-close" />
+                                </svg>
                             </button>
                         </div>
                     </div>
@@ -3482,47 +3487,65 @@
                                 </th>
                                 <th class="th-middle col-document">Document
                                     <button class="sort-btn" ng-click="vm.setSort('name')" aria-label="Sort by document">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-type">Type
                                     <button class="sort-btn" ng-click="vm.setSort('type')" aria-label="Sort by type">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-category">Category
                                     <button class="sort-btn" ng-click="vm.setSort('category')" aria-label="Sort by category">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-clinician">Clinician
                                     <button class="sort-btn" ng-click="vm.setSort('clinician')" aria-label="Sort by clinician">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-date">Sent
                                     <button class="sort-btn" ng-click="vm.setSort('sendDate')" aria-label="Sort by sent date">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-date">Received
                                     <button class="sort-btn" ng-click="vm.setSort('receivedDate')" aria-label="Sort by received date">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-encounter">Encounter
                                     <button class="sort-btn" ng-click="vm.setSort('encounter')" aria-label="Sort by encounter">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle col-status">Status
                                     <button class="sort-btn" ng-click="vm.setSort('shareStatus')" aria-label="Sort by share status">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="col-actions td-end">
                                     <label for="upload-input" class="btn-primary btn-sm upload-label" tabindex="0">
-                                        <svg aria-hidden="true" viewBox="0 0 24 24"><use href="#icon-upload"/></svg>
+                                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                                            <use href="#icon-upload" />
+                                        </svg>
                                         Upload
                                     </label>
                                 </th>
@@ -3558,7 +3581,9 @@
                                     <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closeRowMenu(doc)">
                                         <button class="btn-sm btn-outline" ng-click="vm.toggleRowMenu(doc, $event)">
                                             Actions
-                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16"><use href="#icon-chevron-down"/></svg>
+                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
+                                                <use href="#icon-chevron-down" />
+                                            </svg>
                                         </button>
                                         <div ng-if="doc.menuOpen" ng-click="vm.closeRowMenu(doc)" class="overlay-backdrop"></div>
                                         <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top + 'px', right: doc.menuPos.right + 'px'}">
@@ -3595,7 +3620,9 @@
                             <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0">Print</button>
                         </div>
                         <div class="docs-search-wrapper">
-                            <svg class="docs-search-icon" viewBox="0 0 24 24"><use href="#icon-search"/></svg>
+                            <svg class="docs-search-icon" viewBox="0 0 24 24">
+                                <use href="#icon-search" />
+                            </svg>
                             <input type="search" placeholder="Search faxes" class="docs-search" ng-model="vm.faxSearchQuery">
                         </div>
                     </div>
@@ -3613,42 +3640,58 @@
                                 </th>
                                 <th class="th-middle">Document
                                     <button class="sort-btn" ng-click="vm.setFaxSort('name')" aria-label="Sort by document">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Recipient
                                     <button class="sort-btn" ng-click="vm.setFaxSort('recipient')" aria-label="Sort by recipient">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Fax Number
                                     <button class="sort-btn" ng-click="vm.setFaxSort('faxNumber')" aria-label="Sort by fax number">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Sent Date
                                     <button class="sort-btn" ng-click="vm.setFaxSort('sentDate')" aria-label="Sort by sent date">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Sent By
                                     <button class="sort-btn" ng-click="vm.setFaxSort('sentBy')" aria-label="Sort by sent by">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Pages
                                     <button class="sort-btn" ng-click="vm.setFaxSort('pages')" aria-label="Sort by pages">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="th-middle">Status
                                     <button class="sort-btn" ng-click="vm.setFaxSort('faxStatus')" aria-label="Sort by status">
-                                        <svg width="14" height="14" viewBox="0 0 24 24"><use href="#icon-sort"/></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24">
+                                            <use href="#icon-sort" />
+                                        </svg>
                                     </button>
                                 </th>
                                 <th class="col-actions td-end">
                                     <label for="upload-input" class="btn-primary btn-sm upload-label" tabindex="0">
-                                        <svg aria-hidden="true" viewBox="0 0 24 24"><use href="#icon-download"/></svg>
+                                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                                            <use href="#icon-download" />
+                                        </svg>
                                         Archive
                                     </label>
                                 </th>
@@ -3694,7 +3737,9 @@
                                     <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closeRowMenu(fax)">
                                         <button class="btn-sm btn-outline" ng-click="vm.toggleRowMenu(fax, $event)">
                                             Actions
-                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16"><use href="#icon-chevron-down"/></svg>
+                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
+                                                <use href="#icon-chevron-down" />
+                                            </svg>
                                         </button>
                                         <div ng-if="fax.menuOpen" ng-click="vm.closeRowMenu(fax)" class="overlay-backdrop"></div>
                                         <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top + 'px', right: fax.menuPos.right + 'px'}">
@@ -3710,7 +3755,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="10" class="table-footer-count">{{vm.filteredFaxDocs().length}} fax{{vm.filteredFaxDocs().length !== 1 ? 'es' : ''}}</td>
+                                <td colspan="10" class="table-footer-count">{{vm.filteredFaxDocs().length}} fax{{vm.filteredFaxDocs().length !== 1 ? 'es' : ''}}<span ng-if="vm.getFaxSelectedCount() > 0"> &middot; {{vm.getFaxSelectedCount()}} selected</span></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -3724,7 +3769,9 @@
         <header>
             <h2 id="fax-dialog-title">Send Fax</h2>
             <button ng-click="vm.closeFaxModal()" aria-label="Close">
-                <svg viewBox="0 0 24 24"><use href="#icon-close"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <use href="#icon-close" />
+                </svg>
             </button>
         </header>
         <div>
@@ -3750,7 +3797,9 @@
                 <div class="fax-recipient-chip" ng-if="vm.faxModal.recipient">
                     <span>{{vm.faxModal.recipient.name}} &mdash; {{vm.faxModal.recipient.faxNumber}}</span>
                     <button ng-click="vm.clearFaxRecipient()" aria-label="Remove recipient">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><use href="#icon-close"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+                            <use href="#icon-close" />
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -3777,7 +3826,9 @@
             </div>
             <span ng-if="vm.signQueue.length > 1" class="sign-dialog-counter">Document {{vm.signQueueIndex + 1}} of {{vm.signQueue.length}}</span>
             <button type="button" ng-click="vm.cancelSign()" aria-label="Close">
-                <svg viewBox="0 0 24 24"><use href="#icon-close"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <use href="#icon-close" />
+                </svg>
             </button>
         </header>
         <div ng-if="vm.signDoc" class="sign-dialog-body">
@@ -3826,11 +3877,15 @@
             <div class="sign-modal-footer">
                 <button ng-click="vm.cancelSign()">Cancel</button>
                 <div ng-if="vm.skippedNonSignable > 0" class="sign-modal-footer-notice">
-                    <svg viewBox="0 0 24 24"><use href="#icon-info"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <use href="#icon-info" />
+                    </svg>
                     {{vm.skippedNonSignable}} selected {{vm.skippedNonSignable === 1 ? 'document is' : 'documents are'}} not signable and will be skipped
                 </div>
                 <div ng-if="vm.signDoc.staffSigned && !vm.signDoc.justSigned" class="sign-modal-footer-notice">
-                    <svg viewBox="0 0 24 24"><use href="#icon-info"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <use href="#icon-info" />
+                    </svg>
                     This document was previously signed by staff
                 </div>
                 <div class="sign-modal-footer-actions">
@@ -3847,7 +3902,9 @@
         <header>
             <h2 id="doc-view-title">{{vm.previewDoc.name}}</h2>
             <button type="button" ng-click="vm.closeDocPreview()" aria-label="Close">
-                <svg viewBox="0 0 24 24"><use href="#icon-close"/></svg>
+                <svg viewBox="0 0 24 24">
+                    <use href="#icon-close" />
+                </svg>
             </button>
         </header>
         <div ng-if="vm.previewDoc" class="sign-dialog-body">
@@ -3895,7 +3952,9 @@
                 <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closePreviewMenu()">
                     <button class="btn-preview-actions" ng-click="vm.togglePreviewMenu($event)">
                         Actions
-                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12"><use href="#icon-chevron-down"/></svg>
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12">
+                            <use href="#icon-chevron-down" />
+                        </svg>
                     </button>
                     <div ng-if="vm.previewMenuOpen" ng-click="vm.closePreviewMenu()" class="overlay-backdrop"></div>
                     <div ng-if="vm.previewMenuOpen" class="btn-dropdown-menu" ng-style="{bottom: vm.previewMenuPos.bottom + 'px', right: vm.previewMenuPos.right + 'px'}">
@@ -3941,7 +4000,9 @@
     <!-- Toast (success: outside dialogs, shows after dialog closes) -->
     <div class="toast-container" aria-live="polite" aria-atomic="true">
         <div ng-repeat="toast in vm.toasts" class="toast" ng-class="[toast.type, {leaving: toast.leaving}]">
-            <svg viewBox="0 0 24 24"><use href="#icon-check-circle"/></svg>
+            <svg viewBox="0 0 24 24">
+                <use href="#icon-check-circle" />
+            </svg>
             {{toast.message}}
         </div>
     </div>
@@ -4508,44 +4569,44 @@
             if (pop) try { pop.hidePopover(); } catch (err) { }
         });
     </script>
-        <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-            <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8" />
-                <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </symbol>
-            <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-            </symbol>
-            <symbol id="icon-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m21 16-4 4-4-4" />
-                <path d="M17 20V4" />
-                <path d="m3 8 4-4 4 4" />
-                <path d="M7 4v16" />
-            </symbol>
-            <symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 3v12" />
-                <path d="m17 8-5-5-5 5" />
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            </symbol>
-            <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 15V3" />
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <path d="m7 10 5 5 5-5" />
-            </symbol>
-            <symbol id="icon-chevron-down" viewBox="0 0 16 16" fill="currentColor">
-                <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
-            </symbol>
-            <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="8" />
-                <line x1="12" y1="12" x2="12" y2="16" />
-            </symbol>
-            <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-            </symbol>
-        </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </symbol>
+        <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+        </symbol>
+        <symbol id="icon-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21 16-4 4-4-4" />
+            <path d="M17 20V4" />
+            <path d="m3 8 4-4 4 4" />
+            <path d="M7 4v16" />
+        </symbol>
+        <symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12" />
+            <path d="m17 8-5-5-5 5" />
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        </symbol>
+        <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 15V3" />
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <path d="m7 10 5 5 5-5" />
+        </symbol>
+        <symbol id="icon-chevron-down" viewBox="0 0 16 16" fill="currentColor">
+            <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
+        </symbol>
+        <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="8" />
+            <line x1="12" y1="12" x2="12" y2="16" />
+        </symbol>
+        <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+        </symbol>
+    </svg>
 </body>
 
 </html>
