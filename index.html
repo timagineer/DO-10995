@@ -2865,9 +2865,7 @@
 
             /* Doc table */
             .doc-name-cell {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+                overflow: visible;
             }
 
             .doc-category-cell {
@@ -2879,7 +2877,8 @@
 
             .doc-name {
                 display: block;
-                overflow: hidden;
+                overflow: clip;
+                overflow-clip-margin: 4px;
                 text-overflow: ellipsis;
                 white-space: nowrap;
             }
