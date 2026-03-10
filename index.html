@@ -3210,16 +3210,19 @@
             }
 
             /* Sign modal wider */
-            #cancel-queue-dialog {
+            #cancel-queue-dialog,
+            #skip-doc-dialog {
                 max-inline-size: 22rem;
             }
 
-            #cancel-queue-dialog>div {
+            #cancel-queue-dialog>div,
+            #skip-doc-dialog>div {
                 padding-block-start: var(--space-55);
                 padding-block-end: var(--space-45);
             }
 
-            #cancel-queue-dialog .modal-footer {
+            #cancel-queue-dialog .modal-footer,
+            #skip-doc-dialog .modal-footer {
                 margin-block-start: var(--space-55);
                 padding-block-end: 0;
                 margin-block-end: 0;
@@ -3903,6 +3906,18 @@
         </div>
     </dialog>
 
+    <!-- Skip doc confirm dialog -->
+    <dialog id="skip-doc-dialog" aria-labelledby="skip-doc-title">
+        <div>
+            <h2 id="skip-doc-title">Skip this document?</h2>
+            <p>"{{vm.signDoc.name}}" can be completed later.</p>
+            <div class="modal-footer">
+                <button ng-click="vm.dismissSkipDoc()">Go Back</button>
+                <button class="btn-danger" ng-click="vm.confirmSkipDoc()">Skip for Now</button>
+            </div>
+        </div>
+    </dialog>
+
     <!-- Cancel queue confirm dialog -->
     <dialog id="cancel-queue-dialog" aria-labelledby="cancel-queue-title">
         <div>
@@ -4272,7 +4287,20 @@
                 };
 
                 vm.skipDoc = function () {
+                    if (!vm.signDoc.staffSigned && !vm.signDoc.justSigned) {
+                        vm._openDialog('skip-doc-dialog');
+                    } else {
+                        vm._advanceQueue();
+                    }
+                };
+
+                vm.confirmSkipDoc = function () {
+                    vm._closeDialog('skip-doc-dialog');
                     vm._advanceQueue();
+                };
+
+                vm.dismissSkipDoc = function () {
+                    vm._closeDialog('skip-doc-dialog');
                 };
 
                 vm.prevDoc = function () {
@@ -4332,7 +4360,7 @@
                     }, 200);
                 };
 
-                ['staff-sign-dialog', 'cancel-queue-dialog', 'fax-send-dialog', 'doc-view-dialog'].forEach(function (id) {
+                ['staff-sign-dialog', 'cancel-queue-dialog', 'skip-doc-dialog', 'fax-send-dialog', 'doc-view-dialog'].forEach(function (id) {
                     var el = document.getElementById(id);
                     if (el) {
                         el.addEventListener('cancel', function (e) {
@@ -4340,6 +4368,7 @@
                             $scope.$apply(function () {
                                 if (id === 'staff-sign-dialog') vm.cancelSign();
                                 else if (id === 'cancel-queue-dialog') vm.dismissCancelQueue();
+                                else if (id === 'skip-doc-dialog') vm.dismissSkipDoc();
                                 else if (id === 'doc-view-dialog') vm.closeDocPreview();
                                 else vm.closeFaxModal();
                             });
