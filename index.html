@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <style>
-        * {
-            /* outline: .5px dashed deeppink */
-        }
 
         @layer config, base, components, utils;
 
@@ -1084,13 +1081,13 @@
 
             /* Fax docs popover */
             .fax-docs-trigger {
-                background: var(--info-550);
-                border: 1px solid var(--info-450);
+                background: var(--primary-300);
+                border: 1px solid var(--primary-300);
                 padding: 0.15em 0.5em;
                 border-radius: 2em;
                 font-size: var(--font-size-sm);
                 font-weight: var(--font-weight-semibold);
-                color: var(--info-200);
+                color: var(--gray-850);
                 cursor: pointer;
                 white-space: nowrap;
                 vertical-align: middle;
@@ -1098,8 +1095,9 @@
             }
 
             .fax-docs-trigger:hover {
-                background: var(--info-600);
-                color: var(--info-100);
+                background: var(--primary-250);
+                border-color: var(--primary-250);
+                color: var(--gray-850);
             }
 
             .fax-docs-popover {
@@ -1107,8 +1105,7 @@
                 border-radius: var(--radius);
                 background: var(--surface);
                 box-shadow: var(--elevation-md);
-                padding: var(--space-30) 0;
-                padding-inline-end: var(--space-40);
+                padding: 0;
                 min-inline-size: 16rem;
                 max-inline-size: 24rem;
                 margin: 0 !important;
@@ -1141,10 +1138,10 @@
                 color: var(--text-secondary);
                 text-transform: uppercase;
                 letter-spacing: var(--tracking-wide);
-                padding-inline: var(--space-40);
-                padding-block-end: var(--space-20);
+                padding-inline: var(--space-45);
+                padding-block: var(--space-45) var(--space-25);
                 border-block-end: 1px solid var(--border-subtle);
-                margin-block-end: var(--space-20);
+                margin: 0;
             }
 
             .fax-docs-popover ol {
@@ -1157,9 +1154,10 @@
                 display: grid;
                 grid-template-columns: auto 1fr auto auto;
                 align-items: baseline;
-                column-gap: var(--space-40);
-                padding-block: var(--space-20);
-                padding-inline: var(--space-40);
+                column-gap: var(--space-45);
+                padding-block: var(--space-25);
+                padding-inline: var(--space-45);
+
                 font-size: var(--font-size-sm);
                 color: var(--text);
             }
@@ -1168,10 +1166,13 @@
                 border-block-start: 1px solid var(--border-subtle);
             }
 
+            .fax-docs-popover li:last-child {
+                padding-block-end: var(--space-45);
+            }
+
             .fax-docs-popover .doc-pages {
                 color: var(--text-secondary);
                 white-space: nowrap;
-                inline-size: 4.5ch;
             }
 
             .doc-filetype {
@@ -3739,7 +3740,7 @@
                                     </div>
                                 </td>
                                 <td class="doc-name-cell">
-                                    <span class="doc-name">{{fax.docs[0].name}}<ng-container ng-if="fax.docs.length > 1"> <button class="fax-docs-trigger" ng-click="$event.stopPropagation()" onclick="(function(btn){var id=btn.getAttribute('data-popover');var pop=document.getElementById(id);if(!pop)return;var rect=btn.getBoundingClientRect();pop.style.top=(rect.bottom+6)+'px';pop.style.left=rect.left+'px';pop.showPopover();requestAnimationFrame(function(){var pr=pop.getBoundingClientRect();var left=Math.max(8,Math.min(rect.left,window.innerWidth-pr.width-8));pop.style.left=left+'px';});})(this)" data-popover="fax-docs-{{fax.id}}">+{{fax.docs.length - 1}}</button></ng-container></span>
+                                    <span class="doc-name">{{fax.docs[0].name}}<ng-container ng-if="fax.docs.length > 1"> <button class="fax-docs-trigger" ng-click="$event.stopPropagation()" ng-attr-data-popover="fax-docs-{{fax.id}}">+{{fax.docs.length - 1}}</button></ng-container></span>
                                     <div id="fax-docs-{{fax.id}}" class="fax-docs-popover" popover="auto">
                                         <p class="fax-docs-popover-header">{{fax.docs.length}} documents in this transmission</p>
                                         <ol>
@@ -4547,6 +4548,31 @@
                     }, 2760);
                 };
             });
+
+        document.addEventListener('mouseover', function (e) {
+            var trigger = e.target.closest('.fax-docs-trigger');
+            if (!trigger) return;
+            var from = e.relatedTarget ? e.relatedTarget.closest('.fax-docs-trigger') : null;
+            if (from === trigger) return;
+            var id = trigger.getAttribute('data-popover');
+            var pop = document.getElementById(id);
+            if (!pop) return;
+            try { pop.showPopover(); } catch (err) { return; }
+            var rect = trigger.getBoundingClientRect();
+            var pr = pop.getBoundingClientRect();
+            pop.style.top = (rect.bottom + window.scrollY + 6) + 'px';
+            pop.style.left = Math.max(8, Math.min(rect.left + window.scrollX, window.innerWidth - pr.width - 8)) + 'px';
+        });
+
+        document.addEventListener('mouseout', function (e) {
+            var trigger = e.target.closest('.fax-docs-trigger');
+            if (!trigger) return;
+            var to = e.relatedTarget ? e.relatedTarget.closest('.fax-docs-trigger') : null;
+            if (to === trigger) return;
+            var id = trigger.getAttribute('data-popover');
+            var pop = document.getElementById(id);
+            if (pop) try { pop.hidePopover(); } catch (err) { }
+        });
     </script>
 </body>
 
