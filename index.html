@@ -1389,6 +1389,9 @@
             }
 
             .btn-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.375rem;
                 background: var(--button-primary-bg);
                 color: var(--button-primary-text);
                 border-color: var(--button-primary-bg);
@@ -1401,6 +1404,28 @@
 
             .btn-primary:active {
                 background: var(--primary-200);
+            }
+
+            .btn-preview-actions {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                padding-inline-start: var(--space-55);
+                padding-inline-end: var(--space-50);
+                background: var(--button-primary-bg);
+                color: var(--button-primary-text);
+                border-color: var(--button-primary-bg);
+            }
+
+            .btn-preview-actions:hover {
+                background: var(--button-primary-hover);
+                border-color: var(--button-primary-hover);
+            }
+
+            .btn-preview-actions svg {
+                flex-shrink: 0;
+                inline-size: 1rem;
+                block-size: 1rem;
             }
 
             .btn-danger {
@@ -1596,6 +1621,7 @@
                 opacity: 0;
                 transform: translateY(0.3125rem) scale(0.99);
                 max-block-size: 85vh;
+                outline: none;
             }
 
             dialog[open] {
@@ -3191,11 +3217,13 @@
                 margin-block-end: 0;
             }
 
-            #staff-sign-dialog {
+            #staff-sign-dialog,
+            #doc-view-dialog {
                 max-inline-size: 58rem;
             }
 
-            #staff-sign-dialog>div {
+            #staff-sign-dialog>div,
+            #doc-view-dialog>div {
                 padding: 0;
             }
 
@@ -3532,8 +3560,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="doc in vm.filteredDocs() track by doc.id" ng-class="{selected: doc.selected}">
-                                <td class="td-checkbox" ng-click="vm.toggleDocSelect(doc, $event)">
+                            <tr ng-repeat="doc in vm.filteredDocs() track by doc.id" ng-class="{selected: doc.selected}" ng-click="vm.openDocPreview(doc)" style="cursor: pointer;">
+                                <td class="td-checkbox" ng-click="$event.stopPropagation(); vm.toggleDocSelect(doc, $event)">
                                     <div class="checkbox" ng-class="{checked: doc.selected}">
                                         <svg ng-if="doc.selected" viewBox="0 0 10 8" fill="none">
                                             <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -3557,7 +3585,7 @@
                                     <span ng-if="!doc.staffSigned && !doc.faxed && doc.shareStatus === 'Shared'" class="badge badge-info">Shared</span>
                                     <span ng-if="!doc.staffSigned && !doc.shareStatus && !doc.faxed" class="badge badge-neutral">Not Shared</span>
                                 </td>
-                                <td class="td-end">
+                                <td class="td-end" ng-click="$event.stopPropagation()">
                                     <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closeRowMenu(doc)">
                                         <button class="btn-sm btn-outline" ng-click="vm.toggleRowMenu(doc, $event)">
                                             Actions
@@ -3860,7 +3888,7 @@
                         <p><strong>{{block.heading}}</strong></p>
                         <p>{{block.body}}</p>
                     </div>
-                    <div class="doc-preview-sig-row">
+                    <div class="doc-preview-sig-row" ng-if="vm.signDoc.patientSigned || vm.signDoc.staffSigned || vm.signDoc.justSigned || vm.signDoc.shareStatus === 'Shared to Sign'">
                         <div class="doc-preview-sig-block">
                             <div class="doc-preview-sig-label">Patient Signature</div>
                             <div class="doc-preview-patient-sig">{{vm.patient.name}}</div>
@@ -3901,6 +3929,83 @@
                     <button ng-if="vm.signQueue.length > 1 && vm.signQueueIndex > 0" ng-click="vm.prevDoc()">Previous</button>
                     <button ng-if="vm.signQueue.length > 1 && vm.signQueueIndex < vm.signQueue.length - 1" ng-click="vm.skipDoc()">Skip</button>
                     <button class="btn-primary" ng-click="vm.electronicallySign()">{{vm.signDoc.staffSigned && !vm.signDoc.justSigned ? 'Re-sign' : 'Electronically Sign'}}</button>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Doc Preview Modal -->
+    <dialog id="doc-view-dialog" aria-labelledby="doc-view-title">
+        <header>
+            <h2 id="doc-view-title">{{vm.previewDoc.name}}</h2>
+            <button type="button" ng-click="vm.closeDocPreview()" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </header>
+        <div ng-if="vm.previewDoc" class="sign-dialog-body">
+            <div class="doc-preview-shell">
+                <div class="doc-preview-page">
+                    <div class="doc-preview-header">
+                        <div class="doc-preview-practice">
+                            <div class="doc-preview-practice-name">{{vm.practice.name}}</div>
+                            <div>{{vm.practice.address}}</div>
+                            <div>{{vm.practice.city}}</div>
+                            <div>{{vm.practice.phone}}</div>
+                        </div>
+                        <div class="doc-preview-patient-card">
+                            <div class="doc-preview-patient-row"><span>Clinician</span><span>{{vm.staff.name}}, {{vm.staff.credentials}}</span></div>
+                            <div class="doc-preview-patient-row"><span>Patient</span><span>{{vm.patient.name}}</span></div>
+                            <div class="doc-preview-patient-row"><span>DOB</span><span>{{vm.patient.dob}}</span></div>
+                            <div class="doc-preview-patient-row"><span>MRN</span><span>{{vm.patient.chartId}}</span></div>
+                        </div>
+                    </div>
+                    <h3 class="doc-preview-title">{{vm.previewDoc.name}}</h3>
+                    <div class="doc-preview-block" ng-repeat="block in vm.previewDoc.content">
+                        <p><strong>{{block.heading}}</strong></p>
+                        <p>{{block.body}}</p>
+                    </div>
+                    <div class="doc-preview-sig-row" ng-if="vm.previewDoc.patientSigned || vm.previewDoc.staffSigned || vm.previewDoc.shareStatus === 'Shared to Sign'">
+                        <div class="doc-preview-sig-block">
+                            <div class="doc-preview-sig-label">Patient Signature</div>
+                            <div class="doc-preview-patient-sig">{{vm.patient.name}}</div>
+                            <div class="doc-preview-sig-line"></div>
+                            <div class="doc-preview-sig-printed">{{vm.patient.name}}</div>
+                            <div class="doc-preview-sig-date">{{vm.previewDoc.receivedDate}}</div>
+                        </div>
+                        <div ng-if="vm.previewDoc.staffSigned" class="doc-preview-sig-block">
+                            <div class="doc-preview-sig-label">Staff Signature (Electronic)</div>
+                            <div class="doc-preview-patient-sig">{{vm.previewDoc.staffSigName}}, {{vm.previewDoc.staffSigCredentials}}</div>
+                            <div class="doc-preview-sig-line"></div>
+                            <div class="doc-preview-sig-printed">{{vm.previewDoc.staffSigName}}, {{vm.previewDoc.staffSigCredentials}}</div>
+                            <div class="doc-preview-sig-date">{{vm.previewDoc.staffSigTs}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sign-modal-footer" style="justify-content: flex-end; gap: var(--space-30);">
+                <button type="button" ng-click="vm.closeDocPreview()">Close</button>
+                <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closePreviewMenu()">
+                    <button class="btn-preview-actions" ng-click="vm.togglePreviewMenu($event)">
+                        Actions
+                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12" fill="currentColor">
+                            <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
+                        </svg>
+                    </button>
+                    <div ng-if="vm.previewMenuOpen" ng-click="vm.closePreviewMenu()" class="overlay-backdrop"></div>
+                    <div ng-if="vm.previewMenuOpen" class="btn-dropdown-menu" ng-style="{bottom: vm.previewMenuPos.bottom + 'px', right: vm.previewMenuPos.right + 'px'}">
+                        <button ng-if="vm.previewDoc.signable" ng-click="vm.closeDocPreview(); vm.startStaffSign(vm.previewDoc)">Staff Sign</button>
+                        <button ng-click="vm.closePreviewMenu()">Fax</button>
+                        <button ng-click="vm.closePreviewMenu()">Share</button>
+                        <button ng-click="vm.closePreviewMenu()">Share to Sign</button>
+                        <hr class="menu-divider">
+                        <button ng-click="vm.closePreviewMenu()">Download</button>
+                        <button ng-click="vm.closePreviewMenu()">Print</button>
+                        <hr class="menu-divider">
+                        <button ng-click="vm.closePreviewMenu()" class="menu-danger">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3962,6 +4067,13 @@
                 vm.practice = MOCK.practice;
                 vm.staff = MOCK.staff;
 
+                var LOREM_CONTENT = [
+                    { heading: 'Overview', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
+                    { heading: 'Clinical Findings', body: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
+                    { heading: 'Assessment', body: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.' },
+                    { heading: 'Plan', body: 'Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi.' }
+                ];
+
                 var CONSENT_CONTENT = [
                     { heading: 'Definition', body: 'Telehealth involves the use of electronic communications to enable professionals to connect with individuals using interactive video and audio communications. Telehealth includes the practice of psychological health care delivery, diagnosis, consultation, treatment, referral to resources, education, and the transfer of medical and clinical data.' },
                     { heading: 'Privacy Rights', body: 'I understand that the laws that protect privacy and the confidentiality of medical information also apply to telehealth, and that no information obtained in the use of telehealth which identifies me will be disclosed to researchers or other entities without my written consent.' },
@@ -3990,11 +4102,11 @@
                     { id: 2, name: 'Authorization to Bill Insurance', type: 'Form', sendDate: '03/05/2026 03:58 PM', receivedDate: '03/05/2026 04:02 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: AUTH_CONTENT },
                     { id: 25, name: 'Consent to Treatment', type: 'Form', sendDate: '03/05/2026 10:00 AM', receivedDate: '03/05/2026 10:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, patientSigned: true, selected: false, content: CONSENT_CONTENT },
                     { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/05/2026 03:42 PM', receivedDate: '03/05/2026 03:51 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
-                    { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: [] },
-                    { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: [] },
-                    { id: 6, name: 'Discharge Summary', type: 'Summary', sendDate: '02/28/2026 02:35 PM', receivedDate: '02/28/2026 02:35 PM', encounter: '02/28/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: [] },
+                    { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: LOREM_CONTENT },
+                    { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: LOREM_CONTENT },
+                    { id: 6, name: 'Discharge Summary', type: 'Summary', sendDate: '02/28/2026 02:35 PM', receivedDate: '02/28/2026 02:35 PM', encounter: '02/28/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
                     { id: 7, name: 'Release of Information', type: 'Form', sendDate: '02/20/2026 02:15 PM', receivedDate: '02/20/2026 02:19 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, faxed: true, faxStatus: 'success', selected: false, content: CONSENT_CONTENT },
-                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: [] }
+                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT }
                 ];
 
                 vm.sortField = 'sendDate';
@@ -4183,6 +4295,38 @@
                     doc.menuOpen = false;
                 };
 
+                // --- Doc Preview ---
+                vm.previewDoc = null;
+                vm.previewMenuOpen = false;
+                vm.previewMenuPos = {};
+
+                vm.openDocPreview = function (doc) {
+                    vm.previewDoc = doc;
+                    vm.previewMenuOpen = false;
+                    vm._openDialog('doc-view-dialog');
+                };
+
+                vm.closeDocPreview = function () {
+                    vm.previewMenuOpen = false;
+                    vm._closeDialog('doc-view-dialog');
+                };
+
+                vm.togglePreviewMenu = function ($event) {
+                    $event.stopPropagation();
+                    vm.previewMenuOpen = !vm.previewMenuOpen;
+                    if (vm.previewMenuOpen) {
+                        var rect = $event.currentTarget.getBoundingClientRect();
+                        vm.previewMenuPos = {
+                            bottom: window.innerHeight - rect.top + 4,
+                            right: window.innerWidth - rect.right
+                        };
+                    }
+                };
+
+                vm.closePreviewMenu = function () {
+                    vm.previewMenuOpen = false;
+                };
+
                 // --- Staff Sign ---
                 vm.signQueue = [];
                 vm.signQueueIndex = 0;
@@ -4280,6 +4424,7 @@
                     if (!d) return;
                     d.classList.remove('animate-in', 'closing');
                     d.showModal();
+                    if (id === 'doc-view-dialog') d.focus();
                     requestAnimationFrame(function () {
                         requestAnimationFrame(function () {
                             d.classList.add('animate-in');
@@ -4298,7 +4443,7 @@
                     }, 200);
                 };
 
-                ['staff-sign-dialog', 'cancel-queue-dialog', 'fax-send-dialog'].forEach(function (id) {
+                ['staff-sign-dialog', 'cancel-queue-dialog', 'fax-send-dialog', 'doc-view-dialog'].forEach(function (id) {
                     var el = document.getElementById(id);
                     if (el) {
                         el.addEventListener('cancel', function (e) {
@@ -4306,6 +4451,7 @@
                             $scope.$apply(function () {
                                 if (id === 'staff-sign-dialog') vm.cancelSign();
                                 else if (id === 'cancel-queue-dialog') vm.dismissCancelQueue();
+                                else if (id === 'doc-view-dialog') vm.closeDocPreview();
                                 else vm.closeFaxModal();
                             });
                         });
