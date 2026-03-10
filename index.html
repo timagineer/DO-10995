@@ -3876,17 +3876,9 @@
             <!-- Modal footer -->
             <div class="sign-modal-footer">
                 <button ng-click="vm.cancelSign()">Cancel</button>
-                <div ng-if="vm.skippedNonSignable > 0" class="sign-modal-footer-notice">
-                    <svg viewBox="0 0 24 24">
-                        <use href="#icon-info" />
-                    </svg>
-                    {{vm.skippedNonSignable}} selected {{vm.skippedNonSignable === 1 ? 'document is' : 'documents are'}} not signable and will be skipped
-                </div>
-                <div ng-if="vm.signDoc.staffSigned && !vm.signDoc.justSigned" class="sign-modal-footer-notice">
-                    <svg viewBox="0 0 24 24">
-                        <use href="#icon-info" />
-                    </svg>
-                    This document was previously signed by staff
+                <div ng-if="vm.skippedNonSignable > 0 || (vm.signDoc.staffSigned && !vm.signDoc.justSigned)" class="sign-modal-footer-notice">
+                    <svg viewBox="0 0 24 24"><use href="#icon-info" /></svg>
+                    <span ng-if="vm.skippedNonSignable > 0">{{vm.skippedNonSignable}} {{vm.skippedNonSignable === 1 ? 'document' : 'documents'}} not signable</span><span ng-if="vm.skippedNonSignable > 0 && vm.signDoc.staffSigned && !vm.signDoc.justSigned"> &middot; </span><span ng-if="vm.signDoc.staffSigned && !vm.signDoc.justSigned">This document was previously signed by staff</span>
                 </div>
                 <div class="sign-modal-footer-actions">
                     <button ng-if="vm.signQueue.length > 1 && vm.signQueueIndex > 0" ng-click="vm.prevDoc()">Previous</button>
