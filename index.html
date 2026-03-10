@@ -2492,12 +2492,19 @@
 
             .docs-panel-tabs {
                 display: flex;
+                align-items: center;
+                justify-content: space-between;
                 padding-inline: var(--space-45);
                 padding-block-end: var(--space-35);
                 border-block-end: 1px solid var(--border-subtle);
                 margin-block-end: var(--space-35);
             }
 
+            .docs-panel-tabs h1 {
+                font-size: var(--font-size-20);
+                font-weight: 500;
+                color: var(--text-secondary);
+            }
             .segmented-control {
                 display: inline-flex;
                 background: var(--gray-650);
@@ -3437,6 +3444,7 @@
                     <button ng-click="vm.setView('documents')" aria-pressed="{{vm.activeView === 'documents'}}">Documents</button>
                     <button ng-click="vm.setView('fax')" aria-pressed="{{vm.activeView === 'fax'}}">Fax Log</button>
                 </div>
+                <h1>{{vm.activeView === 'fax' ? 'Fax Log' : 'Documents'}}</h1>
             </div>
             <div ng-if="vm.activeView === 'documents'">
                 <div class="docs-panel-header" ng-class="{'has-selection': vm.getSelectedCount() > 0, 'has-signable': vm.hasSignableSelected()}">
