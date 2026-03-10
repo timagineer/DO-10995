@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <style>
-
         @layer config, base, components, utils;
 
         @layer config {
@@ -194,16 +193,7 @@
                 --space-95: 10rem;
 
                 /* Typography scale */
-                --font-size-xs: 0.625rem;
-                --font-size-2xs: 0.6875rem;
-                --font-size-sm: 0.75rem;
-                --font-size-2sm: 0.8125rem;
-                --font-size-base: 0.875rem;
-                --font-size-md: 0.9375rem;
-                --font-size-lg: 1rem;
-                --font-size-xl: 1.5rem;
-
-                /* --font-size-10: 0.625rem;
+                --font-size-10: 0.625rem;
                 --font-size-11: 0.6875rem;
                 --font-size-12: 0.75rem;
                 --font-size-13: 0.8125rem;
@@ -212,7 +202,9 @@
                 --font-size-16: 1rem;
                 --font-size-18: 1.125rem;
                 --font-size-20: 1.25rem;
-                --font-size-24: 1.5rem; */
+                --font-size-24: 1.5rem;
+                --font-size-32: 2rem;
+                --font-size-32: 2rem;
 
                 /* Font weights */
                 --font-weight-normal: 400;
@@ -317,7 +309,7 @@
             body {
                 animation: fadeIn 0.5s ease 0.2s backwards;
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                font-size: var(--font-size-md);
+                font-size: var(--font-size-15);
                 line-height: var(--leading-normal);
                 color: var(--text);
                 background: var(--bg);
@@ -332,11 +324,11 @@
             }
 
             h1 {
-                font-size: var(--font-size-xl);
+                font-size: var(--font-size-24);
             }
 
             h2 {
-                font-size: var(--font-size-lg);
+                font-size: var(--font-size-16);
                 margin-block-end: var(--space-40);
             }
 
@@ -371,7 +363,7 @@
 
             table {
                 inline-size: 100%;
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 table-layout: auto;
                 font-variant-numeric: tabular-nums;
             }
@@ -425,7 +417,7 @@
 
             .patient-info {
                 color: var(--text-secondary);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -437,7 +429,7 @@
                 display: flex;
                 align-items: center;
                 gap: var(--space-40);
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 color: var(--info-150);
                 padding: var(--space-30) calc(var(--space-30) + var(--space-20));
                 background: var(--info-600);
@@ -488,7 +480,7 @@
                 display: flex;
                 align-items: center;
                 gap: var(--space-30);
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 font-weight: 500;
                 color: var(--text-secondary);
             }
@@ -562,7 +554,7 @@
                 padding: calc(var(--space-40) + 0.125rem) var(--space-45);
                 background: var(--surface);
                 font-weight: var(--font-weight-semibold);
-                font-size: var(--font-size-md);
+                font-size: var(--font-size-15);
                 border-radius: var(--radius);
                 transition: background-color var(--transition-fast);
             }
@@ -630,7 +622,7 @@
             }
 
             .summary-stat-label {
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 color: var(--text-secondary);
                 text-transform: uppercase;
                 letter-spacing: var(--tracking-wide);
@@ -640,7 +632,7 @@
             }
 
             .summary-stat-value {
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-weight: var(--font-weight-semibold);
                 font-variant-numeric: tabular-nums;
                 line-height: var(--leading-none);
@@ -676,7 +668,7 @@
             }
 
             .filter-bar-count {
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 color: var(--text-secondary);
             }
 
@@ -696,14 +688,14 @@
                 border-block-end: 1px solid var(--border);
                 white-space: nowrap;
                 color: var(--text-secondary);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
             }
 
             td {
                 padding: var(--space-30) var(--space-40);
                 border-block-end: 1px solid var(--border-subtle);
                 vertical-align: middle;
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 white-space: nowrap;
             }
 
@@ -712,6 +704,10 @@
             th.code,
             td.code {
                 text-align: end;
+            }
+
+            tbody tr[ng-click] {
+                cursor: pointer;
             }
 
             tbody tr:hover {
@@ -908,7 +904,7 @@
                 padding: var(--space-40) var(--space-45);
                 cursor: pointer;
                 font-weight: var(--font-weight-semibold);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 transition: background-color var(--transition-fast);
             }
 
@@ -963,7 +959,7 @@
                 padding: var(--space-30) var(--space-40);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 font-weight: var(--font-weight-normal);
                 background: var(--surface);
                 color: var(--text);
@@ -1000,14 +996,14 @@
 
             .activity-time {
                 color: var(--text-secondary);
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
             }
 
             /* Badges */
             .badge {
                 display: inline-block;
                 padding: 0.125rem var(--space-30);
-                font-size: var(--font-size-2xs);
+                font-size: var(--font-size-11);
                 font-weight: var(--font-weight-semibold);
                 border-radius: var(--radius);
             }
@@ -1050,7 +1046,7 @@
             .badge-pending {
                 background: var(--info-550);
                 color: var(--info-150);
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 padding: 0.125rem 0.375rem;
                 margin-inline-start: 0.25rem;
                 text-transform: none;
@@ -1085,7 +1081,7 @@
                 border: 1px solid var(--primary-300);
                 padding: 0.15em 0.5em;
                 border-radius: 2em;
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--gray-850);
                 cursor: pointer;
@@ -1133,7 +1129,7 @@
             }
 
             .fax-docs-popover-header {
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 font-weight: 700;
                 color: var(--text-secondary);
                 text-transform: uppercase;
@@ -1158,7 +1154,7 @@
                 padding-block: var(--space-25);
                 padding-inline: var(--space-45);
 
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--text);
             }
 
@@ -1208,7 +1204,7 @@
                 align-items: center;
                 padding-block: var(--space-25);
                 padding-inline: var(--space-40);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--text);
                 border-block-end: 1px solid var(--border-subtle);
             }
@@ -1228,7 +1224,7 @@
                 gap: var(--space-40);
                 margin-block: var(--space-40);
                 color: var(--text-secondary);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
             }
 
             .fax-or-divider::before,
@@ -1263,14 +1259,14 @@
             }
 
             .kno2-result-name {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--text);
                 margin: 0;
             }
 
             .kno2-result-meta {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--text-secondary);
                 margin: 0;
                 margin-block-start: 0.125rem;
@@ -1285,7 +1281,7 @@
                 border-radius: 2rem;
                 padding-block: var(--space-15);
                 padding-inline: var(--space-35) var(--space-25);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--primary-150);
                 margin-block-start: var(--space-30);
             }
@@ -1306,7 +1302,7 @@
             }
 
             .fax-number-error {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--warning-300);
                 margin-block-start: var(--space-20);
             }
@@ -1323,7 +1319,7 @@
                 background: var(--notice-550);
                 color: var(--notice-200);
                 border: 1px solid var(--notice-450);
-                font-size: var(--font-size-md);
+                font-size: var(--font-size-15);
                 font-weight: var(--font-weight-semibold);
                 border-radius: var(--radius);
                 margin-inline-start: var(--space-20);
@@ -1333,7 +1329,7 @@
                 background: var(--info-550);
                 color: var(--info-200);
                 border-color: var(--info-450);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
             }
 
             /* Buttons */
@@ -1341,7 +1337,7 @@
                 padding: var(--space-30) var(--space-40);
                 border: 1px solid var(--border);
                 background: var(--surface);
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 border-radius: var(--radius);
                 transition: background-color var(--transition-fast), border-color var(--transition-fast);
             }
@@ -1367,15 +1363,6 @@
 
             button:disabled:active {
                 background: var(--surface);
-            }
-
-            .btn-primary:disabled:hover {
-                background: var(--button-primary-bg);
-                border-color: var(--button-primary-bg);
-            }
-
-            .btn-primary:disabled:active {
-                background: var(--button-primary-bg);
             }
 
             @media (prefers-reduced-motion: no-preference) {
@@ -1405,6 +1392,15 @@
 
             .btn-primary:active {
                 background: var(--primary-200);
+            }
+
+            .btn-primary:disabled:hover {
+                background: var(--button-primary-bg);
+                border-color: var(--button-primary-bg);
+            }
+
+            .btn-primary:disabled:active {
+                background: var(--button-primary-bg);
             }
 
             .btn-preview-actions {
@@ -1543,13 +1539,13 @@
                 border-radius: var(--radius);
                 box-shadow: var(--elevation-md);
                 min-width: 14rem;
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
             }
 
             .info-tooltip-header {
                 padding: var(--space-30) var(--space-40);
                 border-bottom: 1px solid var(--border-subtle);
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 font-weight: var(--font-weight-semibold);
                 color: var(--text-secondary);
                 text-transform: uppercase;
@@ -1564,7 +1560,7 @@
                 display: flex;
                 justify-content: space-between;
                 padding: 0.1875rem 0;
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
             }
 
             .info-tooltip-label {
@@ -1586,7 +1582,7 @@
             .info-tooltip-total {
                 display: flex;
                 justify-content: space-between;
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
             }
 
             .info-tooltip-total-label {
@@ -1685,7 +1681,7 @@
             }
 
             dialog h2 {
-                font-size: var(--font-size-md);
+                font-size: var(--font-size-15);
                 font-weight: var(--font-weight-semibold);
                 margin: 0;
                 line-height: var(--leading-tight);
@@ -1764,7 +1760,7 @@
             }
 
             .modal-section-header {
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 font-weight: 700;
                 color: var(--text-secondary);
                 text-transform: uppercase;
@@ -1788,7 +1784,7 @@
 
             .modal-table th {
                 padding: 0.4375rem 0.625rem;
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--text-secondary);
                 text-transform: none;
@@ -1804,7 +1800,7 @@
 
             .modal-table td {
                 padding: 0.5625rem 0.625rem;
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 color: var(--text);
                 border-block-end: 1px solid var(--border-subtle);
                 vertical-align: middle;
@@ -1859,14 +1855,14 @@
             }
 
             .modal-warning-title {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--warning-200);
                 margin-block-end: var(--space-20);
             }
 
             .modal-warning-text {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--warning-200);
                 line-height: var(--leading-normal);
             }
@@ -1902,14 +1898,14 @@
             }
 
             .modal-notice-title {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--notice-200);
                 margin-block-end: var(--space-20);
             }
 
             .modal-notice-text {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--notice-200);
                 line-height: var(--leading-normal);
             }
@@ -1920,7 +1916,7 @@
             }
 
             .modal-form-label {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--gray-250);
                 margin-block-end: var(--space-20);
@@ -1928,14 +1924,14 @@
             }
 
             .modal-field-label {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 color: var(--gray-250);
                 margin-block-end: var(--space-15);
             }
 
             .modal-field-value {
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 color: var(--text);
             }
 
@@ -1950,7 +1946,7 @@
                 align-items: center;
                 gap: var(--space-30);
                 cursor: pointer;
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 color: var(--text);
             }
 
@@ -1983,7 +1979,7 @@
                 padding: 0 0 0 var(--space-30);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-variant-numeric: tabular-nums;
                 color: var(--text);
                 inline-size: 5rem;
@@ -2004,14 +2000,14 @@
                 padding-inline: var(--space-40);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-family: inherit;
                 background: var(--surface);
                 color: var(--text);
             }
 
             .modal-field-value {
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
             }
 
             .modal-field-input.error,
@@ -2069,7 +2065,7 @@
                 padding-inline-end: var(--space-40);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-family: inherit;
                 background: var(--surface) url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right var(--space-40) center;
                 color: var(--text);
@@ -2109,7 +2105,7 @@
                 inset-inline-start: var(--space-40);
                 inset-block-start: 50%;
                 transform: translateY(-50%);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 color: var(--text-secondary);
                 font-variant-numeric: tabular-nums;
             }
@@ -2119,7 +2115,7 @@
             }
 
             .modal-footer-note-input button {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.375rem 0.625rem;
             }
 
@@ -2157,7 +2153,7 @@
 
             .modal-input-error {
                 margin-block-start: var(--space-20);
-                font-size: var(--font-size-xs);
+                font-size: var(--font-size-10);
                 color: var(--warning-300);
             }
 
@@ -2168,7 +2164,7 @@
                 padding: var(--space-30) var(--space-40);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-family: inherit;
                 resize: vertical;
                 box-shadow: 0 0 0 0 var(--surface), 0 0 0 0 var(--focus-ring);
@@ -2223,7 +2219,7 @@
                 padding: var(--space-30) var(--space-40);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 background: var(--surface);
                 color: var(--text);
             }
@@ -2334,7 +2330,7 @@
                 display: flex;
                 align-items: center;
                 margin-block-end: 0.375rem;
-                font-size: var(--font-size-2sm);
+                font-size: var(--font-size-13);
                 cursor: pointer;
                 font-weight: 400;
             }
@@ -2394,7 +2390,7 @@
                 inline-size: 100%;
                 text-align: start;
                 padding: var(--space-30) var(--space-40);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: 400;
                 border: none;
                 background: transparent;
@@ -2444,7 +2440,7 @@
             }
 
             .selection-bar-text {
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-weight: var(--font-weight-semibold);
                 color: var(--text);
             }
@@ -2504,7 +2500,7 @@
             }
 
             .segmented-control button {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-medium);
                 padding: var(--space-20) var(--space-45);
                 border: none;
@@ -2553,7 +2549,7 @@
             }
 
             .table-action-btn {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.375rem 0.625rem;
                 font-weight: 400;
                 background: var(--surface);
@@ -2624,7 +2620,7 @@
 
             /* btn-outline */
             .btn-outline {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.375rem 0.625rem;
                 font-weight: 400;
                 background: var(--surface);
@@ -2652,7 +2648,7 @@
                 padding-block: var(--space-30);
                 padding-inline: var(--space-45);
                 color: var(--text-secondary);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
             }
 
             .docs-panel .table-wrapper {
@@ -2709,7 +2705,7 @@
             }
 
             .btn-sm {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.375rem 0.625rem;
                 font-weight: 400;
             }
@@ -2749,7 +2745,7 @@
                 background: transparent;
                 border: none;
                 color: var(--gray-850);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: var(--space-20) var(--space-30);
                 border-radius: var(--radius);
                 font-weight: var(--font-weight-normal);
@@ -2770,7 +2766,7 @@
 
             .bulk-action-count {
                 color: var(--gray-850);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: var(--font-weight-semibold);
                 opacity: 0.9;
             }
@@ -2807,7 +2803,7 @@
                 padding-inline-end: calc(var(--space-40) + 1.25rem);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-family: inherit;
                 background: var(--surface);
                 color: var(--text);
@@ -2935,7 +2931,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                font-size: 1.25rem;
+                font-size: var(--font-size-20);
                 line-height: 1;
             }
 
@@ -2963,7 +2959,7 @@
                 inline-size: 100%;
                 text-align: start;
                 padding: var(--space-25) var(--space-40);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 font-weight: 400;
                 border: none;
                 background: transparent;
@@ -3000,7 +2996,7 @@
                 margin-inline: auto;
                 padding: var(--space-60) var(--space-65) var(--space-70);
                 box-shadow: var(--elevation-md);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 line-height: var(--leading-normal);
                 color: var(--primary-50);
             }
@@ -3011,7 +3007,7 @@
                 align-items: stretch;
                 margin-block-end: var(--space-55);
                 padding-block-end: var(--space-45);
-                font-size: 0.75rem;
+                font-size: var(--font-size-12);
                 line-height: 1.6;
             }
 
@@ -3038,7 +3034,7 @@
             }
 
             .doc-preview-title {
-                font-size: var(--font-size-lg);
+                font-size: var(--font-size-16);
                 font-weight: var(--font-weight-bold);
                 margin-block-end: var(--space-60);
                 text-align: center;
@@ -3046,13 +3042,13 @@
 
             .doc-preview-section-header {
                 font-weight: var(--font-weight-semibold);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 margin-block-end: var(--space-20);
             }
 
             .doc-preview-block {
                 margin-block-end: var(--space-55);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
             }
 
             .doc-preview-block p {
@@ -3086,7 +3082,7 @@
 
             .doc-preview-sig-label,
             .doc-preview-patient-row span:first-child {
-                font-size: var(--font-size-2xs);
+                font-size: var(--font-size-11);
                 font-weight: 600;
                 color: var(--gray-300);
                 text-transform: uppercase;
@@ -3095,7 +3091,7 @@
 
             .doc-preview-patient-sig {
                 font-family: 'Caveat', Georgia, serif;
-                font-size: 2rem;
+                font-size: var(--font-size-32);
                 color: var(--primary-350);
                 line-height: 1.2;
                 margin-block: var(--space-30) 0;
@@ -3110,12 +3106,12 @@
             }
 
             .doc-preview-sig-date {
-                font-size: 0.75rem;
+                font-size: var(--font-size-12);
                 margin-block-start: var(--space-25);
             }
 
             .doc-preview-sig-printed {
-                font-size: 0.75rem;
+                font-size: var(--font-size-12);
                 margin-block-start: var(--space-15);
             }
 
@@ -3128,7 +3124,7 @@
             }
 
             .doc-preview-esig-label {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--positive-250);
                 font-weight: var(--font-weight-semibold);
                 margin-block-end: var(--space-15);
@@ -3136,18 +3132,18 @@
 
             .doc-preview-esig-name {
                 font-family: Georgia, serif;
-                font-size: 1.125rem;
+                font-size: var(--font-size-18);
                 color: var(--positive-200);
                 font-style: italic;
             }
 
             .doc-preview-esig-creds {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--positive-250);
             }
 
             .doc-preview-esig-ts {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--positive-300);
                 margin-block-start: var(--space-15);
             }
@@ -3157,7 +3153,7 @@
                 position: absolute;
                 inset-inline: 0;
                 text-align: center;
-                font-size: var(--font-size-md);
+                font-size: var(--font-size-15);
                 font-weight: var(--font-weight-semibold);
                 line-height: var(--leading-tight);
                 pointer-events: none;
@@ -3186,7 +3182,7 @@
                 display: flex;
                 align-items: center;
                 gap: var(--space-25);
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 color: var(--notice-200);
             }
 
@@ -3199,6 +3195,11 @@
 
             .sign-modal-footer-actions {
                 display: flex;
+                gap: var(--space-30);
+            }
+
+            .sign-modal-footer-end {
+                justify-content: flex-end;
                 gap: var(--space-30);
             }
 
@@ -3247,7 +3248,7 @@
                 gap: var(--space-30);
                 padding: var(--space-40) var(--space-50);
                 border-radius: var(--radius);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-weight: var(--font-weight-medium);
                 box-shadow: var(--elevation-md);
                 max-inline-size: 24rem;
@@ -3335,7 +3336,7 @@
 
             .empty-state-message {
                 color: var(--text-secondary);
-                font-size: var(--font-size-base);
+                font-size: var(--font-size-14);
                 font-style: italic;
                 text-align: center;
                 margin-block-start: calc(var(--space-45) * -1);
@@ -3398,13 +3399,13 @@
 
             /* Button size modifiers */
             .btn-xs {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.25rem 0.5rem;
                 font-weight: 400;
             }
 
             .btn-xs-spaced {
-                font-size: var(--font-size-sm);
+                font-size: var(--font-size-12);
                 padding: 0.25rem 0.5rem;
                 margin-inline-end: 0.25rem;
                 font-weight: 400;
@@ -3561,7 +3562,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="doc in vm.filteredDocs() track by doc.id" ng-class="{selected: doc.selected}" ng-click="vm.openDocPreview(doc)" style="cursor: pointer;">
+                            <tr ng-repeat="doc in vm.filteredDocs() track by doc.id" ng-class="{selected: doc.selected}" ng-click="vm.openDocPreview(doc)">
                                 <td class="td-checkbox" ng-click="$event.stopPropagation(); vm.toggleDocSelect(doc, $event)">
                                     <div class="checkbox" ng-class="{checked: doc.selected}">
                                         <svg ng-if="doc.selected" viewBox="0 0 10 8" fill="none">
@@ -3841,7 +3842,7 @@
 
             <div class="modal-form-group">
                 <label class="modal-form-label" for="fax-number-manual">Enter Fax Number Manually</label>
-                <input id="fax-number-manual" type="tel" class="modal-field-input" ng-class="{error: vm.faxModal.numberError}" placeholder="(555) 000-0000" ng-model="vm.faxModal.manualNumber" ng-change="vm.onManualNumberChange()" ng-disabled="!!vm.faxModal.recipient" maxlength="14">
+                <input id="fax-number-manual" type="tel" class="modal-field-input" ng-class="{error: vm.faxModal.numberError}" placeholder="(555) 000-0000" ng-model="vm.faxModal.manualNumber" ng-change="vm.onManualNumberChange()" ng-blur="vm.onManualNumberBlur()" ng-disabled="!!vm.faxModal.recipient" maxlength="14">
                 <p class="fax-number-error" ng-if="vm.faxModal.numberError" role="alert">{{vm.faxModal.numberError}}</p>
             </div>
         </div>
@@ -3986,7 +3987,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sign-modal-footer" style="justify-content: flex-end; gap: var(--space-30);">
+            <div class="sign-modal-footer sign-modal-footer-end">
                 <button type="button" ng-click="vm.closeDocPreview()">Close</button>
                 <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closePreviewMenu()">
                     <button class="btn-preview-actions" ng-click="vm.togglePreviewMenu($event)">
@@ -4470,7 +4471,7 @@
                     { name: 'BlueCross BlueShield', org: 'BlueCross BlueShield', specialty: 'Insurance', faxNumber: '(555) 300-7700' }
                 ];
 
-                vm.faxModal = { docs: [], kno2Query: '', kno2Results: [], recipient: null, manualNumber: '', validNumber: false, numberError: '' };
+                vm.faxModal = { docs: [], kno2Query: '', kno2Results: [], recipient: null, manualNumber: '', validNumber: false, numberError: '', numberTouched: false };
 
                 vm.bulkFax = function () { vm.openFaxModal(); };
 
@@ -4492,6 +4493,7 @@
                     vm.faxModal.manualNumber = '';
                     vm.faxModal.validNumber = false;
                     vm.faxModal.numberError = '';
+                    vm.faxModal.numberTouched = false;
                     vm._openDialog('fax-send-dialog');
                 };
 
@@ -4515,6 +4517,7 @@
                     vm.faxModal.kno2Results = [];
                     vm.faxModal.manualNumber = '';
                     vm.faxModal.numberError = '';
+                    vm.faxModal.numberTouched = false;
                     vm.faxModal.validNumber = false;
                 };
 
@@ -4525,7 +4528,12 @@
                 vm.onManualNumberChange = function () {
                     var raw = vm.faxModal.manualNumber.replace(/\D/g, '');
                     vm.faxModal.validNumber = raw.length === 10;
-                    vm.faxModal.numberError = (vm.faxModal.manualNumber && !vm.faxModal.validNumber) ? 'Enter a valid 10-digit fax number.' : '';
+                    vm.faxModal.numberError = (vm.faxModal.numberTouched && vm.faxModal.manualNumber && !vm.faxModal.validNumber) ? 'Enter a valid 10-digit fax number.' : '';
+                };
+
+                vm.onManualNumberBlur = function () {
+                    vm.faxModal.numberTouched = true;
+                    $timeout(function () { vm.onManualNumberChange(); });
                 };
 
                 vm.submitFax = function () {
@@ -4549,6 +4557,8 @@
                 };
             });
 
+        /* Fax pill hover — delegated outside Angular since popovers are
+           positioned via JS and ng-attr resolves after compile */
         document.addEventListener('mouseover', function (e) {
             var trigger = e.target.closest('.fax-docs-trigger');
             if (!trigger) return;
