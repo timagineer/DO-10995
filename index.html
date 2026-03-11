@@ -3623,7 +3623,7 @@
                                             </svg>
                                         </button>
                                         <div ng-if="doc.menuOpen" ng-click="vm.closeRowMenu(doc)" class="overlay-backdrop"></div>
-                                        <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top + 'px', right: doc.menuPos.right + 'px'}">
+                                        <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top !== 'auto' ? doc.menuPos.top + 'px' : 'auto', bottom: doc.menuPos.bottom !== 'auto' ? doc.menuPos.bottom + 'px' : 'auto', right: doc.menuPos.right + 'px'}">
                                             <button ng-click="vm.closeRowMenu(doc)">Fax</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share to Sign</button>
@@ -3779,7 +3779,7 @@
                                             </svg>
                                         </button>
                                         <div ng-if="fax.menuOpen" ng-click="vm.closeRowMenu(fax)" class="overlay-backdrop"></div>
-                                        <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top + 'px', right: fax.menuPos.right + 'px'}">
+                                        <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top !== 'auto' ? fax.menuPos.top + 'px' : 'auto', bottom: fax.menuPos.bottom !== 'auto' ? fax.menuPos.bottom + 'px' : 'auto', right: fax.menuPos.right + 'px'}">
                                             <button ng-if="fax.faxStatus === 'failed'" ng-click="vm.closeRowMenu(fax)">Retry</button>
                                             <button ng-if="fax.faxStatus !== 'failed'" ng-click="vm.openFaxModal(fax); vm.closeRowMenu(fax)">Fax</button>
                                             <hr class="menu-divider">
@@ -4290,7 +4290,14 @@
                     vm.faxDocs.forEach(function (d) { d.menuOpen = false; });
                     if (!wasOpen) {
                         var rect = $event.currentTarget.getBoundingClientRect();
-                        doc.menuPos = { top: rect.bottom + 4, right: window.innerWidth - rect.right };
+                        var spaceBelow = window.innerHeight - rect.bottom;
+                        var spaceAbove = rect.top;
+                        var menuHeight = 280;
+                        if (spaceBelow < menuHeight && spaceAbove > spaceBelow) {
+                            doc.menuPos = { bottom: window.innerHeight - rect.top + 4, right: window.innerWidth - rect.right, top: 'auto' };
+                        } else {
+                            doc.menuPos = { top: rect.bottom + 4, right: window.innerWidth - rect.right, bottom: 'auto' };
+                        }
                     }
                     doc.menuOpen = !wasOpen;
                 };
