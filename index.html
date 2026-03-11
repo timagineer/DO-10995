@@ -2482,9 +2482,7 @@
                 background: var(--surface);
                 border-radius: var(--radius);
                 border: 1px solid var(--border-subtle);
-                padding: var(--space-45);
                 padding-inline: 0;
-                padding-block-end: 0;
                 margin: var(--space-45);
                 overflow: visible;
             }
@@ -2494,7 +2492,7 @@
                 align-items: center;
                 justify-content: space-between;
                 padding-inline: var(--space-45);
-                padding-block-end: var(--space-35);
+                padding-block: var(--space-45);
                 border-block-end: 1px solid var(--border-subtle);
                 margin-block-end: var(--space-35);
             }
@@ -2503,6 +2501,8 @@
                 font-size: var(--font-size-20);
                 font-weight: 500;
                 color: var(--text-secondary);
+                line-height: var(--leading-none);
+                margin: 0;
             }
 
             .segmented-control {
@@ -3876,7 +3876,9 @@
             <div class="sign-modal-footer">
                 <button ng-click="vm.cancelSign()">Cancel</button>
                 <div ng-if="vm.skippedNonSignable > 0 || (vm.signDoc.staffSigned && !vm.signDoc.justSigned)" class="sign-modal-footer-notice">
-                    <svg viewBox="0 0 24 24"><use href="#icon-info" /></svg>
+                    <svg viewBox="0 0 24 24">
+                        <use href="#icon-info" />
+                    </svg>
                     <span ng-if="vm.skippedNonSignable > 0">{{vm.skippedNonSignable}} {{vm.skippedNonSignable === 1 ? 'document' : 'documents'}} not signable</span><span ng-if="vm.skippedNonSignable > 0 && vm.signDoc.staffSigned && !vm.signDoc.justSigned"> &middot; </span><span ng-if="vm.signDoc.staffSigned && !vm.signDoc.justSigned">This document was previously signed by staff</span>
                 </div>
                 <div class="sign-modal-footer-actions">
