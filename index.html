@@ -1314,6 +1314,42 @@
             }
 
             /* Fax table numeric columns */
+            .fax-table {
+                table-layout: fixed;
+            }
+
+            .fax-table th {
+                white-space: nowrap;
+            }
+
+            .fax-table .col-fax-document {
+                inline-size: 28%;
+            }
+
+            .fax-table .col-fax-recipient {
+                inline-size: 8rem;
+            }
+
+            .fax-table .col-fax-number {
+                inline-size: 7rem;
+            }
+
+            .fax-table .col-fax-date {
+                inline-size: 9rem;
+            }
+
+            .fax-table .col-fax-sentby {
+                inline-size: 6rem;
+            }
+
+            .fax-table .col-fax-pages {
+                inline-size: 3.5rem;
+            }
+
+            .fax-table .col-fax-status {
+                inline-size: 5.5rem;
+            }
+
             .fax-table :is(th, td):nth-child(4),
             .fax-table :is(th, td):nth-child(7) {
                 text-align: end;
@@ -2678,12 +2714,16 @@
                 margin-block-end: 0;
             }
 
+            .docs-table {
+                table-layout: fixed;
+            }
+
             .docs-panel .th-checkbox {
                 inline-size: 2.5rem;
             }
 
             .docs-panel .col-document {
-                inline-size: auto;
+                inline-size: 28%;
             }
 
             .docs-panel .col-type {
@@ -2692,10 +2732,6 @@
 
             .docs-panel .col-category {
                 inline-size: 9rem;
-            }
-
-            .docs-panel .col-clinician {
-                inline-size: 6rem;
             }
 
             .docs-panel .col-date {
@@ -2873,6 +2909,7 @@
             /* Doc table */
             .doc-name-cell {
                 overflow: visible;
+                max-inline-size: 13rem;
             }
 
             .doc-category-cell {
@@ -3382,6 +3419,7 @@
 
             .th-middle {
                 vertical-align: middle;
+                white-space: nowrap;
             }
 
             .th-relative {
@@ -3474,7 +3512,7 @@
                     </div>
                 </div>
                 <div class="table-wrapper">
-                    <table>
+                    <table class="docs-table">
                         <thead>
                             <tr>
                                 <th class="th-checkbox">
@@ -3500,13 +3538,6 @@
                                 </th>
                                 <th class="th-middle col-category">Category
                                     <button class="sort-btn" ng-click="vm.setSort('category')" aria-label="Sort by category">
-                                        <svg width="14" height="14" viewBox="0 0 24 24">
-                                            <use href="#icon-sort" />
-                                        </svg>
-                                    </button>
-                                </th>
-                                <th class="th-middle col-clinician">Clinician
-                                    <button class="sort-btn" ng-click="vm.setSort('clinician')" aria-label="Sort by clinician">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
@@ -3564,7 +3595,6 @@
                                 </td>
                                 <td>{{doc.type}}</td>
                                 <td class="doc-category-cell">{{doc.category}}</td>
-                                <td>{{doc.clinician}}</td>
                                 <td>{{doc.sendDate | dateOnly}}</td>
                                 <td>{{doc.receivedDate | dateOnly}}</td>
                                 <td>{{doc.encounter || ''}}<span ng-if="!doc.encounter" class="empty-value">–</span></td>
@@ -3637,49 +3667,49 @@
                                         </svg>
                                     </div>
                                 </th>
-                                <th class="th-middle">Document
+                                <th class="th-middle col-fax-document">Document
                                     <button class="sort-btn" ng-click="vm.setFaxSort('name')" aria-label="Sort by document">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Recipient
+                                <th class="th-middle col-fax-recipient">Recipient
                                     <button class="sort-btn" ng-click="vm.setFaxSort('recipient')" aria-label="Sort by recipient">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Fax Number
+                                <th class="th-middle col-fax-number">Fax Number
                                     <button class="sort-btn" ng-click="vm.setFaxSort('faxNumber')" aria-label="Sort by fax number">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Sent Date
+                                <th class="th-middle col-fax-date">Sent Date
                                     <button class="sort-btn" ng-click="vm.setFaxSort('sentDate')" aria-label="Sort by sent date">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Sent By
+                                <th class="th-middle col-fax-sentby">Sent By
                                     <button class="sort-btn" ng-click="vm.setFaxSort('sentBy')" aria-label="Sort by sent by">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Pages
+                                <th class="th-middle col-fax-pages">Pages
                                     <button class="sort-btn" ng-click="vm.setFaxSort('pages')" aria-label="Sort by pages">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle">Status
+                                <th class="th-middle col-fax-status">Status
                                     <button class="sort-btn" ng-click="vm.setFaxSort('faxStatus')" aria-label="Sort by status">
                                         <svg width="14" height="14" viewBox="0 0 24 24">
                                             <use href="#icon-sort" />
