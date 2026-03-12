@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,&display=swap">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
     <style>
+        /* * {
+            outline: .5px dashed deeppink
+        } */
+
         @layer config, base, components, utils;
 
         @layer config {
@@ -212,8 +216,8 @@
                 --font-weight-bold: 700;
 
                 /* Border radius */
-                --radius: 0.375rem;
-                --radius-full: 1rem;
+                --radius: var(--space-25);
+                --radius-full: var(--space-45);
 
                 /* Letter spacing */
                 --tracking-tight: 0;
@@ -1343,8 +1347,21 @@
             }
 
             .fax-table .col-fax-pages {
-                inline-size: 3.5rem;
+                inline-size: 5.5rem;
             }
+
+            .th-pages-inner {
+                display: inline-flex;
+                align-items: center;
+                justify-content: end;
+                inline-size: 100%;
+            }
+
+            .th-pages-inner .sort-btn {
+                margin-inline-start: 0;
+                margin-inline-end: 0.5rem;
+            }
+
 
             .fax-table .col-fax-status {
                 inline-size: 5.5rem;
@@ -3730,12 +3747,9 @@
                                         </svg>
                                     </button>
                                 </th>
-                                <th class="th-middle col-fax-pages">Pages
-                                    <button class="sort-btn" ng-click="vm.setFaxSort('pages')" aria-label="Sort by pages">
-                                        <svg width="14" height="14" viewBox="0 0 24 24">
-                                            <use href="#icon-sort" />
-                                        </svg>
-                                    </button>
+                                <th class="th-middle col-fax-pages"><span class="th-pages-inner"><button class="sort-btn" ng-click="vm.setFaxSort('pages')" aria-label="Sort by pages"><svg width="14" height="14" viewBox="0 0 24 24">
+                                                <use href="#icon-sort" />
+                                            </svg></button>pp</span>
                                 </th>
                                 <th class="th-middle col-fax-status">Status
                                     <button class="sort-btn" ng-click="vm.setFaxSort('faxStatus')" aria-label="Sort by status">
