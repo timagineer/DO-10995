@@ -1210,13 +1210,24 @@
 
             .fax-doc-list li {
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
+                gap: var(--space-35);
                 padding-block: var(--space-25);
                 padding-inline: var(--space-40);
                 font-size: var(--font-size-12);
                 color: var(--text);
                 border-block-end: 1px solid var(--border-subtle);
+                cursor: pointer;
+            }
+
+            .fax-doc-list .doc-name {
+                flex: 1;
+            }
+
+            .fax-doc-list li.excluded .doc-name,
+            .fax-doc-list li.excluded .doc-pages {
+                text-decoration: line-through;
+                color: var(--text-secondary);
             }
 
             .fax-doc-list li:last-child {
@@ -3850,10 +3861,15 @@
         </header>
         <div>
             <div class="modal-form-group">
-                <p class="modal-section-header">Documents ({{vm.faxModal.docs.length}})</p>
+                <p class="modal-section-header">Documents ({{(vm.faxModal.docs | filter:{included:true}).length}})</p>
                 <ul class="fax-doc-list">
-                    <li ng-repeat="d in vm.faxModal.docs">
-                        <span>{{d.name}}</span>
+                    <li ng-repeat="d in vm.faxModal.docs" ng-class="{excluded: !d.included}" ng-click="d.included = !d.included">
+                        <div class="checkbox" ng-class="{checked: d.included}">
+                            <svg ng-if="d.included" viewBox="0 0 10 8" fill="none">
+                                <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="doc-name">{{d.name}}</span>
                         <span class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</span>
                     </li>
                 </ul>
@@ -3888,7 +3904,7 @@
         </div>
         <div class="modal-footer modal-footer-spaced">
             <button class="btn-outline" ng-click="vm.closeFaxModal()">Cancel</button>
-            <button class="btn-primary" ng-click="vm.submitFax()" ng-disabled="!vm.faxModal.recipient && !vm.faxModal.validNumber">Send Fax</button>
+            <button class="btn-primary" ng-click="vm.submitFax()" ng-disabled="(!vm.faxModal.recipient && !vm.faxModal.validNumber) || !(vm.faxModal.docs | filter:{included:true}).length">Send Fax</button>
         </div>
     </dialog>
 
@@ -4537,15 +4553,15 @@
 
                 vm.openFaxModal = function (fax) {
                     if (fax) {
-                        vm.faxModal.docs = fax.docs.map(function (d) { return { name: d.name, pages: d.pages }; });
+                        vm.faxModal.docs = fax.docs.map(function (d) { return { name: d.name, pages: d.pages, included: true }; });
                     } else if (vm.activeView === 'fax') {
                         var selectedFaxes = vm.faxDocs.filter(function (f) { return f.selected; });
                         vm.faxModal.docs = selectedFaxes.reduce(function (acc, f) {
-                            return acc.concat(f.docs.map(function (d) { return { name: d.name, pages: d.pages }; }));
+                            return acc.concat(f.docs.map(function (d) { return { name: d.name, pages: d.pages, included: true }; }));
                         }, []);
                     } else {
                         var selectedDocs = vm.docs.filter(function (d) { return d.selected; });
-                        vm.faxModal.docs = selectedDocs.map(function (d) { return { name: d.name, pages: 1 }; });
+                        vm.faxModal.docs = selectedDocs.map(function (d) { return { name: d.name, pages: 1, included: true }; });
                     }
                     vm.faxModal.kno2Query = '';
                     vm.faxModal.kno2Results = [];
