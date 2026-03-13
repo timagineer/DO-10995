@@ -3672,7 +3672,7 @@
                                         </button>
                                         <div ng-if="doc.menuOpen" ng-click="vm.closeRowMenu(doc)" class="overlay-backdrop"></div>
                                         <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top !== 'auto' ? doc.menuPos.top + 'px' : 'auto', bottom: doc.menuPos.bottom !== 'auto' ? doc.menuPos.bottom + 'px' : 'auto', right: doc.menuPos.right + 'px'}">
-                                            <button ng-click="vm.closeRowMenu(doc)">Fax</button>
+                                            <button ng-click="vm.openFaxModal(doc); vm.closeRowMenu(doc)">Fax</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share to Sign</button>
                                             <hr class="menu-divider">
@@ -4280,8 +4280,10 @@
                     }
                     var f = vm.faxSortField, dir = vm.faxSortDir === 'asc' ? 1 : -1;
                     return list.slice().sort(function (a, b) {
-                        var av = (a[f] || '').toString().toLowerCase();
-                        var bv = (b[f] || '').toString().toLowerCase();
+                        var av = a[f], bv = b[f];
+                        if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir;
+                        av = (av || '').toString().toLowerCase();
+                        bv = (bv || '').toString().toLowerCase();
                         return av < bv ? -dir : av > bv ? dir : 0;
                     });
                 };
@@ -4552,8 +4554,10 @@
                 vm.bulkFax = function () { vm.openFaxModal(); };
 
                 vm.openFaxModal = function (fax) {
-                    if (fax) {
+                    if (fax && fax.docs) {
                         vm.faxModal.docs = fax.docs.map(function (d) { return { name: d.name, pages: d.pages, included: true }; });
+                    } else if (fax) {
+                        vm.faxModal.docs = [{ name: fax.name, pages: fax.pages || 1, included: true }];
                     } else if (vm.activeView === 'fax') {
                         var selectedFaxes = vm.faxDocs.filter(function (f) { return f.selected; });
                         vm.faxModal.docs = selectedFaxes.reduce(function (acc, f) {
