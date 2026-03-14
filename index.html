@@ -1072,6 +1072,37 @@
                 color: var(--notice-150);
             }
 
+            .badge-fax-status {
+                transition: background-color 400ms ease, color 400ms ease;
+            }
+
+            .badge-doc-status {
+                transition: background-color 400ms ease, color 400ms ease;
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+
+                .badge-fax-status.resolving,
+                .badge-doc-status.resolving {
+                    animation: badgeRing 480ms ease-out both;
+                }
+            }
+
+            @keyframes badgeRing {
+                0% {
+                    box-shadow: 0 0 0 0 var(--positive-400);
+                }
+
+                60% {
+                    box-shadow: 0 0 0 4px transparent;
+                }
+
+                100% {
+                    box-shadow: 0 0 0 0 transparent;
+                }
+            }
+
+
             .fax-status-cell {
                 display: flex;
                 align-items: center;
@@ -1474,7 +1505,7 @@
             }
 
             button.btn-preview-actions {
-                padding-inline: var(--space-45);
+                padding-inline: var(--space-40);
                 background: var(--button-primary-bg);
                 color: var(--button-primary-text);
                 border-color: var(--button-primary-bg);
@@ -3331,8 +3362,7 @@
             .toast-container {
                 position: fixed;
                 inset-block-end: var(--space-55);
-                inset-inline-start: 50%;
-                transform: translateX(-50%);
+                inset-inline-end: var(--space-55);
                 z-index: 9999;
                 display: flex;
                 flex-direction: column;
@@ -3674,9 +3704,8 @@
                                 <td>{{doc.encounter || ''}}<span ng-if="!doc.encounter" class="empty-value">–</span></td>
                                 <td>
                                     <span ng-if="doc.staffSigned" class="badge badge-signed">Staff Signed</span>
-                                    <span ng-if="!doc.staffSigned && doc.patientSigned" class="badge badge-patient-signed">Patient Signed</span>
+                                    <span ng-if="!doc.staffSigned && doc.shareStatus === 'Shared to Sign'" class="badge badge-doc-status" ng-class="{'badge-patient-signed': doc.patientSigned, 'badge-finished': !doc.patientSigned, 'resolving': doc.resolving}">{{doc.patientSigned ? 'Patient Signed' : 'Shared to Sign'}}</span>
                                     <span ng-if="doc.faxed" class="badge badge-info">Faxed</span>
-                                    <span ng-if="!doc.staffSigned && !doc.patientSigned && !doc.faxed && doc.shareStatus === 'Shared to Sign'" class="badge badge-finished">Shared to Sign</span>
                                     <span ng-if="!doc.staffSigned && !doc.faxed && doc.shareStatus === 'Shared'" class="badge badge-info">Shared</span>
                                     <span ng-if="!doc.staffSigned && !doc.shareStatus && !doc.faxed" class="badge badge-neutral">Not Shared</span>
                                 </td>
@@ -3828,9 +3857,7 @@
                                 <td>{{fax.pages}}</td>
                                 <td>
                                     <div class="fax-status-cell">
-                                        <span ng-if="fax.faxStatus === 'success'" class="badge badge-success">Success</span>
-                                        <span ng-if="fax.faxStatus === 'failed'" class="badge badge-failed">Failed</span>
-                                        <span ng-if="fax.faxStatus === 'pending'" class="badge badge-fax-pending">Pending</span>
+                                        <span class="badge badge-fax-status" ng-class="{'badge-success': fax.faxStatus === 'success', 'badge-failed': fax.faxStatus === 'failed', 'badge-fax-pending': fax.faxStatus === 'pending', 'resolving': fax.resolving}">{{fax.faxStatus === 'success' ? 'Success' : fax.faxStatus === 'failed' ? 'Failed' : 'Pending'}}</span>
                                     </div>
                                 </td>
                                 <td class="td-end">
@@ -4240,6 +4267,11 @@
                         ]
                     },
                     {
+                        id: 111, name: 'Psychiatric Evaluation', recipient: 'Dr. James Patel', faxNumber: '(555) 444-9900', sentDate: '03/06/2026 07:55 AM', sentBy: 'Dr. Sarah', pages: 5, faxStatus: 'pending', selected: false, docs: [
+                            { name: 'Psychiatric Evaluation', pages: 5, fileType: 'PDF' }
+                        ]
+                    },
+                    {
                         id: 103, name: 'Assessment Report', recipient: 'Memorial Hospital', faxNumber: '(555) 987-6543', sentDate: '03/05/2026 03:20 PM', sentBy: 'Dr. Sarah', pages: 6, faxStatus: 'failed', selected: false, docs: [
                             { name: 'Assessment Report', pages: 4, fileType: 'PDF' },
                             { name: 'Intake Progress Note', pages: 2, fileType: 'PDF' }
@@ -4324,21 +4356,51 @@
                     return vm.faxDocs.some(function (f) { return f.selected && f.faxStatus === 'failed'; });
                 };
 
+                vm._queueFaxDelivery = function (fax, delay) {
+                    $timeout(function () {
+                        fax.resolving = true;
+                        $timeout(function () {
+                            fax.faxStatus = 'success';
+                            fax.resolving = false;
+                        }, 360);
+                    }, delay);
+                };
+
+                vm.faxDocs.filter(function (f) { return f.faxStatus === 'pending'; }).forEach(function (fax, i) {
+                    vm._queueFaxDelivery(fax, 4000 + (i * 1500));
+                });
+
                 vm.retryFax = function (fax) {
                     vm.closeRowMenu(fax);
                     fax.faxStatus = 'pending';
                     var recipient = fax.recipient || fax.faxNumber;
                     vm._showToast('info', 'Fax queued for ' + recipient);
+                    vm._queueFaxDelivery(fax, 5000);
                 };
 
                 vm.retrySelectedFailed = function () {
                     var failed = vm.faxDocs.filter(function (f) { return f.selected && f.faxStatus === 'failed'; });
-                    failed.forEach(function (fax) {
+                    failed.forEach(function (fax, i) {
                         fax.faxStatus = 'pending';
                         var recipient = fax.recipient || fax.faxNumber;
                         vm._showToast('info', 'Fax queued for ' + recipient);
+                        vm._queueFaxDelivery(fax, 4000 + (i * 1500));
                     });
                 };
+
+                vm._queuePatientSign = function (doc, delay) {
+                    $timeout(function () {
+                        doc.resolving = true;
+                        $timeout(function () {
+                            doc.patientSigned = true;
+                            doc.resolving = false;
+                        }, 360);
+                    }, delay);
+                };
+
+                vm.docs.filter(function (d) { return d.shareStatus === 'Shared to Sign' && !d.patientSigned; }).forEach(function (doc, i) {
+                    vm._queuePatientSign(doc, 6000 + (i * 2000));
+                });
 
 
 
@@ -4656,6 +4718,20 @@
                         : vm.faxModal.manualNumber;
                     vm.closeFaxModal();
                     vm._showToast('info', 'Fax queued for ' + recipient);
+                    var newFax = {
+                        id: Date.now(),
+                        name: vm.faxModal.docs[0].name,
+                        recipient: vm.faxModal.recipient ? vm.faxModal.recipient.name : '',
+                        faxNumber: vm.faxModal.recipient ? vm.faxModal.recipient.faxNumber : vm.faxModal.manualNumber,
+                        sentDate: new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }),
+                        sentBy: vm.staff.name,
+                        pages: vm.faxModal.docs.reduce(function (s, d) { return s + (d.pages || 1); }, 0),
+                        faxStatus: 'pending',
+                        selected: false,
+                        docs: vm.faxModal.docs.map(function (d) { return { name: d.name, pages: d.pages, fileType: 'PDF' }; })
+                    };
+                    vm.faxDocs.unshift(newFax);
+                    vm._queueFaxDelivery(newFax, 5000);
                 };
 
                 vm._showToast = function (type, message) {
