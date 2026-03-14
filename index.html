@@ -1473,26 +1473,16 @@
                 background: var(--button-primary-bg);
             }
 
-            .btn-preview-actions {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.25rem;
-                padding-inline-start: var(--space-55);
-                padding-inline-end: var(--space-50);
+            button.btn-preview-actions {
+                padding-inline: var(--space-45);
                 background: var(--button-primary-bg);
                 color: var(--button-primary-text);
                 border-color: var(--button-primary-bg);
             }
 
-            .btn-preview-actions:hover {
+            button.btn-preview-actions:hover {
                 background: var(--button-primary-hover);
                 border-color: var(--button-primary-hover);
-            }
-
-            .btn-preview-actions svg {
-                flex-shrink: 0;
-                inline-size: 1rem;
-                block-size: 1rem;
             }
 
             .btn-danger {
@@ -2425,7 +2415,6 @@
             .btn-dropdown>button {
                 display: flex;
                 align-items: center;
-                inline-size: 5rem;
                 justify-content: center;
             }
 
@@ -3390,6 +3379,15 @@
                 color: var(--warning-400);
             }
 
+            .toast.info {
+                background: var(--info-100);
+                color: var(--info-600);
+            }
+
+            .toast.info svg {
+                color: var(--info-400);
+            }
+
             @media (prefers-reduced-motion: no-preference) {
                 .toast {
                     animation: toastIn 300ms ease both;
@@ -3425,6 +3423,26 @@
         }
 
         @layer utils {
+
+            .with-icon {
+                display: inline-flex;
+                align-items: baseline;
+            }
+
+            .with-icon .icon {
+                block-size: 1ch;
+                inline-size: 1ch;
+                flex-shrink: 0;
+                align-self: center;
+            }
+
+            .with-icon .icon-before {
+                margin-inline-end: var(--space-30);
+            }
+
+            .with-icon .icon-after {
+                margin-inline-start: var(--space-30);
+            }
 
             /* Single-purpose utilities */
             .empty-value {
@@ -3672,7 +3690,7 @@
                                         </button>
                                         <div ng-if="doc.menuOpen" ng-click="vm.closeRowMenu(doc)" class="overlay-backdrop"></div>
                                         <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top !== 'auto' ? doc.menuPos.top + 'px' : 'auto', bottom: doc.menuPos.bottom !== 'auto' ? doc.menuPos.bottom + 'px' : 'auto', right: doc.menuPos.right + 'px'}">
-                                            <button ng-click="vm.openFaxModal(doc); vm.closeRowMenu(doc)">Fax</button>
+                                            <button ng-disabled="vm.getSelectedCount() > 1" ng-click="vm.openFaxModal(doc); vm.closeRowMenu(doc)">Fax</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share</button>
                                             <button ng-click="vm.closeRowMenu(doc)">Share to Sign</button>
                                             <hr class="menu-divider">
@@ -3699,7 +3717,7 @@
                     <div class="th-toolbar-cell">
                         <div class="th-toolbar-actions">
                             <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0" ng-click="vm.openFaxModal()">Fax</button>
-                            <button class="table-action-btn" ng-disabled="!vm.hasFaxFailedSelected()">Retry</button>
+                            <button class="table-action-btn" ng-disabled="!vm.hasFaxFailedSelected()" ng-click="vm.retrySelectedFailed()">Retry</button>
                             <div class="th-toolbar-actions-separator" aria-hidden="true"></div>
                             <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0">Download</button>
                             <button class="table-action-btn" ng-disabled="vm.getFaxSelectedCount() === 0">Print</button>
@@ -3825,8 +3843,8 @@
                                         </button>
                                         <div ng-if="fax.menuOpen" ng-click="vm.closeRowMenu(fax)" class="overlay-backdrop"></div>
                                         <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top !== 'auto' ? fax.menuPos.top + 'px' : 'auto', bottom: fax.menuPos.bottom !== 'auto' ? fax.menuPos.bottom + 'px' : 'auto', right: fax.menuPos.right + 'px'}">
-                                            <button ng-if="fax.faxStatus === 'failed'" ng-click="vm.closeRowMenu(fax)">Retry</button>
-                                            <button ng-if="fax.faxStatus !== 'failed'" ng-click="vm.openFaxModal(fax); vm.closeRowMenu(fax)">Fax</button>
+                                            <button ng-if="fax.faxStatus === 'failed'" ng-click="vm.retryFax(fax)">Retry</button>
+                                            <button ng-if="fax.faxStatus !== 'failed'" ng-disabled="vm.getFaxSelectedCount() > 1" ng-click="vm.openFaxModal(fax); vm.closeRowMenu(fax)">Fax</button>
                                             <hr class="menu-divider">
                                             <button ng-click="vm.closeRowMenu(fax)">Download</button>
                                             <button ng-click="vm.closeRowMenu(fax)">Print</button>
@@ -4035,10 +4053,9 @@
                 <button type="button" ng-click="vm.closeDocPreview()">Close</button>
                 <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closePreviewMenu()">
                     <button class="btn-preview-actions" ng-click="vm.togglePreviewMenu($event)">
-                        Actions
-                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12">
-                            <use href="#icon-chevron-down" />
-                        </svg>
+                        <span class="with-icon">Actions <svg class="icon icon-after" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 4.5L8 12l7-7.5" />
+                            </svg></span>
                     </button>
                     <div ng-if="vm.previewMenuOpen" ng-click="vm.closePreviewMenu()" class="overlay-backdrop"></div>
                     <div ng-if="vm.previewMenuOpen" class="btn-dropdown-menu" ng-style="{bottom: vm.previewMenuPos.bottom + 'px', right: vm.previewMenuPos.right + 'px'}">
@@ -4085,7 +4102,8 @@
     <div class="toast-container" aria-live="polite" aria-atomic="true">
         <div ng-repeat="toast in vm.toasts" class="toast" ng-class="[toast.type, {leaving: toast.leaving}]">
             <svg viewBox="0 0 24 24">
-                <use href="#icon-check-circle" />
+                <use ng-if="toast.type === 'info'" href="#icon-info" />
+                <use ng-if="toast.type !== 'info'" href="#icon-check-circle" />
             </svg>
             {{toast.message}}
         </div>
@@ -4304,6 +4322,22 @@
 
                 vm.hasFaxFailedSelected = function () {
                     return vm.faxDocs.some(function (f) { return f.selected && f.faxStatus === 'failed'; });
+                };
+
+                vm.retryFax = function (fax) {
+                    vm.closeRowMenu(fax);
+                    fax.faxStatus = 'pending';
+                    var recipient = fax.recipient || fax.faxNumber;
+                    vm._showToast('info', 'Fax queued for ' + recipient);
+                };
+
+                vm.retrySelectedFailed = function () {
+                    var failed = vm.faxDocs.filter(function (f) { return f.selected && f.faxStatus === 'failed'; });
+                    failed.forEach(function (fax) {
+                        fax.faxStatus = 'pending';
+                        var recipient = fax.recipient || fax.faxNumber;
+                        vm._showToast('info', 'Fax queued for ' + recipient);
+                    });
                 };
 
 
@@ -4621,7 +4655,7 @@
                         ? vm.faxModal.recipient.name
                         : vm.faxModal.manualNumber;
                     vm.closeFaxModal();
-                    vm._showToast('success', 'Fax sent to ' + recipient);
+                    vm._showToast('info', 'Fax queued for ' + recipient);
                 };
 
                 vm._showToast = function (type, message) {
@@ -4690,7 +4724,7 @@
             <path d="m7 10 5 5 5-5" />
         </symbol>
         <symbol id="icon-chevron-down" viewBox="0 0 16 16" fill="currentColor">
-            <path d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
+            <path d="M3 5.5L8 11l5-5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
         </symbol>
         <symbol id="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10" />
