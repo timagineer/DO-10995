@@ -4775,13 +4775,13 @@
                 };
 
                 vm.allDocsSelected = function () {
-                    var visible = vm.filteredDocs();
-                    return visible.length > 0 && visible.every(function (d) { return d.selected; });
+                    var page = vm.pagedDocs();
+                    return page.length > 0 && page.every(function (d) { return d.selected; });
                 };
 
                 vm.toggleSelectAllDocs = function () {
                     var all = vm.allDocsSelected();
-                    vm.filteredDocs().forEach(function (d) { d.selected = !all; });
+                    vm.pagedDocs().forEach(function (d) { d.selected = !all; });
                 };
 
                 vm.getSelectedCount = function () {
