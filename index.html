@@ -3235,7 +3235,7 @@
                 background: var(--gray-850);
                 max-inline-size: 42rem;
                 margin-inline: auto;
-                padding: var(--space-60) var(--space-65) var(--space-70);
+                padding: var(--space-60) var(--space-65) var(--space-55);
                 box-shadow: var(--elevation-md);
                 font-size: var(--font-size-14);
                 line-height: var(--leading-normal);
@@ -3376,6 +3376,120 @@
                 font-size: var(--font-size-18);
                 color: var(--positive-200);
                 font-style: italic;
+            }
+
+            /* Doc name inline edit */
+            #doc-view-dialog header h2 {
+                display: flex;
+                align-items: center;
+                gap: var(--space-25);
+                flex: 1;
+                min-inline-size: 0;
+            }
+
+            #doc-view-dialog header h2 span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .doc-name-input {
+                flex: 1;
+                font-size: inherit;
+                font-weight: inherit;
+                font-family: inherit;
+                color: inherit;
+                border: none;
+                border-radius: 0;
+                background: transparent;
+                padding-block: var(--space-05);
+                padding-inline: 0;
+                outline: none;
+                min-inline-size: 0;
+            }
+
+            .doc-name-edit-btn {
+                flex-shrink: 0;
+                display: inline-flex;
+                align-items: center;
+                padding: var(--space-20);
+                border-radius: var(--radius);
+                color: inherit;
+                opacity: 0.65;
+                background: transparent;
+                border: none;
+            }
+
+            .doc-name-edit-btn:hover {
+                opacity: 1;
+                background: transparent;
+                border-color: transparent;
+            }
+
+            /* Doc metadata bar */
+            .doc-meta-bar {
+                padding: var(--space-35) var(--space-55);
+                border-block-end: 1px solid var(--border-subtle);
+                background: var(--surface);
+            }
+
+            .doc-meta-fields {
+                display: grid;
+                grid-template-columns: 2fr 1fr 3fr;
+                gap: var(--space-45);
+                align-items: start;
+            }
+
+            .doc-meta-field {
+                display: flex;
+                flex-direction: column;
+                gap: var(--space-15);
+                font-size: var(--font-size-12);
+            }
+
+            .doc-meta-field span {
+                color: var(--text-secondary);
+                font-size: var(--font-size-12);
+            }
+
+            .doc-meta-field input {
+                font-size: var(--font-size-12);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius);
+                padding: var(--space-15) var(--space-30) var(--space-15) var(--space-25);
+                background: var(--surface);
+                color: var(--text);
+                inline-size: 100%;
+            }
+
+            .doc-meta-field select {
+                font-size: var(--font-size-12);
+                border: 1px solid var(--border-subtle);
+                border-radius: var(--radius);
+                padding: var(--space-15) var(--space-55) var(--space-15) var(--space-25);
+                background: var(--surface) url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right var(--space-25) center;
+                color: var(--text);
+                inline-size: 100%;
+                appearance: none;
+                cursor: pointer;
+            }
+
+            .doc-meta-field select:hover {
+                background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23333' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            }
+
+            .doc-meta-description {
+                flex: 1;
+            }
+
+            /* Doc dates footer */
+            .doc-preview-dates {
+                display: flex;
+                justify-content: space-between;
+                padding-block-start: var(--space-40);
+                margin-block-start: var(--space-55);
+                font-size: var(--font-size-11);
+                color: var(--text-secondary);
             }
 
             .doc-preview-esig-creds {
@@ -3864,7 +3978,7 @@
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Message</button>
                     <hr>
                     <button role="menuitem" ng-disabled="vm.activeDoc && (vm.activeDoc.patientSigned || vm.activeDoc.staffSigned)" ng-click="vm.closeMenu('doc-row-menu')">Patient Sign</button>
-                    <button ng-if="vm.activeDoc && vm.activeDoc.signable" role="menuitem" ng-disabled="vm.activeDoc && vm.activeDoc.staffSigned" ng-click="vm.startStaffSign(vm.activeDoc); vm.closeMenu('doc-row-menu')">Staff Sign</button>
+                    <button ng-if="vm.activeDoc && vm.activeDoc.signable" role="menuitem" ng-click="vm.startStaffSign(vm.activeDoc); vm.closeMenu('doc-row-menu')">Staff Sign</button>
                     <hr>
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Download</button>
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Print</button>
@@ -4157,7 +4271,15 @@
     <!-- Doc Preview Modal -->
     <dialog id="doc-view-dialog" aria-labelledby="doc-view-title">
         <header>
-            <h2 id="doc-view-title">{{vm.previewDoc.name}}</h2>
+            <h2 id="doc-view-title">
+                <span ng-if="!vm.editingDocName">{{vm.previewDoc.name}}</span>
+                <input ng-if="vm.editingDocName" type="text" class="doc-name-input" ng-model="vm.previewDoc.name" ng-blur="vm.editingDocName = false" ng-keydown="vm.handleDocNameKey($event)" aria-label="Document name">
+                <button ng-if="!vm.editingDocName" class="doc-name-edit-btn" ng-click="vm.startEditDocName()" aria-label="Edit document name">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                        <use href="#icon-pencil" />
+                    </svg>
+                </button>
+            </h2>
             <button type="button" ng-click="vm.closeDocPreview()" aria-label="Close">
                 <svg viewBox="0 0 24 24">
                     <use href="#icon-close" />
@@ -4165,6 +4287,24 @@
             </button>
         </header>
         <div ng-if="vm.previewDoc" class="sign-dialog-body">
+            <div class="doc-meta-bar">
+                <div class="doc-meta-fields">
+                    <label class="doc-meta-field">
+                        <span>Category</span>
+                        <select ng-model="vm.previewDoc.category" ng-options="c for c in vm.docCategories"></select>
+                    </label>
+                    <label class="doc-meta-field">
+                        <span>Attach to</span>
+                        <select ng-model="vm.previewDoc.attachTo">
+                            <option value="Chart">Chart</option>
+                        </select>
+                    </label>
+                    <label class="doc-meta-field doc-meta-description">
+                        <span>Description</span>
+                        <input type="text" ng-model="vm.previewDoc.description" placeholder="Add a description">
+                    </label>
+                </div>
+            </div>
             <div class="doc-preview-shell">
                 <div class="doc-preview-page">
                     <div class="doc-preview-header">
@@ -4202,6 +4342,10 @@
                             <div class="doc-preview-sig-date">{{vm.previewDoc.staffSigTs}}</div>
                         </div>
                     </div>
+                    <footer class="doc-preview-dates">
+                        <span>Created: {{vm.previewDoc.dateCreated}}</span>
+                        <span>Modified: {{vm.previewDoc.dateModified}}</span>
+                    </footer>
                 </div>
             </div>
             <div class="sign-modal-footer sign-modal-footer-end">
@@ -4219,7 +4363,7 @@
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Message</button>
                     <hr>
                     <button role="menuitem" ng-disabled="vm.previewDoc && (vm.previewDoc.patientSigned || vm.previewDoc.staffSigned)" ng-click="vm.closeMenu('preview-menu')">Patient Sign</button>
-                    <button ng-if="vm.previewDoc.signable" role="menuitem" ng-disabled="vm.previewDoc && vm.previewDoc.staffSigned" ng-click="vm.closeDocPreview(); vm.startStaffSign(vm.previewDoc)">Staff Sign</button>
+                    <button ng-if="vm.previewDoc.signable" role="menuitem" ng-click="vm.closeDocPreview(); vm.startStaffSign(vm.previewDoc)">Staff Sign</button>
                     <hr>
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Download</button>
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Print</button>
@@ -4312,8 +4456,8 @@
                 ];
 
                 var AUTH_CONTENT = [
-                    { heading: 'Authorization Scope', body: 'I hereby authorize ICANotes Behavioral Health and its staff to release any medical records, clinical notes, diagnoses, treatment history, and other health information necessary to submit claims to my insurance carrier and to receive payment for services rendered on my behalf.' },
-                    { heading: 'Insurance Billing', body: 'I understand that my provider will bill my insurance plan directly for covered behavioral health services. I authorize my insurance company to make payment directly to ICANotes Behavioral Health for any benefits otherwise payable to me. I agree to be responsible for any charges not covered by my insurance, including deductibles, co-payments, and non-covered services.' },
+                    { heading: 'Authorization Scope', body: 'I hereby authorize Riverside Behavioral Health and its staff to release any medical records, clinical notes, diagnoses, treatment history, and other health information necessary to submit claims to my insurance carrier and to receive payment for services rendered on my behalf.' },
+                    { heading: 'Insurance Billing', body: 'I understand that my provider will bill my insurance plan directly for covered behavioral health services. I authorize my insurance company to make payment directly to Riverside Behavioral Health for any benefits otherwise payable to me. I agree to be responsible for any charges not covered by my insurance, including deductibles, co-payments, and non-covered services.' },
                     { heading: 'Assignment of Benefits', body: 'I assign and transfer to my provider all rights and benefits under my insurance policy to the extent of charges for services rendered. This assignment remains in effect until revoked in writing and applies to all future claims submitted during the course of my treatment.' },
                     { heading: 'Release of Information', body: 'I authorize the release of information to my insurance carrier, third-party payers, and any utilization review organizations as necessary to process claims, verify eligibility, obtain prior authorizations, or coordinate benefits. This includes information related to mental health, substance use, and other behavioral health services.' },
                     { heading: 'Duration', body: 'This authorization is valid for one year from the date of signature unless revoked in writing prior to that date. Revocation does not affect actions already taken in reliance on this authorization.' }
@@ -4328,25 +4472,27 @@
                     { heading: 'Acknowledgment', body: 'By signing below, you acknowledge that you have received a copy of this Notice of Privacy Practices and have had the opportunity to review it.' }
                 ];
 
+                vm.docCategories = ['Unassigned', 'Assessment Tools', 'Consents and Legal Forms', 'Disability', 'Fax', 'Insurance Information', 'Lab', 'Miscellaneous', 'Patient External Medical Records', 'Photos', 'Portal Attachments', 'Clinical Notes', 'Invoices', 'Intake Forms', 'Prescriptions'];
+
                 vm.docs = [
-                    { id: 1, name: 'Telehealth Informed Consent', type: 'Form', sendDate: '03/06/2026 09:14 AM', receivedDate: '03/06/2026 09:16 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
-                    { id: 2, name: 'Authorization to Bill Insurance', type: 'Form', sendDate: '03/05/2026 03:58 PM', receivedDate: '03/05/2026 04:02 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: AUTH_CONTENT },
-                    { id: 25, name: 'Consent to Treatment', type: 'Form', sendDate: '03/05/2026 10:00 AM', receivedDate: '03/05/2026 10:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, patientSigned: true, selected: false, content: CONSENT_CONTENT },
-                    { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/06/2026 09:30 AM', receivedDate: '03/05/2026 03:51 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
-                    { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: LOREM_CONTENT },
-                    { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: LOREM_CONTENT },
-                    { id: 6, name: 'Discharge Summary', type: 'Summary', sendDate: '02/28/2026 02:35 PM', receivedDate: '02/28/2026 02:35 PM', encounter: '02/28/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 7, name: 'Release of Information', type: 'Form', sendDate: '02/20/2026 02:15 PM', receivedDate: '02/20/2026 02:19 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, faxed: true, faxStatus: 'success', selected: false, content: CONSENT_CONTENT },
-                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 9, name: 'Psychiatric Evaluation', type: 'Assessment', sendDate: '01/10/2026 02:00 PM', receivedDate: '01/10/2026 02:05 PM', encounter: '01/10/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 10, name: 'Medication Management Note', type: 'Progress Note', sendDate: '01/08/2026 11:30 AM', receivedDate: '01/08/2026 11:30 AM', encounter: '01/08/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 11, name: 'Crisis Safety Plan', type: 'Form', sendDate: '12/20/2025 03:15 PM', receivedDate: '12/20/2025 03:20 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
-                    { id: 12, name: 'Group Therapy Note', type: 'Progress Note', sendDate: '12/15/2025 10:00 AM', receivedDate: '12/15/2025 10:00 AM', encounter: '12/15/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 13, name: 'Referral to Specialist', type: 'Form', sendDate: '12/10/2025 09:45 AM', receivedDate: '12/10/2025 09:50 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
-                    { id: 14, name: 'Biopsychosocial Assessment', type: 'Assessment', sendDate: '12/05/2025 01:30 PM', receivedDate: '12/05/2025 01:35 PM', encounter: '12/05/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 15, name: 'Substance Use Assessment', type: 'Assessment', sendDate: '11/28/2025 02:00 PM', receivedDate: '11/28/2025 02:00 PM', encounter: '11/28/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 16, name: 'Aftercare Plan', type: 'Treatment Plan', sendDate: '11/20/2025 11:00 AM', receivedDate: '11/20/2025 11:00 AM', encounter: '11/20/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
-                    { id: 17, name: 'Notice of Privacy Practices', type: 'Form', sendDate: '11/15/2025 09:00 AM', receivedDate: '11/15/2025 09:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT }
+                    { id: 1, name: 'Telehealth Informed Consent', type: 'Form', sendDate: '03/06/2026 09:14 AM', receivedDate: '03/06/2026 09:16 AM', dateCreated: '03/06/2026 09:14 AM', dateModified: '03/06/2026 09:16 AM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
+                    { id: 2, name: 'Authorization to Bill Insurance', type: 'Form', sendDate: '03/05/2026 03:58 PM', receivedDate: '03/05/2026 04:02 PM', dateCreated: '03/05/2026 03:55 PM', dateModified: '03/05/2026 04:02 PM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: AUTH_CONTENT },
+                    { id: 25, name: 'Consent to Treatment', type: 'Form', sendDate: '03/05/2026 10:00 AM', receivedDate: '03/05/2026 10:05 AM', dateCreated: '03/05/2026 09:58 AM', dateModified: '03/05/2026 10:05 AM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, patientSigned: true, selected: false, content: CONSENT_CONTENT },
+                    { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/06/2026 09:30 AM', receivedDate: '03/05/2026 03:51 PM', dateCreated: '03/05/2026 03:40 PM', dateModified: '03/06/2026 04:12 PM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
+                    { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', dateCreated: '03/04/2026 10:45 AM', dateModified: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: LOREM_CONTENT },
+                    { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', dateCreated: '03/04/2026 10:30 AM', dateModified: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: LOREM_CONTENT },
+                    { id: 6, name: 'Discharge Summary', type: 'Summary', sendDate: '02/28/2026 02:35 PM', receivedDate: '02/28/2026 02:35 PM', dateCreated: '02/28/2026 02:20 PM', dateModified: '02/28/2026 02:35 PM', encounter: '02/28/2026', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 7, name: 'Release of Information', type: 'Form', sendDate: '02/20/2026 02:15 PM', receivedDate: '02/20/2026 02:19 PM', dateCreated: '02/20/2026 02:10 PM', dateModified: '02/20/2026 02:19 PM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, faxed: true, faxStatus: 'success', selected: false, content: CONSENT_CONTENT },
+                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', dateCreated: '01/14/2026 04:30 PM', dateModified: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 9, name: 'Psychiatric Evaluation', type: 'Assessment', sendDate: '01/10/2026 02:00 PM', receivedDate: '01/10/2026 02:05 PM', dateCreated: '01/10/2026 01:45 PM', dateModified: '01/10/2026 02:05 PM', encounter: '01/10/2026', category: 'Assessment Tools', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 10, name: 'Medication Management Note', type: 'Progress Note', sendDate: '01/08/2026 11:30 AM', receivedDate: '01/08/2026 11:30 AM', dateCreated: '01/08/2026 11:15 AM', dateModified: '01/08/2026 11:30 AM', encounter: '01/08/2026', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 11, name: 'Crisis Safety Plan', type: 'Form', sendDate: '12/20/2025 03:15 PM', receivedDate: '12/20/2025 03:20 PM', dateCreated: '12/20/2025 03:00 PM', dateModified: '12/20/2025 03:20 PM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
+                    { id: 12, name: 'Group Therapy Note', type: 'Progress Note', sendDate: '12/15/2025 10:00 AM', receivedDate: '12/15/2025 10:00 AM', dateCreated: '12/15/2025 09:45 AM', dateModified: '12/15/2025 10:00 AM', encounter: '12/15/2025', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 13, name: 'Referral to Specialist', type: 'Form', sendDate: '12/10/2025 09:45 AM', receivedDate: '12/10/2025 09:50 AM', dateCreated: '12/10/2025 09:40 AM', dateModified: '12/10/2025 09:50 AM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
+                    { id: 14, name: 'Biopsychosocial Assessment', type: 'Assessment', sendDate: '12/05/2025 01:30 PM', receivedDate: '12/05/2025 01:35 PM', dateCreated: '12/05/2025 01:15 PM', dateModified: '12/05/2025 01:35 PM', encounter: '12/05/2025', category: 'Assessment Tools', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 15, name: 'Substance Use Assessment', type: 'Assessment', sendDate: '11/28/2025 02:00 PM', receivedDate: '11/28/2025 02:00 PM', dateCreated: '11/28/2025 01:45 PM', dateModified: '11/28/2025 02:00 PM', encounter: '11/28/2025', category: 'Assessment Tools', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 16, name: 'Aftercare Plan', type: 'Treatment Plan', sendDate: '11/20/2025 11:00 AM', receivedDate: '11/20/2025 11:00 AM', dateCreated: '11/20/2025 10:45 AM', dateModified: '11/20/2025 11:00 AM', encounter: '11/20/2025', category: 'Clinical Notes', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 17, name: 'Notice of Privacy Practices', type: 'Form', sendDate: '11/15/2025 09:00 AM', receivedDate: '11/15/2025 09:05 AM', dateCreated: '11/15/2025 08:55 AM', dateModified: '11/15/2025 09:05 AM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT }
                 ];
 
                 vm.pageSize = 10;
@@ -4765,8 +4911,25 @@
                 };
 
                 vm.closeDocPreview = function () {
+                    vm.editingDocName = false;
                     vm.closeMenu('preview-menu');
                     vm._closeDialog('doc-view-dialog');
+                };
+
+                vm.editingDocName = false;
+                vm.startEditDocName = function () {
+                    vm.editingDocName = true;
+                    setTimeout(function () {
+                        var input = document.querySelector('.doc-name-input');
+                        if (input) {
+                            input.focus();
+                            var len = input.value.length;
+                            input.setSelectionRange(len, len);
+                        }
+                    }, 0);
+                };
+                vm.handleDocNameKey = function (e) {
+                    if (e.key === 'Enter' || e.key === 'Escape') vm.editingDocName = false;
                 };
 
                 // --- Staff Sign ---
@@ -5089,6 +5252,10 @@
         <symbol id="icon-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
             <polyline points="22 4 12 14.01 9 11.01" />
+        </symbol>
+        <symbol id="icon-pencil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+            <path d="m15 5 4 4" />
         </symbol>
     </svg>
 </body>
