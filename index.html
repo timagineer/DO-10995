@@ -4307,7 +4307,7 @@
             </div>
             <div class="doc-preview-shell">
                 <div class="doc-preview-page">
-                    <div class="doc-preview-header">
+                    <div ng-if="!vm.isUploading && !vm.previewDoc.uploaded" class="doc-preview-header">
                         <div class="doc-preview-practice">
                             <div class="doc-preview-practice-name">{{vm.practice.name}}</div>
                             <div>{{vm.practice.address}}</div>
@@ -4349,8 +4349,10 @@
                 </div>
             </div>
             <div class="sign-modal-footer sign-modal-footer-end">
-                <button type="button" ng-click="vm.closeDocPreview()">Close</button>
-                <button class="btn-preview-actions" ng-click="vm.openMenu('preview-menu', $event)" aria-haspopup="menu" aria-expanded="false">
+                <button type="button" ng-if="!vm.isUploading" ng-click="vm.closeDocPreview()">Close</button>
+                <button type="button" ng-if="vm.isUploading" ng-click="vm.cancelUpload()">Cancel</button>
+                <button type="button" ng-if="vm.isUploading" class="btn-primary" ng-click="vm.saveUpload()">Save to Chart</button>
+                <button ng-if="!vm.isUploading" class="btn-preview-actions" ng-click="vm.openMenu('preview-menu', $event)" aria-haspopup="menu" aria-expanded="false">
                     Actions
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
                         <use href="#icon-chevron-down" />
@@ -4904,6 +4906,7 @@
 
                 // --- Doc Preview ---
                 vm.previewDoc = null;
+                vm.isUploading = false;
 
                 vm.openDocPreview = function (doc) {
                     vm.previewDoc = doc;
@@ -4912,9 +4915,69 @@
 
                 vm.closeDocPreview = function () {
                     vm.editingDocName = false;
+                    vm.isUploading = false;
                     vm.closeMenu('preview-menu');
                     vm._closeDialog('doc-view-dialog');
                 };
+
+                vm.startUpload = function (input) {
+                    var file = input && input.files && input.files[0];
+                    if (!file) return;
+                    var now = new Date();
+                    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+                    var h = now.getHours();
+                    var dateStr = pad(now.getMonth() + 1) + '/' + pad(now.getDate()) + '/' + now.getFullYear() + ' ' + pad(h % 12 || 12) + ':' + pad(now.getMinutes()) + ' ' + (h >= 12 ? 'PM' : 'AM');
+                    var baseName = file.name.replace(/\.[^.]+$/, '');
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $scope.$apply(function () {
+                            var text = e.target.result;
+                            var blocks = text.split(/\n\s*\n/).map(function (p) {
+                                return { heading: '', body: p.trim() };
+                            }).filter(function (b) { return b.body; });
+                            vm.previewDoc = {
+                                id: Date.now(),
+                                name: baseName,
+                                type: 'Form',
+                                category: 'Unassigned',
+                                attachTo: 'Chart',
+                                description: '',
+                                sendDate: '',
+                                receivedDate: '',
+                                dateCreated: dateStr,
+                                dateModified: dateStr,
+                                encounter: '',
+                                shareStatus: '',
+                                signable: false,
+                                staffSigned: false,
+                                selected: false,
+                                content: blocks
+                            };
+                            vm.isUploading = true;
+                            input.value = '';
+                            vm._openDialog('doc-view-dialog');
+                        });
+                    };
+                    reader.readAsText(file);
+                };
+
+                vm.saveUpload = function () {
+                    vm.previewDoc.uploaded = true;
+                    vm.docs.unshift(vm.previewDoc);
+                    vm.docsPage = 1;
+                    vm.isUploading = false;
+                    vm._showToast('success', '"' + vm.previewDoc.name + '" saved to chart');
+                    vm.closeDocPreview();
+                };
+
+                vm.cancelUpload = function () {
+                    vm.isUploading = false;
+                    vm.closeDocPreview();
+                };
+
+                document.getElementById('upload-input').addEventListener('change', function (e) {
+                    $scope.$apply(function () { vm.startUpload(e.target); });
+                });
 
                 vm.editingDocName = false;
                 vm.startEditDocName = function () {
