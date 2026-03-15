@@ -229,10 +229,23 @@
                 --leading-tight: 1.2;
                 --leading-normal: 1.5;
 
-                /* Transitions */
-                --ease-out-quadratic: cubic-bezier(.25, .46, .45, .94);
-                --transition-fast: 180ms;
-                --transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                /* Duration scale (60ms steps) */
+                --duration-1: 60ms;
+                --duration-2: 120ms;
+                --duration-3: 180ms;
+                --duration-4: 240ms;
+                --duration-5: 300ms;
+                --duration-6: 360ms;
+                --duration-7: 420ms;
+                --duration-8: 480ms;
+
+                /* Easing */
+                --ease-hover: cubic-bezier(0.25, 0.1, 0.25, 1);
+                /* ease - hover effects */
+                --ease-out: cubic-bezier(.165, .84, .44, 1);
+                /* ease-out-quart - enter/exit */
+                --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+                /* ease-in-out-quart - position/layout */
 
                 /* Elevation */
                 --elevation-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -355,7 +368,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 a {
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -503,7 +516,7 @@
                 border-radius: var(--radius-full);
                 position: relative;
                 cursor: pointer;
-                transition: background var(--transition-fast);
+                transition: background var(--duration-3) var(--ease-hover);
             }
 
             .freeze-toggle input[type="checkbox"]:checked {
@@ -519,7 +532,7 @@
                 border-radius: 50%;
                 inset-block-start: 0.125rem;
                 inset-inline-start: 0.125rem;
-                transition: transform var(--transition-fast);
+                transition: transform var(--duration-3) var(--ease-in-out);
             }
 
             .freeze-toggle input[type="checkbox"]:checked::before {
@@ -532,7 +545,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .freeze-toggle input[type="checkbox"] {
-                    transition: background var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -559,7 +572,7 @@
                 font-weight: var(--font-weight-semibold);
                 font-size: var(--font-size-15);
                 border-radius: var(--radius);
-                transition: background-color var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover);
             }
 
             summary:hover {
@@ -572,7 +585,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 summary {
-                    transition: background-color var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background-color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -593,7 +606,7 @@
                 justify-content: center;
                 inline-size: 1.25rem;
                 block-size: 1.25rem;
-                transition: transform var(--transition-normal);
+                transition: transform var(--duration-4) var(--ease-in-out);
                 color: var(--text-secondary);
             }
 
@@ -779,7 +792,7 @@
                 justify-content: center;
                 inline-size: 1.25rem;
                 block-size: 1.25rem;
-                transition: transform var(--transition-normal);
+                transition: transform var(--duration-4) var(--ease-in-out);
                 color: var(--text-secondary);
             }
 
@@ -839,7 +852,7 @@
 
             .payment-table tbody tr {
                 background: var(--surface);
-                transition: background var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover);
                 cursor: pointer;
             }
 
@@ -908,7 +921,7 @@
                 cursor: pointer;
                 font-weight: var(--font-weight-semibold);
                 font-size: var(--font-size-14);
-                transition: background-color var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover);
             }
 
             .activity-log-summary:hover {
@@ -927,7 +940,7 @@
                 justify-content: center;
                 inline-size: 1.25rem;
                 block-size: 1.25rem;
-                transition: transform var(--transition-normal);
+                transition: transform var(--duration-4) var(--ease-in-out);
                 color: var(--text-secondary);
             }
 
@@ -978,7 +991,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .activity-input input {
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -1072,19 +1085,18 @@
                 color: var(--notice-150);
             }
 
-            .badge-fax-status {
-                transition: background-color 400ms ease, color 400ms ease;
-            }
-
-            .badge-doc-status {
-                transition: background-color 400ms ease, color 400ms ease;
-            }
-
             @media (prefers-reduced-motion: no-preference) {
+                .badge-fax-status {
+                    transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover);
+                }
+
+                .badge-doc-status {
+                    transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover);
+                }
 
                 .badge-fax-status.resolving,
                 .badge-doc-status.resolving {
-                    animation: badgeRing 480ms ease-out both;
+                    animation: badgeRing var(--duration-8) ease-out both;
                 }
             }
 
@@ -1440,7 +1452,7 @@
                 background: var(--surface);
                 font-size: var(--font-size-13);
                 border-radius: var(--radius);
-                transition: background-color var(--transition-fast), border-color var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover), border-color var(--duration-3) var(--ease-hover);
             }
 
             button:hover {
@@ -1468,7 +1480,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 button {
-                    transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background-color var(--duration-3) var(--ease-hover), border-color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -1505,6 +1517,10 @@
             }
 
             button.btn-preview-actions {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                white-space: nowrap;
                 padding-inline: var(--space-40);
                 background: var(--button-primary-bg);
                 color: var(--button-primary-text);
@@ -1557,7 +1573,7 @@
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                transition: all var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover), border-color var(--duration-3) var(--ease-hover);
             }
 
             .checkbox.checked {
@@ -1565,9 +1581,13 @@
                 border-color: var(--secondary-250);
             }
 
-            .checkbox svg {
+            .checkbox.checked::after {
+                content: '';
+                display: block;
                 inline-size: 0.625rem;
                 block-size: 0.5rem;
+                background: url("data:image/svg+xml,%3Csvg viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center;
+                background-size: contain;
             }
 
             /* Info icon */
@@ -1580,7 +1600,7 @@
                 background: transparent;
                 color: var(--gray-250);
                 cursor: pointer;
-                transition: all var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover);
                 margin-right: 0.25rem;
                 vertical-align: -0.125em;
                 border-radius: 0.1875rem;
@@ -1611,7 +1631,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .info-icon {
-                    transition: all var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -1719,11 +1739,11 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 dialog {
-                    transition: opacity 240ms ease, transform 240ms var(--ease-out-quadratic);
+                    transition: opacity var(--duration-3) var(--ease-out), transform var(--duration-3) var(--ease-out);
                 }
 
                 dialog::backdrop {
-                    transition: opacity 240ms ease;
+                    transition: opacity var(--duration-3) var(--ease-hover);
                 }
             }
 
@@ -2076,7 +2096,7 @@
                 inline-size: 5rem;
                 margin-inline-start: var(--space-20);
                 opacity: 1;
-                transition: opacity 180ms ease;
+                transition: opacity var(--duration-3) var(--ease-hover);
             }
 
             .modal-input-distribute {
@@ -2117,7 +2137,7 @@
                 .modal-field-input,
                 .modal-field-select {
                     box-shadow: 0 0 0 0 var(--surface), 0 0 0 0 var(--focus-ring);
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2162,7 +2182,7 @@
                 color: var(--text);
                 appearance: none;
                 text-indent: 0;
-                transition: background-image var(--transition-fast);
+                transition: background-image var(--duration-3) var(--ease-hover);
                 cursor: pointer;
             }
 
@@ -2228,7 +2248,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .modal-input {
-                    transition: opacity 180ms ease, box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: opacity var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2263,7 +2283,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .modal-textarea {
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2325,7 +2345,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .modal-footer-note-input input {
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2359,7 +2379,7 @@
                 align-items: center;
                 color: var(--gray-250);
                 vertical-align: -0.125em;
-                transition: all var(--transition-fast);
+                transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover);
                 border-radius: 0.1875rem;
             }
 
@@ -2383,7 +2403,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .sort-btn {
-                    transition: all var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background-color var(--duration-3) var(--ease-hover), color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2458,24 +2478,73 @@
                 block-size: 1.125em;
             }
 
-            .btn-dropdown-menu {
+            /* Row action menu — popover-based */
+            .row-action-menu {
                 position: fixed;
-                z-index: 100;
+                inset: auto;
+                margin: 0;
                 background: var(--surface);
                 border: 1px solid var(--border);
                 border-radius: var(--radius);
                 padding: var(--space-20);
                 box-shadow: var(--elevation-md);
                 min-inline-size: 12rem;
+                outline: none;
             }
 
-            .btn-dropdown-menu .menu-divider {
+            .row-action-menu:popover-open {
+                display: block;
+                animation: menuShow var(--duration-2) var(--ease-hover) forwards;
+            }
+
+            .row-action-menu.hiding {
+                display: block;
+                animation: menuHide var(--duration-1) var(--ease-hover) forwards;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+
+                .row-action-menu:popover-open,
+                .row-action-menu.hiding {
+                    animation: none;
+                }
+            }
+
+            @keyframes menuShow {
+                from {
+                    opacity: 0;
+                    scale: 0.95;
+                    translate: 0 -0.25rem;
+                }
+
+                to {
+                    opacity: 1;
+                    scale: 1;
+                    translate: 0 0;
+                }
+            }
+
+            @keyframes menuHide {
+                from {
+                    opacity: 1;
+                    scale: 1;
+                    translate: 0 0;
+                }
+
+                to {
+                    opacity: 0;
+                    scale: 0.95;
+                    translate: 0 -0.25rem;
+                }
+            }
+
+            .row-action-menu hr {
                 border: none;
                 border-block-start: 1px solid var(--border-subtle);
                 margin-block: var(--space-20);
             }
 
-            .btn-dropdown-menu button {
+            .row-action-menu button {
                 display: block;
                 inline-size: 100%;
                 text-align: start;
@@ -2483,13 +2552,25 @@
                 font-size: var(--font-size-12);
                 font-weight: 400;
                 border: none;
+                border-radius: calc(var(--radius) - 0.125rem);
                 background: transparent;
                 color: var(--text);
+                cursor: pointer;
             }
 
-            .btn-dropdown-menu button:hover {
-                background: var(--bg);
-                border-color: transparent;
+            .row-action-menu button:hover {
+                background: var(--gray-600);
+            }
+
+            .row-action-menu button:focus-visible {
+                outline: 2px solid var(--focus-ring);
+                outline-offset: -2px;
+            }
+
+            .row-action-menu button:disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+                pointer-events: none;
             }
 
             /* Waterfall container */
@@ -2666,13 +2747,7 @@
             }
 
             .table-action-btn {
-                transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
-            }
-
-            @media (prefers-reduced-motion: reduce) {
-                .table-action-btn {
-                    transition: opacity var(--duration-medium-1) ease;
-                }
+                transition: background-color var(--duration-3) var(--ease-hover), border-color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
             }
 
             .table-action-btn:focus-visible {
@@ -2685,12 +2760,12 @@
             }
 
             .table-action-btn:hover {
-                background: var(--bg);
+                background: var(--gray-700);
                 border-color: var(--hover-border);
             }
 
             .table-action-btn:active {
-                background: var(--gray-650);
+                background: var(--gray-600);
             }
 
             .table-action-danger {
@@ -2709,12 +2784,10 @@
                 border-color: var(--warning-100);
             }
 
-            .table-action-staff-sign {
+            .table-action-dropdown {
                 display: inline-flex;
-            }
-
-            .has-selection.has-signable .table-action-staff-sign {
-                opacity: 1;
+                align-items: center;
+                gap: var(--space-15);
             }
 
             /* btn-outline */
@@ -2728,17 +2801,18 @@
             }
 
             .btn-outline:hover {
-                background: var(--bg);
+                background: var(--gray-700);
                 border-color: var(--hover-border);
             }
 
             .btn-outline:active {
-                background: var(--gray-650);
+                background: var(--gray-600);
             }
 
             .btn-outline svg {
-                vertical-align: middle;
-                margin-inline-start: 0.25rem;
+                inline-size: 1em;
+                block-size: 1em;
+                flex-shrink: 0;
             }
 
             /* Table footer count */
@@ -2757,23 +2831,80 @@
                 margin-inline: 0;
             }
 
-            .load-more-bar {
+            .pagination-bar {
                 display: flex;
                 justify-content: center;
                 padding: var(--space-35) var(--space-45);
             }
 
-            .btn-load-more {
-                font-size: var(--font-size-12);
-                color: var(--text-secondary);
-                background: none;
-                border: none;
-                padding: var(--space-20) var(--space-40);
-                cursor: pointer;
+            .pagination-bar>div {
+                display: inline-flex;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
             }
 
-            .btn-load-more:hover {
+            .pagination-btn {
+                font-size: var(--font-size-12);
+                padding: var(--space-25) var(--space-40);
+                background: var(--surface);
+                border: none;
+                border-inline-end: 1px solid var(--border);
                 color: var(--text);
+                cursor: pointer;
+                min-inline-size: 2.25rem;
+                border-radius: 0;
+            }
+
+            .pagination-btn:first-child {
+                border-start-start-radius: calc(var(--radius) - 1px);
+                border-end-start-radius: calc(var(--radius) - 1px);
+            }
+
+            .pagination-btn:last-child {
+                border-inline-end: none;
+                border-start-end-radius: calc(var(--radius) - 1px);
+                border-end-end-radius: calc(var(--radius) - 1px);
+            }
+
+            .pagination-btn:hover:not(:disabled):not(.pagination-active) {
+                background: var(--gray-700);
+                border-color: var(--border);
+            }
+
+            .pagination-btn:active:not(:disabled):not(.pagination-active) {
+                background: var(--gray-600);
+            }
+
+            .pagination-btn:focus-visible {
+                outline: 2px solid var(--focus-ring);
+                outline-offset: -2px;
+            }
+
+            .pagination-btn:focus-visible:not(.pagination-active) {
+                outline: 2px solid var(--focus-ring);
+                outline-offset: -2px;
+            }
+
+            .pagination-active:focus-visible {
+                outline: none;
+            }
+
+            .pagination-btn:disabled {
+                color: var(--text-secondary);
+                cursor: not-allowed;
+            }
+
+            .pagination-active {
+                background: var(--gray-650);
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+                border-inline-start: 1px solid var(--border);
+                color: var(--text);
+                cursor: default;
+                pointer-events: none;
+            }
+
+            .pagination-btn:has(+ .pagination-active) {
+                border-inline-end: none;
             }
 
             .docs-panel table {
@@ -2823,9 +2954,25 @@
             }
 
             .btn-sm {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                white-space: nowrap;
                 font-size: var(--font-size-12);
                 padding: 0.375rem 0.625rem;
                 font-weight: 400;
+            }
+
+            .btn-sm svg,
+            button.btn-preview-actions svg {
+                inline-size: 1em;
+                block-size: 1em;
+                flex-shrink: 0;
+            }
+
+            .btn-sm svg:last-child,
+            button.btn-preview-actions svg:last-child {
+                translate: 0 0.0625rem;
             }
 
             .upload-label {
@@ -2844,7 +2991,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .upload-label {
-                    transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: background-color var(--duration-3) var(--ease-hover), border-color var(--duration-3) var(--ease-hover), box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -2965,7 +3112,7 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .docs-search {
-                    transition: box-shadow var(--transition-fast) var(--ease-out-quadratic);
+                    transition: box-shadow var(--duration-3) var(--ease-out);
                 }
             }
 
@@ -3067,43 +3214,11 @@
                 color: var(--text);
             }
 
-            .row-menu {
-                position: absolute;
-                inset-inline-end: var(--space-45);
-                inset-block-start: calc(100% - var(--space-20));
-                z-index: 100;
-                background: var(--surface);
-                border: 1px solid var(--border);
-                border-radius: var(--radius);
-                padding: var(--space-20);
-                box-shadow: var(--elevation-md);
-                min-inline-size: 10rem;
-            }
-
-            .row-menu button {
-                display: block;
-                inline-size: 100%;
-                text-align: start;
-                padding: var(--space-25) var(--space-40);
-                font-size: var(--font-size-12);
-                font-weight: 400;
-                border: none;
-                background: transparent;
-                color: var(--text);
-            }
-
-            .row-menu button:hover {
-                background: var(--hover-bg);
-                border-color: transparent;
-            }
-
-            .row-menu .menu-danger,
-            .btn-dropdown-menu .menu-danger {
+            .row-action-menu .menu-danger {
                 color: var(--warning-300);
             }
 
-            .row-menu .menu-danger:hover,
-            .btn-dropdown-menu .menu-danger:hover {
+            .row-action-menu .menu-danger:hover {
                 background: var(--warning-700);
             }
 
@@ -3420,15 +3535,12 @@
 
             @media (prefers-reduced-motion: no-preference) {
                 .toast {
-                    animation: toastIn 300ms ease both;
+                    animation: toastIn var(--duration-5) var(--ease-out) both;
                 }
 
-                .toast.ng-leave {
-                    animation: toastOut 200ms ease-in both;
-                }
-
+                .toast.ng-leave,
                 .toast.leaving {
-                    animation: toastOut 240ms ease both;
+                    animation: toastOut var(--duration-3) var(--ease-in-out) both;
                 }
             }
 
@@ -3592,15 +3704,40 @@
                 <div class="docs-panel-header" ng-class="{'has-selection': vm.getSelectedCount() > 0, 'has-signable': vm.hasSignableSelected()}">
                     <div class="th-toolbar-cell">
                         <div class="th-toolbar-actions">
-                            <button class="table-action-btn" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkFax()">Fax</button>
-                            <button class="table-action-btn" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkShare()">Share</button>
-                            <button class="table-action-btn" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkShareToSign()">Share to Sign</button>
-                            <div class="th-toolbar-actions-separator" aria-hidden="true"></div>
-                            <button class="table-action-btn table-action-staff-sign" ng-disabled="!vm.hasSignableSelected()" ng-click="vm.startStaffSign(null)">Staff Sign</button>
-                            <button class="table-action-btn" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkDownload()">Download</button>
-                            <button class="table-action-btn" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkPrint()">Print</button>
+                            <button class="table-action-btn table-action-dropdown" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.openToolbarMenu('toolbar-send-menu', $event)" aria-haspopup="menu">
+                                Send
+                                <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12">
+                                    <use href="#icon-chevron-down" />
+                                </svg>
+                            </button>
+                            <button class="table-action-btn table-action-dropdown" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.openToolbarMenu('toolbar-sign-menu', $event)" aria-haspopup="menu">
+                                Sign
+                                <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12">
+                                    <use href="#icon-chevron-down" />
+                                </svg>
+                            </button>
+                            <button class="table-action-btn table-action-dropdown" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.openToolbarMenu('toolbar-export-menu', $event)" aria-haspopup="menu">
+                                Export
+                                <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="12" height="12">
+                                    <use href="#icon-chevron-down" />
+                                </svg>
+                            </button>
                             <div class="th-toolbar-actions-separator" aria-hidden="true"></div>
                             <button class="table-action-btn table-action-danger" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkDelete()">Delete</button>
+                        </div>
+                        <div id="toolbar-send-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                            <button role="menuitem" ng-click="vm.bulkFax(); vm.closeMenu('toolbar-send-menu')">Fax</button>
+                            <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">Direct Message</button>
+                            <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">HIE</button>
+                            <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">Message</button>
+                        </div>
+                        <div id="toolbar-sign-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                            <button role="menuitem" ng-click="vm.closeMenu('toolbar-sign-menu')">Patient</button>
+                            <button role="menuitem" ng-click="vm.startStaffSign(null); vm.closeMenu('toolbar-sign-menu')">Staff</button>
+                        </div>
+                        <div id="toolbar-export-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                            <button role="menuitem" ng-click="vm.bulkDownload(); vm.closeMenu('toolbar-export-menu')">Download</button>
+                            <button role="menuitem" ng-click="vm.bulkPrint(); vm.closeMenu('toolbar-export-menu')">Print</button>
                         </div>
                         <div class="docs-search-wrapper">
                             <svg class="docs-search-icon" viewBox="0 0 24 24">
@@ -3621,9 +3758,6 @@
                             <tr>
                                 <th class="th-checkbox">
                                     <div class="checkbox" ng-class="{checked: vm.allDocsSelected()}" ng-click="vm.toggleSelectAllDocs()">
-                                        <svg ng-if="vm.allDocsSelected()" viewBox="0 0 10 8" fill="none">
-                                            <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
                                     </div>
                                 </th>
                                 <th class="th-middle col-document">Document
@@ -3686,12 +3820,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="doc in vm.filteredDocs() track by doc.id" ng-class="{selected: doc.selected}" ng-click="vm.openDocPreview(doc)">
+                            <tr ng-repeat="doc in vm.pagedDocs() track by doc.id" ng-class="{selected: doc.selected}" ng-click="vm.openDocPreview(doc)">
                                 <td class="td-checkbox" ng-click="$event.stopPropagation(); vm.toggleDocSelect(doc, $event)">
                                     <div class="checkbox" ng-class="{checked: doc.selected}">
-                                        <svg ng-if="doc.selected" viewBox="0 0 10 8" fill="none">
-                                            <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
                                     </div>
                                 </td>
                                 <td class="doc-name-cell">
@@ -3710,26 +3841,12 @@
                                     <span ng-if="!doc.staffSigned && !doc.shareStatus && !doc.faxed" class="badge badge-neutral">Not Shared</span>
                                 </td>
                                 <td class="td-end" ng-click="$event.stopPropagation()">
-                                    <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closeRowMenu(doc)">
-                                        <button class="btn-sm btn-outline" ng-click="vm.toggleRowMenu(doc, $event)">
-                                            Actions
-                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
-                                                <use href="#icon-chevron-down" />
-                                            </svg>
-                                        </button>
-                                        <div ng-if="doc.menuOpen" ng-click="vm.closeRowMenu(doc)" class="overlay-backdrop"></div>
-                                        <div ng-if="doc.menuOpen" class="btn-dropdown-menu" ng-style="{top: doc.menuPos.top !== 'auto' ? doc.menuPos.top + 'px' : 'auto', bottom: doc.menuPos.bottom !== 'auto' ? doc.menuPos.bottom + 'px' : 'auto', right: doc.menuPos.right + 'px'}">
-                                            <button ng-disabled="vm.getSelectedCount() > 1" ng-click="vm.openFaxModal(doc); vm.closeRowMenu(doc)">Fax</button>
-                                            <button ng-click="vm.closeRowMenu(doc)">Share</button>
-                                            <button ng-click="vm.closeRowMenu(doc)">Share to Sign</button>
-                                            <hr class="menu-divider">
-                                            <button ng-if="doc.signable" ng-click="$event.stopPropagation(); vm.startStaffSign(doc)">Staff Sign</button>
-                                            <button ng-click="vm.closeRowMenu(doc)">Download</button>
-                                            <button ng-click="vm.closeRowMenu(doc)">Print</button>
-                                            <hr class="menu-divider">
-                                            <button ng-click="vm.closeRowMenu(doc)" class="menu-danger">Delete</button>
-                                        </div>
-                                    </div>
+                                    <button class="btn-sm btn-outline" ng-click="vm.openDocMenu(doc, $event)" aria-haspopup="menu">
+                                        Actions
+                                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+                                            <use href="#icon-chevron-down" />
+                                        </svg>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -3739,6 +3856,20 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+                <div id="doc-row-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                    <button role="menuitem" ng-click="vm.openFaxModal(vm.activeDoc); vm.closeMenu('doc-row-menu')">Fax</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Direct Message</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">HIE</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Message</button>
+                    <hr>
+                    <button role="menuitem" ng-disabled="vm.activeDoc && (vm.activeDoc.patientSigned || vm.activeDoc.staffSigned)" ng-click="vm.closeMenu('doc-row-menu')">Patient Sign</button>
+                    <button ng-if="vm.activeDoc && vm.activeDoc.signable" role="menuitem" ng-disabled="vm.activeDoc && vm.activeDoc.staffSigned" ng-click="vm.startStaffSign(vm.activeDoc); vm.closeMenu('doc-row-menu')">Staff Sign</button>
+                    <hr>
+                    <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Download</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Print</button>
+                    <hr>
+                    <button role="menuitem" class="menu-danger" ng-click="vm.closeMenu('doc-row-menu')">Delete</button>
                 </div>
             </div>
             <div ng-if="vm.activeView === 'fax'">
@@ -3765,9 +3896,6 @@
                             <tr>
                                 <th class="th-checkbox">
                                     <div class="checkbox" ng-class="{checked: vm.allFaxSelected()}" ng-click="vm.toggleSelectAllFax()">
-                                        <svg ng-if="vm.allFaxSelected()" viewBox="0 0 10 8" fill="none">
-                                            <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
                                     </div>
                                 </th>
                                 <th class="th-middle col-fax-document">Document
@@ -3827,12 +3955,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="fax in vm.filteredFaxDocs() track by fax.id" ng-class="{selected: fax.selected}">
+                            <tr ng-repeat="fax in vm.pagedFaxDocs() track by fax.id" ng-class="{selected: fax.selected}">
                                 <td class="td-checkbox" ng-click="fax.selected = !fax.selected">
                                     <div class="checkbox" ng-class="{checked: fax.selected}">
-                                        <svg ng-if="fax.selected" viewBox="0 0 10 8" fill="none">
-                                            <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
                                     </div>
                                 </td>
                                 <td class="doc-name-cell">
@@ -3861,22 +3986,12 @@
                                     </div>
                                 </td>
                                 <td class="td-end">
-                                    <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closeRowMenu(fax)">
-                                        <button class="btn-sm btn-outline" ng-click="vm.toggleRowMenu(fax, $event)">
-                                            Actions
-                                            <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
-                                                <use href="#icon-chevron-down" />
-                                            </svg>
-                                        </button>
-                                        <div ng-if="fax.menuOpen" ng-click="vm.closeRowMenu(fax)" class="overlay-backdrop"></div>
-                                        <div ng-if="fax.menuOpen" class="btn-dropdown-menu" ng-style="{top: fax.menuPos.top !== 'auto' ? fax.menuPos.top + 'px' : 'auto', bottom: fax.menuPos.bottom !== 'auto' ? fax.menuPos.bottom + 'px' : 'auto', right: fax.menuPos.right + 'px'}">
-                                            <button ng-if="fax.faxStatus === 'failed'" ng-click="vm.retryFax(fax)">Retry</button>
-                                            <button ng-if="fax.faxStatus !== 'failed'" ng-disabled="vm.getFaxSelectedCount() > 1" ng-click="vm.openFaxModal(fax); vm.closeRowMenu(fax)">Fax</button>
-                                            <hr class="menu-divider">
-                                            <button ng-click="vm.closeRowMenu(fax)">Download</button>
-                                            <button ng-click="vm.closeRowMenu(fax)">Print</button>
-                                        </div>
-                                    </div>
+                                    <button class="btn-sm btn-outline" ng-click="vm.openFaxMenu(fax, $event)" aria-haspopup="menu">
+                                        Actions
+                                        <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16">
+                                            <use href="#icon-chevron-down" />
+                                        </svg>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -3887,11 +4002,27 @@
                         </tfoot>
                     </table>
                 </div>
+                <div id="fax-row-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                    <button ng-if="vm.activeFax && vm.activeFax.faxStatus === 'failed'" role="menuitem" ng-click="vm.retryFax(vm.activeFax); vm.closeMenu('fax-row-menu')">Retry</button>
+                    <button ng-if="!vm.activeFax || vm.activeFax.faxStatus !== 'failed'" role="menuitem" ng-disabled="vm.getFaxSelectedCount() > 1" ng-click="vm.openFaxModal(vm.activeFax); vm.closeMenu('fax-row-menu')">Fax</button>
+                    <hr>
+                    <button role="menuitem" ng-click="vm.closeMenu('fax-row-menu')">Download</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('fax-row-menu')">Print</button>
+                </div>
             </div>
         </div>
-        <div class="load-more-bar">
-            <button type="button" class="btn-load-more">Load more</button>
-        </div>
+        <nav class="pagination-bar" aria-label="Pagination">
+            <div ng-if="vm.activeView === 'documents'">
+                <button class="pagination-btn" ng-click="vm.setDocsPage(vm.docsPage - 1)" ng-disabled="vm.docsPage === 1" aria-label="Previous page">Previous</button>
+                <button class="pagination-btn" ng-repeat="p in vm.docPageRange() track by p" ng-click="vm.setDocsPage(p)" ng-class="{'pagination-active': vm.docsPage === p}" aria-current="{{vm.docsPage === p ? 'page' : false}}">{{p}}</button>
+                <button class="pagination-btn" ng-click="vm.setDocsPage(vm.docsPage + 1)" ng-disabled="vm.docsPage === vm.totalDocPages()" aria-label="Next page">Next</button>
+            </div>
+            <div ng-if="vm.activeView === 'fax'">
+                <button class="pagination-btn" ng-click="vm.setFaxPage(vm.faxPage - 1)" ng-disabled="vm.faxPage === 1" aria-label="Previous page">Previous</button>
+                <button class="pagination-btn" ng-repeat="p in vm.faxPageRange() track by p" ng-click="vm.setFaxPage(p)" ng-class="{'pagination-active': vm.faxPage === p}" aria-current="{{vm.faxPage === p ? 'page' : false}}">{{p}}</button>
+                <button class="pagination-btn" ng-click="vm.setFaxPage(vm.faxPage + 1)" ng-disabled="vm.faxPage === vm.totalFaxPages()" aria-label="Next page">Next</button>
+            </div>
+        </nav>
     </main>
 
     <!-- Send Fax Modal -->
@@ -3910,9 +4041,6 @@
                 <ul class="fax-doc-list">
                     <li ng-repeat="d in vm.faxModal.docs" ng-class="{excluded: !d.included}" ng-click="d.included = !d.included">
                         <div class="checkbox" ng-class="{checked: d.included}">
-                            <svg ng-if="d.included" viewBox="0 0 10 8" fill="none">
-                                <path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
                         </div>
                         <span class="doc-name">{{d.name}}</span>
                         <span class="doc-pages">{{d.pages === 1 ? '1 page' : d.pages + ' pages'}}</span>
@@ -4078,24 +4206,25 @@
             </div>
             <div class="sign-modal-footer sign-modal-footer-end">
                 <button type="button" ng-click="vm.closeDocPreview()">Close</button>
-                <div class="btn-dropdown" ng-keydown="$event.key === 'Escape' && vm.closePreviewMenu()">
-                    <button class="btn-preview-actions" ng-click="vm.togglePreviewMenu($event)">
-                        <span class="with-icon">Actions <svg class="icon icon-after" aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 4.5L8 12l7-7.5" />
-                            </svg></span>
-                    </button>
-                    <div ng-if="vm.previewMenuOpen" ng-click="vm.closePreviewMenu()" class="overlay-backdrop"></div>
-                    <div ng-if="vm.previewMenuOpen" class="btn-dropdown-menu" ng-style="{bottom: vm.previewMenuPos.bottom + 'px', right: vm.previewMenuPos.right + 'px'}">
-                        <button ng-if="vm.previewDoc.signable" ng-click="vm.closeDocPreview(); vm.startStaffSign(vm.previewDoc)">Staff Sign</button>
-                        <button ng-click="vm.closePreviewMenu()">Fax</button>
-                        <button ng-click="vm.closePreviewMenu()">Share</button>
-                        <button ng-click="vm.closePreviewMenu()">Share to Sign</button>
-                        <hr class="menu-divider">
-                        <button ng-click="vm.closePreviewMenu()">Download</button>
-                        <button ng-click="vm.closePreviewMenu()">Print</button>
-                        <hr class="menu-divider">
-                        <button ng-click="vm.closePreviewMenu()" class="menu-danger">Delete</button>
-                    </div>
+                <button class="btn-preview-actions" ng-click="vm.openMenu('preview-menu', $event)" aria-haspopup="menu" aria-expanded="false">
+                    Actions
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16">
+                        <use href="#icon-chevron-down" />
+                    </svg>
+                </button>
+                <div id="preview-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Fax</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Direct Message</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">HIE</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Message</button>
+                    <hr>
+                    <button role="menuitem" ng-disabled="vm.previewDoc && (vm.previewDoc.patientSigned || vm.previewDoc.staffSigned)" ng-click="vm.closeMenu('preview-menu')">Patient Sign</button>
+                    <button ng-if="vm.previewDoc.signable" role="menuitem" ng-disabled="vm.previewDoc && vm.previewDoc.staffSigned" ng-click="vm.closeDocPreview(); vm.startStaffSign(vm.previewDoc)">Staff Sign</button>
+                    <hr>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Download</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Print</button>
+                    <hr>
+                    <button role="menuitem" class="menu-danger" ng-click="vm.closeMenu('preview-menu')">Delete</button>
                 </div>
             </div>
         </div>
@@ -4203,13 +4332,68 @@
                     { id: 1, name: 'Telehealth Informed Consent', type: 'Form', sendDate: '03/06/2026 09:14 AM', receivedDate: '03/06/2026 09:16 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
                     { id: 2, name: 'Authorization to Bill Insurance', type: 'Form', sendDate: '03/05/2026 03:58 PM', receivedDate: '03/05/2026 04:02 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: AUTH_CONTENT },
                     { id: 25, name: 'Consent to Treatment', type: 'Form', sendDate: '03/05/2026 10:00 AM', receivedDate: '03/05/2026 10:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, patientSigned: true, selected: false, content: CONSENT_CONTENT },
-                    { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/05/2026 03:42 PM', receivedDate: '03/05/2026 03:51 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
+                    { id: 3, name: 'HIPAA Privacy Notice Acknowledgment', type: 'Form', sendDate: '03/06/2026 09:30 AM', receivedDate: '03/05/2026 03:51 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: true, staffSigName: 'Richard Elliott', staffSigCredentials: 'NP', staffSigTs: '03/06/2026 04:12 PM', faxStatus: 'success', selected: false, content: HIPAA_CONTENT },
                     { id: 4, name: 'Initial Treatment Plan', type: 'Treatment Plan', sendDate: '03/04/2026 11:00 AM', receivedDate: '03/04/2026 11:00 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: false, staffSigned: false, faxStatus: 'failed', selected: false, content: LOREM_CONTENT },
                     { id: 5, name: 'Intake Progress Note', type: 'Progress Note', sendDate: '03/04/2026 10:45 AM', receivedDate: '03/04/2026 10:45 AM', encounter: '03/04/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, faxStatus: 'pending', selected: false, content: LOREM_CONTENT },
                     { id: 6, name: 'Discharge Summary', type: 'Summary', sendDate: '02/28/2026 02:35 PM', receivedDate: '02/28/2026 02:35 PM', encounter: '02/28/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
                     { id: 7, name: 'Release of Information', type: 'Form', sendDate: '02/20/2026 02:15 PM', receivedDate: '02/20/2026 02:19 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, faxed: true, faxStatus: 'success', selected: false, content: CONSENT_CONTENT },
-                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT }
+                    { id: 8, name: 'Annual Treatment Plan', type: 'Treatment Plan', sendDate: '01/15/2026 09:00 AM', receivedDate: '01/15/2026 09:00 AM', encounter: '01/15/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 9, name: 'Psychiatric Evaluation', type: 'Assessment', sendDate: '01/10/2026 02:00 PM', receivedDate: '01/10/2026 02:05 PM', encounter: '01/10/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 10, name: 'Medication Management Note', type: 'Progress Note', sendDate: '01/08/2026 11:30 AM', receivedDate: '01/08/2026 11:30 AM', encounter: '01/08/2026', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 11, name: 'Crisis Safety Plan', type: 'Form', sendDate: '12/20/2025 03:15 PM', receivedDate: '12/20/2025 03:20 PM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
+                    { id: 12, name: 'Group Therapy Note', type: 'Progress Note', sendDate: '12/15/2025 10:00 AM', receivedDate: '12/15/2025 10:00 AM', encounter: '12/15/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 13, name: 'Referral to Specialist', type: 'Form', sendDate: '12/10/2025 09:45 AM', receivedDate: '12/10/2025 09:50 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: 'Shared', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
+                    { id: 14, name: 'Biopsychosocial Assessment', type: 'Assessment', sendDate: '12/05/2025 01:30 PM', receivedDate: '12/05/2025 01:35 PM', encounter: '12/05/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 15, name: 'Substance Use Assessment', type: 'Assessment', sendDate: '11/28/2025 02:00 PM', receivedDate: '11/28/2025 02:00 PM', encounter: '11/28/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 16, name: 'Aftercare Plan', type: 'Treatment Plan', sendDate: '11/20/2025 11:00 AM', receivedDate: '11/20/2025 11:00 AM', encounter: '11/20/2025', category: 'Clinical Notes', clinician: 'Dr. Sarah', shareStatus: '', signable: false, staffSigned: false, selected: false, content: LOREM_CONTENT },
+                    { id: 17, name: 'Notice of Privacy Practices', type: 'Form', sendDate: '11/15/2025 09:00 AM', receivedDate: '11/15/2025 09:05 AM', encounter: '', category: 'Consents and Legal', clinician: 'Dr. Sarah', shareStatus: '', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT }
                 ];
+
+                vm.pageSize = 10;
+                vm.docsPage = 1;
+                vm.faxPage = 1;
+
+                vm.totalDocPages = function () {
+                    return Math.ceil(vm.filteredDocs().length / vm.pageSize);
+                };
+
+                vm.totalFaxPages = function () {
+                    return Math.ceil(vm.filteredFaxDocs().length / vm.pageSize);
+                };
+
+                vm.pagedDocs = function () {
+                    var start = (vm.docsPage - 1) * vm.pageSize;
+                    return vm.filteredDocs().slice(start, start + vm.pageSize);
+                };
+
+                vm.pagedFaxDocs = function () {
+                    var start = (vm.faxPage - 1) * vm.pageSize;
+                    return vm.filteredFaxDocs().slice(start, start + vm.pageSize);
+                };
+
+                vm.setDocsPage = function (p) {
+                    var total = vm.totalDocPages();
+                    if (p < 1 || p > total) return;
+                    vm.docsPage = p;
+                };
+
+                vm.setFaxPage = function (p) {
+                    var total = vm.totalFaxPages();
+                    if (p < 1 || p > total) return;
+                    vm.faxPage = p;
+                };
+
+                vm.docPageRange = function () {
+                    var pages = [], total = vm.totalDocPages();
+                    for (var i = 1; i <= total; i++) pages.push(i);
+                    return pages;
+                };
+
+                vm.faxPageRange = function () {
+                    var pages = [], total = vm.totalFaxPages();
+                    for (var i = 1; i <= total; i++) pages.push(i);
+                    return pages;
+                };
 
                 vm.sortField = 'sendDate';
                 vm.sortDir = 'desc';
@@ -4247,8 +4431,14 @@
                     }
                     var f = vm.sortField, dir = vm.sortDir === 'asc' ? 1 : -1;
                     return list.slice().sort(function (a, b) {
-                        var av = (a[f] || '').toString().toLowerCase();
-                        var bv = (b[f] || '').toString().toLowerCase();
+                        var av = a[f] || '', bv = b[f] || '';
+                        if (f === 'sendDate' || f === 'receivedDate') {
+                            av = new Date(av);
+                            bv = new Date(bv);
+                        } else {
+                            av = av.toString().toLowerCase();
+                            bv = bv.toString().toLowerCase();
+                        }
                         return av < bv ? -dir : av > bv ? dir : 0;
                     });
                 };
@@ -4313,6 +4503,36 @@
                         id: 110, name: 'Release of Information', recipient: 'Dr. Sarah Johnson', faxNumber: '(555) 123-4567', sentDate: '02/20/2026 02:15 PM', sentBy: 'Dr. Sarah', pages: 3, faxStatus: 'success', selected: false, docs: [
                             { name: 'Release of Information', pages: 3, fileType: 'PDF' }
                         ]
+                    },
+                    {
+                        id: 112, name: 'Aftercare Plan', recipient: 'Dr. Emily Rodriguez', faxNumber: '(555) 456-7890', sentDate: '01/15/2026 10:00 AM', sentBy: 'Jane Doe', pages: 4, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Aftercare Plan', pages: 4, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 113, name: 'Crisis Safety Plan', recipient: 'Memorial Hospital', faxNumber: '(555) 987-6543', sentDate: '01/10/2026 03:30 PM', sentBy: 'Dr. Sarah', pages: 2, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Crisis Safety Plan', pages: 2, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 114, name: 'Biopsychosocial Assessment', recipient: 'Dr. James Patel', faxNumber: '(555) 444-9900', sentDate: '12/20/2025 11:15 AM', sentBy: 'Richard Elliott', pages: 7, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Biopsychosocial Assessment', pages: 7, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 115, name: 'Referral to Specialist', recipient: 'Dr. Michael Chen', faxNumber: '(555) 345-6789', sentDate: '12/15/2025 09:00 AM', sentBy: 'Dr. Sarah', pages: 1, faxStatus: 'failed', selected: false, docs: [
+                            { name: 'Referral to Specialist', pages: 1, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 116, name: 'Substance Use Assessment', recipient: 'BlueCross BlueShield', faxNumber: '(555) 300-7700', sentDate: '12/10/2025 02:45 PM', sentBy: 'John Smith', pages: 5, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Substance Use Assessment', pages: 5, fileType: 'PDF' }
+                        ]
+                    },
+                    {
+                        id: 117, name: 'Group Therapy Note', recipient: 'Quest Diagnostics', faxNumber: '(555) 876-5432', sentDate: '11/28/2025 01:00 PM', sentBy: 'Jane Doe', pages: 3, faxStatus: 'success', selected: false, docs: [
+                            { name: 'Group Therapy Note', pages: 3, fileType: 'PDF' }
+                        ]
                     }
                 ];
 
@@ -4371,7 +4591,6 @@
                 });
 
                 vm.retryFax = function (fax) {
-                    vm.closeRowMenu(fax);
                     fax.faxStatus = 'pending';
                     var recipient = fax.recipient || fax.faxNumber;
                     vm._showToast('info', 'Fax queued for ' + recipient);
@@ -4434,59 +4653,120 @@
                 vm.bulkDelete = function () { };
                 vm.toggleUploadMenu = function () { };
 
-                vm.toggleRowMenu = function (doc, $event) {
-                    $event.stopPropagation();
-                    var wasOpen = doc.menuOpen;
-                    vm.docs.forEach(function (d) { d.menuOpen = false; });
-                    vm.faxDocs.forEach(function (d) { d.menuOpen = false; });
-                    if (!wasOpen) {
-                        var rect = $event.currentTarget.getBoundingClientRect();
-                        var spaceBelow = window.innerHeight - rect.bottom;
-                        var spaceAbove = rect.top;
-                        var menuHeight = 280;
-                        if (spaceBelow < menuHeight && spaceAbove > spaceBelow) {
-                            doc.menuPos = { bottom: window.innerHeight - rect.top + 4, right: window.innerWidth - rect.right, top: 'auto' };
-                        } else {
-                            doc.menuPos = { top: rect.bottom + 4, right: window.innerWidth - rect.right, bottom: 'auto' };
-                        }
+                vm.activeDoc = null;
+                vm.activeFax = null;
+
+                vm._positionMenu = function (menuEl, trigger) {
+                    var rect = trigger.getBoundingClientRect();
+                    var spaceBelow = window.innerHeight - rect.bottom;
+                    if (spaceBelow < 280 && rect.top > spaceBelow) {
+                        menuEl.style.insetBlockStart = 'auto';
+                        menuEl.style.insetBlockEnd = (window.innerHeight - rect.top + 4) + 'px';
+                    } else {
+                        menuEl.style.insetBlockEnd = 'auto';
+                        menuEl.style.insetBlockStart = (rect.bottom + 4) + 'px';
                     }
-                    doc.menuOpen = !wasOpen;
+                    menuEl.style.insetInlineEnd = (window.innerWidth - rect.right) + 'px';
                 };
 
-                vm.closeRowMenu = function (doc) {
-                    doc.menuOpen = false;
+                vm._hideMenu = function (menu) {
+                    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    if (reduced) { menu.hidePopover(); return; }
+                    menu.classList.add('hiding');
+                    menu.addEventListener('animationend', function () {
+                        menu.classList.remove('hiding');
+                        menu.hidePopover();
+                    }, { once: true });
+                };
+
+                vm._showMenu = function (menu, trigger) {
+                    vm._positionMenu(menu, trigger);
+                    menu.showPopover();
+                    var firstBtn = menu.querySelector('button:not([disabled])');
+                    if (firstBtn) firstBtn.focus();
+                };
+
+                vm.openDocMenu = function (doc, $event) {
+                    $event.stopPropagation();
+                    var menu = document.getElementById('doc-row-menu');
+                    if (!menu) return;
+                    if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm.activeDoc = doc;
+                    vm._showMenu(menu, $event.currentTarget);
+                };
+
+                vm.openFaxMenu = function (fax, $event) {
+                    $event.stopPropagation();
+                    var menu = document.getElementById('fax-row-menu');
+                    if (!menu) return;
+                    if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm.activeFax = fax;
+                    vm._showMenu(menu, $event.currentTarget);
+                };
+
+                vm.openMenu = function (id, $event) {
+                    $event.stopPropagation();
+                    var menu = document.getElementById(id);
+                    if (!menu) return;
+                    if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm._showMenu(menu, $event.currentTarget);
+                };
+
+                vm.closeMenu = function (id) {
+                    var menu = document.getElementById(id);
+                    if (!menu) return;
+                    vm._hideMenu(menu);
+                };
+
+                vm.openToolbarMenu = function (id, $event) {
+                    $event.stopPropagation();
+                    var menu = document.getElementById(id);
+                    if (!menu) return;
+                    var isOpen = menu.matches(':popover-open');
+                    ['toolbar-send-menu', 'toolbar-sign-menu', 'toolbar-export-menu'].forEach(function (otherId) {
+                        var other = document.getElementById(otherId);
+                        if (other && other.matches(':popover-open')) vm._hideMenu(other);
+                    });
+                    if (!isOpen) vm._showMenu(menu, $event.currentTarget);
+                };
+
+                document.addEventListener('click', function () {
+                    ['doc-row-menu', 'fax-row-menu', 'preview-menu', 'toolbar-send-menu', 'toolbar-sign-menu', 'toolbar-export-menu'].forEach(function (id) {
+                        var menu = document.getElementById(id);
+                        if (menu && menu.matches(':popover-open')) vm._hideMenu(menu);
+                    });
+                });
+
+                vm.handleMenuKeydown = function ($event) {
+                    var menu = $event.currentTarget;
+                    var items = Array.from(menu.querySelectorAll('button:not([disabled])'));
+                    var idx = items.indexOf(document.activeElement);
+                    if ($event.key === 'ArrowDown') {
+                        $event.preventDefault();
+                        items[(idx + 1) % items.length].focus();
+                    } else if ($event.key === 'ArrowUp') {
+                        $event.preventDefault();
+                        items[(idx - 1 + items.length) % items.length].focus();
+                    } else if ($event.key === 'Escape') {
+                        $event.preventDefault();
+                        var id = menu.id;
+                        vm.closeMenu(id);
+                        var trigger = document.querySelector('[popovertarget="' + id + '"]');
+                        if (trigger) trigger.focus();
+                    }
                 };
 
                 // --- Doc Preview ---
                 vm.previewDoc = null;
-                vm.previewMenuOpen = false;
-                vm.previewMenuPos = {};
 
                 vm.openDocPreview = function (doc) {
                     vm.previewDoc = doc;
-                    vm.previewMenuOpen = false;
                     vm._openDialog('doc-view-dialog');
                 };
 
                 vm.closeDocPreview = function () {
-                    vm.previewMenuOpen = false;
+                    vm.closeMenu('preview-menu');
                     vm._closeDialog('doc-view-dialog');
-                };
-
-                vm.togglePreviewMenu = function ($event) {
-                    $event.stopPropagation();
-                    vm.previewMenuOpen = !vm.previewMenuOpen;
-                    if (vm.previewMenuOpen) {
-                        var rect = $event.currentTarget.getBoundingClientRect();
-                        vm.previewMenuPos = {
-                            bottom: window.innerHeight - rect.top + 4,
-                            right: window.innerWidth - rect.right
-                        };
-                    }
-                };
-
-                vm.closePreviewMenu = function () {
-                    vm.previewMenuOpen = false;
                 };
 
                 // --- Staff Sign ---
@@ -4497,7 +4777,6 @@
                 vm._pendingCancelQueue = false;
 
                 vm.startStaffSign = function (doc) {
-                    vm.docs.forEach(function (d) { d.menuOpen = false; });
                     if (doc) {
                         vm.signQueue = [doc];
                     } else {
