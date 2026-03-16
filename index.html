@@ -3862,8 +3862,8 @@
                             <button class="table-action-btn table-action-danger" ng-disabled="vm.getSelectedCount() === 0" ng-click="vm.bulkDelete()">Delete</button>
                         </div>
                         <div id="toolbar-send-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
-                            <button role="menuitem" ng-click="vm.bulkFax(); vm.closeMenu('toolbar-send-menu')">Fax</button>
                             <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">Direct Message</button>
+                            <button role="menuitem" ng-click="vm.bulkFax(); vm.closeMenu('toolbar-send-menu')">Fax</button>
                             <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">HIE</button>
                             <button role="menuitem" ng-click="vm.closeMenu('toolbar-send-menu')">Message</button>
                         </div>
@@ -3994,8 +3994,8 @@
                     </table>
                 </div>
                 <div id="doc-row-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
-                    <button role="menuitem" ng-click="vm.openFaxModal(vm.activeDoc); vm.closeMenu('doc-row-menu')">Fax</button>
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Direct Message</button>
+                    <button role="menuitem" ng-click="vm.openFaxModal(vm.activeDoc); vm.closeMenu('doc-row-menu')">Fax</button>
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">HIE</button>
                     <button role="menuitem" ng-click="vm.closeMenu('doc-row-menu')">Message</button>
                     <hr>
@@ -4381,8 +4381,8 @@
                     </svg>
                 </button>
                 <div id="preview-menu" popover="manual" class="row-action-menu" role="menu" ng-keydown="vm.handleMenuKeydown($event)">
-                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Fax</button>
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Direct Message</button>
+                    <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Fax</button>
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">HIE</button>
                     <button role="menuitem" ng-click="vm.closeMenu('preview-menu')">Message</button>
                     <hr>
