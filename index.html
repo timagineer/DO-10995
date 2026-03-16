@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" ng-app="docsApp">
 
@@ -3281,8 +3280,7 @@
                 text-align: end;
             }
 
-            .doc-preview-patient-row span:last-child {
-            }
+            .doc-preview-patient-row span:last-child {}
 
             .doc-preview-title {
                 font-size: var(--font-size-16);
@@ -4096,7 +4094,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="fax in vm.pagedFaxDocs() track by fax.id" ng-class="{selected: fax.selected}">
-                                <td class="td-checkbox" ng-click="fax.selected = !fax.selected">
+                                <td class="td-checkbox" ng-click="fax.selected = !fax.selected; vm._closeAllMenus()">
                                     <div class="checkbox" ng-class="{checked: fax.selected}">
                                     </div>
                                 </td>
@@ -4318,30 +4316,30 @@
                     <label class="doc-meta-field">
                         <span>Category</span>
                         <select ng-model="vm.previewDoc.category">
-                                        <option value="Unassigned">Unassigned</option>
-                                        <optgroup label="Clinical">
-                                            <option>Assessment Tools</option>
-                                            <option>Clinical Notes</option>
-                                            <option>Intake Forms</option>
-                                            <option>Prescriptions</option>
-                                        </optgroup>
-                                        <optgroup label="Administrative">
-                                            <option>Consents and Legal Forms</option>
-                                            <option>Disability</option>
-                                            <option>Insurance Information</option>
-                                            <option>Invoices</option>
-                                        </optgroup>
-                                        <optgroup label="External Records">
-                                            <option>Fax</option>
-                                            <option>Lab</option>
-                                            <option>Patient External Medical Records</option>
-                                            <option>Portal Attachments</option>
-                                        </optgroup>
-                                        <optgroup label="Other">
-                                            <option>Miscellaneous</option>
-                                            <option>Photos</option>
-                                        </optgroup>
-                                    </select>
+                            <option value="Unassigned">Unassigned</option>
+                            <optgroup label="Clinical">
+                                <option>Assessment Tools</option>
+                                <option>Clinical Notes</option>
+                                <option>Intake Forms</option>
+                                <option>Prescriptions</option>
+                            </optgroup>
+                            <optgroup label="Administrative">
+                                <option>Consents and Legal Forms</option>
+                                <option>Disability</option>
+                                <option>Insurance Information</option>
+                                <option>Invoices</option>
+                            </optgroup>
+                            <optgroup label="External Records">
+                                <option>Fax</option>
+                                <option>Lab</option>
+                                <option>Patient External Medical Records</option>
+                                <option>Portal Attachments</option>
+                            </optgroup>
+                            <optgroup label="Other">
+                                <option>Miscellaneous</option>
+                                <option>Photos</option>
+                            </optgroup>
+                        </select>
                     </label>
                     <label class="doc-meta-field">
                         <span>Attach to</span>
@@ -4763,6 +4761,7 @@
                 vm.toggleSelectAllFax = function () {
                     var all = vm.allFaxSelected();
                     vm.filteredFaxDocs().forEach(function (f) { f.selected = !all; });
+                    vm._closeAllMenus();
                 };
 
                 vm.getFaxSelectedCount = function () {
@@ -4823,6 +4822,7 @@
                 vm.toggleDocSelect = function (doc, $event) {
                     $event.stopPropagation();
                     doc.selected = !doc.selected;
+                    vm._closeAllMenus();
                 };
 
                 vm.allDocsSelected = function () {
@@ -4833,6 +4833,7 @@
                 vm.toggleSelectAllDocs = function () {
                     var all = vm.allDocsSelected();
                     vm.pagedDocs().forEach(function (d) { d.selected = !all; });
+                    vm._closeAllMenus();
                 };
 
                 vm.getSelectedCount = function () {
