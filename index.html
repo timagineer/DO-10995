@@ -3460,6 +3460,21 @@
                 background: var(--surface);
                 color: var(--text);
                 inline-size: 100%;
+                box-shadow: 0 0 0 0 var(--surface), 0 0 0 0 var(--focus-ring);
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+
+                .doc-meta-field input,
+                .doc-meta-field select {
+                    transition: box-shadow var(--duration-3) var(--ease-out);
+                }
+            }
+
+            .doc-meta-field input:focus,
+            .doc-meta-field select:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--focus-ring);
             }
 
             .doc-meta-field select {
@@ -3472,6 +3487,7 @@
                 inline-size: 100%;
                 appearance: none;
                 cursor: pointer;
+                box-shadow: 0 0 0 0 var(--surface), 0 0 0 0 var(--focus-ring);
             }
 
             .doc-meta-field select:hover {
