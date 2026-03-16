@@ -4874,12 +4874,13 @@
                 };
 
                 vm._hideMenu = function (menu) {
+                    if (menu.classList.contains('hiding')) return;
                     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                     if (reduced) { menu.hidePopover(); return; }
                     menu.classList.add('hiding');
                     menu.addEventListener('animationend', function () {
                         menu.classList.remove('hiding');
-                        menu.hidePopover();
+                        if (menu.matches(':popover-open')) menu.hidePopover();
                     }, { once: true });
                 };
 
@@ -4939,7 +4940,8 @@
                     if (!menu) return;
                     var isOpen = menu.matches(':popover-open');
                     vm._closeAllMenus(id);
-                    if (!isOpen) vm._showMenu(menu, $event.currentTarget);
+                    if (isOpen) { vm._hideMenu(menu); return; }
+                    vm._showMenu(menu, $event.currentTarget);
                 };
 
                 document.addEventListener('click', function () {
