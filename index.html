@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" ng-app="docsApp">
 
@@ -3280,6 +3281,9 @@
                 text-align: end;
             }
 
+            .doc-preview-patient-row span:last-child {
+            }
+
             .doc-preview-title {
                 font-size: var(--font-size-16);
                 font-weight: var(--font-weight-bold);
@@ -3333,7 +3337,7 @@
                 font-weight: 600;
                 color: var(--gray-300);
                 text-transform: uppercase;
-                letter-spacing: 0;
+                letter-spacing: var(--tracking-normal);
             }
 
             .doc-preview-patient-sig {
@@ -4246,7 +4250,7 @@
                             <div class="doc-preview-patient-row"><span>Clinician</span><span>{{vm.staff.name}}, {{vm.staff.credentials}}</span></div>
                             <div class="doc-preview-patient-row"><span>Patient</span><span>{{vm.patient.name}}</span></div>
                             <div class="doc-preview-patient-row"><span>DOB</span><span>{{vm.patient.dob}}</span></div>
-                            <div class="doc-preview-patient-row"><span>MRN</span><span>{{vm.patient.chartId}}</span></div>
+                            <div class="doc-preview-patient-row"><span>ID</span><span>{{vm.patient.chartId}}</span></div>
                         </div>
                     </div>
                     <h3 class="doc-preview-title">{{vm.signDoc.name}}</h3>
@@ -4313,7 +4317,31 @@
                 <div class="doc-meta-fields">
                     <label class="doc-meta-field">
                         <span>Category</span>
-                        <select ng-model="vm.previewDoc.category" ng-options="c for c in vm.docCategories"></select>
+                        <select ng-model="vm.previewDoc.category">
+                                        <option value="Unassigned">Unassigned</option>
+                                        <optgroup label="Clinical">
+                                            <option>Assessment Tools</option>
+                                            <option>Clinical Notes</option>
+                                            <option>Intake Forms</option>
+                                            <option>Prescriptions</option>
+                                        </optgroup>
+                                        <optgroup label="Administrative">
+                                            <option>Consents and Legal Forms</option>
+                                            <option>Disability</option>
+                                            <option>Insurance Information</option>
+                                            <option>Invoices</option>
+                                        </optgroup>
+                                        <optgroup label="External Records">
+                                            <option>Fax</option>
+                                            <option>Lab</option>
+                                            <option>Patient External Medical Records</option>
+                                            <option>Portal Attachments</option>
+                                        </optgroup>
+                                        <optgroup label="Other">
+                                            <option>Miscellaneous</option>
+                                            <option>Photos</option>
+                                        </optgroup>
+                                    </select>
                     </label>
                     <label class="doc-meta-field">
                         <span>Attach to</span>
@@ -4340,7 +4368,7 @@
                             <div class="doc-preview-patient-row"><span>Clinician</span><span>{{vm.staff.name}}, {{vm.staff.credentials}}</span></div>
                             <div class="doc-preview-patient-row"><span>Patient</span><span>{{vm.patient.name}}</span></div>
                             <div class="doc-preview-patient-row"><span>DOB</span><span>{{vm.patient.dob}}</span></div>
-                            <div class="doc-preview-patient-row"><span>MRN</span><span>{{vm.patient.chartId}}</span></div>
+                            <div class="doc-preview-patient-row"><span>ID</span><span>{{vm.patient.chartId}}</span></div>
                         </div>
                     </div>
                     <h3 class="doc-preview-title">{{vm.previewDoc.name}}</h3>
@@ -4456,8 +4484,8 @@
                 };
 
                 var MOCK = {
-                    patient: { name: 'Patricia Patient', dob: '05/14/1988', chartId: '00482' },
-                    practice: { name: 'Riverside Behavioral Health', address: '1200 Wellness Blvd, Suite 300', city: 'Austin, TX 78701', phone: '(512) 555-0190' },
+                    patient: { name: 'Patricia Patient', dob: '05/14/1988', chartId: '0482' },
+                    practice: { name: 'Riverside Behavioral Health', address: '120 Wellness Road, № 7', city: 'Austin, TX 78701', phone: '(512) 555-0190' },
                     staff: { name: 'Sarah Tina', credentials: 'MD' }
                 };
                 var STAFF = MOCK.staff;
@@ -4496,7 +4524,6 @@
                     { heading: 'Acknowledgment', body: 'By signing below, you acknowledge that you have received a copy of this Notice of Privacy Practices and have had the opportunity to review it.' }
                 ];
 
-                vm.docCategories = ['Unassigned', 'Assessment Tools', 'Consents and Legal Forms', 'Disability', 'Fax', 'Insurance Information', 'Lab', 'Miscellaneous', 'Patient External Medical Records', 'Photos', 'Portal Attachments', 'Clinical Notes', 'Invoices', 'Intake Forms', 'Prescriptions'];
 
                 vm.docs = [
                     { id: 1, name: 'Telehealth Informed Consent', type: 'Form', sendDate: '03/06/2026 09:14 AM', receivedDate: '03/06/2026 09:16 AM', dateCreated: '03/06/2026 09:14 AM', dateModified: '03/06/2026 09:16 AM', encounter: '', category: 'Consents and Legal Forms', attachTo: 'Chart', description: '', clinician: 'Dr. Sarah', shareStatus: 'Shared to Sign', signable: true, staffSigned: false, selected: false, content: CONSENT_CONTENT },
