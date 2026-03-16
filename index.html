@@ -4836,7 +4836,13 @@
                         menuEl.style.insetBlockEnd = 'auto';
                         menuEl.style.insetBlockStart = (rect.bottom + 4) + 'px';
                     }
-                    menuEl.style.insetInlineEnd = (window.innerWidth - rect.right) + 'px';
+                    if (rect.left < window.innerWidth / 2) {
+                        menuEl.style.insetInlineEnd = 'auto';
+                        menuEl.style.insetInlineStart = rect.left + 'px';
+                    } else {
+                        menuEl.style.insetInlineStart = 'auto';
+                        menuEl.style.insetInlineEnd = (window.innerWidth - rect.right) + 'px';
+                    }
                 };
 
                 vm._hideMenu = function (menu) {
@@ -4856,11 +4862,20 @@
                     if (firstBtn) firstBtn.focus();
                 };
 
+                vm._closeAllMenus = function (except) {
+                    ['doc-row-menu', 'fax-row-menu', 'preview-menu', 'toolbar-send-menu', 'toolbar-sign-menu', 'toolbar-export-menu'].forEach(function (id) {
+                        if (id === except) return;
+                        var m = document.getElementById(id);
+                        if (m && m.matches(':popover-open')) vm._hideMenu(m);
+                    });
+                };
+
                 vm.openDocMenu = function (doc, $event) {
                     $event.stopPropagation();
                     var menu = document.getElementById('doc-row-menu');
                     if (!menu) return;
                     if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm._closeAllMenus('doc-row-menu');
                     vm.activeDoc = doc;
                     vm._showMenu(menu, $event.currentTarget);
                 };
@@ -4870,6 +4885,7 @@
                     var menu = document.getElementById('fax-row-menu');
                     if (!menu) return;
                     if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm._closeAllMenus('fax-row-menu');
                     vm.activeFax = fax;
                     vm._showMenu(menu, $event.currentTarget);
                 };
@@ -4879,6 +4895,7 @@
                     var menu = document.getElementById(id);
                     if (!menu) return;
                     if (menu.matches(':popover-open')) { vm._hideMenu(menu); return; }
+                    vm._closeAllMenus(id);
                     vm._showMenu(menu, $event.currentTarget);
                 };
 
@@ -4893,10 +4910,7 @@
                     var menu = document.getElementById(id);
                     if (!menu) return;
                     var isOpen = menu.matches(':popover-open');
-                    ['toolbar-send-menu', 'toolbar-sign-menu', 'toolbar-export-menu'].forEach(function (otherId) {
-                        var other = document.getElementById(otherId);
-                        if (other && other.matches(':popover-open')) vm._hideMenu(other);
-                    });
+                    vm._closeAllMenus(id);
                     if (!isOpen) vm._showMenu(menu, $event.currentTarget);
                 };
 
